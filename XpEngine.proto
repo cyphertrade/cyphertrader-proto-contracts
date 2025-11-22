@@ -1,0 +1,80 @@
+syntax = "proto3";
+package xp_engine;
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+
+// Error types enumeration
+enum XpEngineErrorType {
+    ERROR_TYPE_UNSPECIFIED = 0;
+    ERROR_TYPE_INVALID_EXPRESSION = 1;
+    ERROR_TYPE_MY_NOSQL_ERROR = 2;
+    ERROR_TYPE_VALIDATION_ERROR = 3;
+    ERROR_TYPE_INTERNAL_ERROR = 4;
+}
+
+// Validation error field details
+message XpEngineValidationErrorField {
+    string field = 1;
+    string message = 2;
+    string code = 3;
+}
+
+// Error response model
+message XpEngineErrorGrpcModel {
+    XpEngineErrorType error_type = 1;
+    string message = 2;
+    repeated XpEngineValidationErrorField validation_errors = 3;  // Only populated for validation errors
+}
+
+// XP Type enumeration
+enum XpEngineXpType {
+    XP_TYPE_UNSPECIFIED = 0;
+    XP_TYPE_TRADER = 1;
+    XP_TYPE_PARTNER = 2;
+    XP_TYPE_INFLUENCER = 3;
+}
+
+// User XP State model
+message XpEngineUserXpStateGrpcModel {
+    string user_id = 1;  // UUID as string
+    XpEngineXpType xp_type = 2;
+    int32 current_level = 3;
+    int64 current_level_xp = 4;
+    string user_group = 5;
+    string create_process_id = 6;
+    string last_update_process_id = 7;
+    google.protobuf.Timestamp create_date = 8;
+    google.protobuf.Timestamp last_update_date = 9;
+}
+
+// User XP Transaction model
+message XpEngineUserXpTransactionGrpcModel {
+    string id = 1;  // UUID as string
+    string user_id = 2;  // UUID as string
+    XpEngineXpType xp_type = 3;
+    int64 xp_change = 4;
+    string process_id = 5;
+    google.protobuf.Timestamp date = 6;
+}
+
+// XP Progression Settings model
+message XpEngineXpProgressionSettingsGrpcModel {
+    string name = 1;
+    string base = 2;  // base formula expression
+    map<uint32, string> progressive = 3;  // progressive formula settings
+    google.protobuf.Timestamp created_at = 4;
+    google.protobuf.Timestamp updated_at = 5;
+}
+
+message XpEngineInsertOrReplaceProgressionSettingsResponse{
+    oneof ior_progression_result{
+        XpEngineXpProgressionSettingsGrpcModel progression = 1;
+        XpEngineErrorGrpcModel error = 2;
+
+    }
+}
+
+service XpEngineProtoContract{
+    rpc InsertOrReplaceProgressionSettings(XpEngineXpProgressionSettingsGrpcModel) returns(XpEngineInsertOrReplaceProgressionSettingsResponse);
+    rpc Ping(google.protobuf.Empty) returns (google.protobuf.Empty);
+}

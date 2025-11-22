@@ -74,7 +74,7 @@ message XpEngineInsertOrReplaceProgressionSettingsResponse{
     }
 }
 
-service XpEngineProtoContract{
+service XpEngineGrpcService{
     rpc InsertOrReplaceProgressionSettings(XpEngineXpProgressionSettingsGrpcModel) returns(XpEngineInsertOrReplaceProgressionSettingsResponse);
     rpc Ping(google.protobuf.Empty) returns (google.protobuf.Empty);
 }

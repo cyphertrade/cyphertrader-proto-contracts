@@ -1,5 +1,5 @@
 syntax = "proto3";
-package xp_engine;
+package users_grpc;
 import "google/protobuf/empty.proto";
 
 // Error types enumeration

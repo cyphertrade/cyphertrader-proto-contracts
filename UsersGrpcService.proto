@@ -54,7 +54,8 @@ message UpdateUserGrpcResponse{
 }
 
 message UpdateUserSourcesGrpcRequest{
-    map<string, string> Sources = 1;
+    string UserId = 1;
+    map<string, string> Sources = 2;
 }
 
 message UpdateUserSourcesGrpcResponse{

@@ -72,7 +72,7 @@ message XpEngineInsertOrReplaceProgressionSettingsResponse{
         XpEngineErrorGrpcModel error = 2;
 
     }
-}
+} 
 
 service XpEngineGrpcService{
     rpc InsertOrReplaceProgressionSettings(XpEngineXpProgressionSettingsGrpcModel) returns(XpEngineInsertOrReplaceProgressionSettingsResponse);

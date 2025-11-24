@@ -1,0 +1,85 @@
+syntax = "proto3";
+package xp_engine;
+import "google/protobuf/empty.proto";
+
+// Error types enumeration
+enum UsersGrpcErrorType {
+    USER_FLOWS_ERROR_TYPE_UNSPECIFIED = 0;
+    USER_FLOWS_ERROR_TYPE_HASH_ERROR = 1;
+    USER_FLOWS_ERROR_TYPE_BASE64_ERROR = 2;
+    USER_FLOWS_ERROR_TYPE_INVALID_AUTH_CREDENTIALS = 3;
+    USER_FLOWS_ERROR_TYPE_USER_NOT_FOUND = 4;
+    USER_FLOWS_ERROR_TYPE_DB_ERROR = 5;
+    USER_FLOWS_ERROR_TYPE_INVALID_SETTINGS = 6;
+}
+
+// Error response model
+message UsersGrpcErrorError {
+    UsersGrpcErrorType error_type = 1;
+    optional string message = 2;  
+}
+
+message UserGrpcModel{
+    string Id = 1;
+    string UserGroup = 2;
+}
+
+message UserDataGrpcModel{
+    UserGrpcModel User = 1;
+    map<string, string> Sources = 2;
+}
+
+message RegisterUserGrpcRequest {
+    string Email = 1;
+    string Password = 2;
+}
+
+message RegisterUserGrpcResponse{
+    oneof register_user_result{
+        UserGrpcModel User = 1;
+        UsersGrpcErrorError Error = 2;
+    }
+}
+
+message UpdateUserGrpcRequest{
+    string Id = 1;
+    string UserGroup = 2;
+}
+
+message UpdateUserGrpcResponse{
+    oneof update_user_result{
+        UserGrpcModel User = 1;
+        UsersGrpcErrorError Error = 2;
+    }
+}
+
+message UpdateUserSourcesGrpcRequest{
+    map<string, string> Sources = 1;
+}
+
+message UpdateUserSourcesGrpcResponse{
+    oneof update_user_sources_result{
+        UserDataGrpcModel UserData = 1;
+        UsersGrpcErrorError Error = 2;
+    }
+}
+
+message VerifyUserCredentialsGrpcRequest{
+    string Email = 1;
+    string Password = 2;
+}
+
+message VerifyUserCredentialsGrpcResponse{
+    oneof verify_user_credentials_result{
+        UserGrpcModel User = 1;
+        UsersGrpcErrorError Error = 2;
+    }
+}
+
+service UsersGrpcService {
+    rpc RegisterUser (RegisterUserGrpcRequest) returns (RegisterUserGrpcResponse);
+    rpc UpdateUser (UpdateUserGrpcRequest) returns (UpdateUserGrpcResponse);
+    rpc UpdateUserSources (UpdateUserSourcesGrpcRequest) returns (UpdateUserSourcesGrpcResponse);
+    rpc VerifyUserCredentials (VerifyUserCredentialsGrpcRequest) returns (VerifyUserCredentialsGrpcResponse);
+    rpc Ping(google.protobuf.Empty) returns (google.protobuf.Empty);
+}

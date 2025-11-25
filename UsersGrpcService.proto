@@ -4,17 +4,18 @@ import "google/protobuf/empty.proto";
 
 // Error types enumeration
 enum UsersGrpcErrorType {
-    USER_FLOWS_ERROR_TYPE_UNSPECIFIED = 0;
-    USER_FLOWS_ERROR_TYPE_HASH_ERROR = 1;
-    USER_FLOWS_ERROR_TYPE_BASE64_ERROR = 2;
-    USER_FLOWS_ERROR_TYPE_INVALID_AUTH_CREDENTIALS = 3;
-    USER_FLOWS_ERROR_TYPE_USER_NOT_FOUND = 4;
-    USER_FLOWS_ERROR_TYPE_DB_ERROR = 5;
-    USER_FLOWS_ERROR_TYPE_INVALID_SETTINGS = 6;
+    UNSPECIFIED = 0;
+    HASH_ERROR = 1;
+    BASE64_ERROR = 2;
+    INVALID_AUTH_CREDENTIALS = 3;
+    USER_NOT_FOUND = 4;
+    DB_ERROR = 5;
+    INVALID_SETTINGS = 6;
+    VALIDATION_ERROR = 7;
 }
 
 // Error response model
-message UsersGrpcErrorError {
+message UsersGrpcError {
     UsersGrpcErrorType error_type = 1;
     optional string message = 2;  
 }
@@ -37,7 +38,7 @@ message RegisterUserGrpcRequest {
 message RegisterUserGrpcResponse{
     oneof register_user_result{
         UserGrpcModel User = 1;
-        UsersGrpcErrorError Error = 2;
+        UsersGrpcError Error = 2;
     }
 }
 
@@ -49,7 +50,7 @@ message UpdateUserGrpcRequest{
 message UpdateUserGrpcResponse{
     oneof update_user_result{
         UserGrpcModel User = 1;
-        UsersGrpcErrorError Error = 2;
+        UsersGrpcError Error = 2;
     }
 }
 
@@ -61,7 +62,7 @@ message UpdateUserSourcesGrpcRequest{
 message UpdateUserSourcesGrpcResponse{
     oneof update_user_sources_result{
         UserDataGrpcModel UserData = 1;
-        UsersGrpcErrorError Error = 2;
+        UsersGrpcError Error = 2;
     }
 }
 
@@ -73,7 +74,7 @@ message VerifyUserCredentialsGrpcRequest{
 message VerifyUserCredentialsGrpcResponse{
     oneof verify_user_credentials_result{
         UserGrpcModel User = 1;
-        UsersGrpcErrorError Error = 2;
+        UsersGrpcError Error = 2;
     }
 }
 

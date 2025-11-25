@@ -78,10 +78,19 @@ message VerifyUserCredentialsGrpcResponse{
     }
 }
 
+message GetUserGrpcRequest{
+    string UserId = 1;
+}
+
+message GetUserGrpcResponse{
+    optional UserDataGrpcModel UserData = 1;
+}
+
 service UsersGrpcService {
     rpc RegisterUser (RegisterUserGrpcRequest) returns (RegisterUserGrpcResponse);
     rpc UpdateUser (UpdateUserGrpcRequest) returns (UpdateUserGrpcResponse);
     rpc UpdateUserSources (UpdateUserSourcesGrpcRequest) returns (UpdateUserSourcesGrpcResponse);
     rpc VerifyUserCredentials (VerifyUserCredentialsGrpcRequest) returns (VerifyUserCredentialsGrpcResponse);
+    rpc GetUser (GetUserGrpcRequest) returns (GetUserGrpcResponse);
     rpc Ping(google.protobuf.Empty) returns (google.protobuf.Empty);
 }

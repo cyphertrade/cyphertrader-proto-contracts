@@ -1,0 +1,39 @@
+// syntax = "proto3";
+// package partners_grpc;
+// import "google/protobuf/empty.proto";
+// import "google/protobuf/timestamp.proto";
+
+// message PartnerErrorType{
+    
+// }
+
+
+// enum PartnerCampaignGrpcStatus{
+//     Active = 0;
+//     Disabled = 1;
+//     Archive = 2;
+// }
+
+// message PartnerCampaignParamGrpcModel{
+//     string Id = 1;
+//     string Name = 2;
+// }
+
+// message PartnerCampaignGrpcModel{
+//     string Id = 1;
+//     string UserId = 2;
+//     repeated PartnerCampaignParamGrpcModel Params = 3;
+//     PartnerCampaignGrpcStatus Status = 4;
+//     google.protobuf.Timestamp CreateDate = 5;
+//     google.protobuf.Timestamp UpdateDate = 6;
+// }
+
+// message CreateCampaignGrpcRequest{
+//     string UserId = 1;
+//     repeated string Params = 2;
+// }
+
+// service PartnersGrpcService {
+//     rpc CreateCampaign(CreateCampaignGrpcRequest) 
+//     rpc Ping(google.protobuf.Empty) returns (google.protobuf.Empty);
+// }

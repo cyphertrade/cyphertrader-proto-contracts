@@ -117,9 +117,24 @@ message InsertOrUpdatePartnerCommissionSettingsGrpcResponse{
     }
 }
 
+message UpdatePartnerCampaignGrpcRequest{
+    string Id = 1;
+    optional double RebaitPercent = 2;
+    repeated PartnerCampaignParamGrpcModel Params = 3;
+    optional PartnerCampaignGrpcStatus Status = 4;
+}
+
+message UpdatePartnerCampaignGrpcResponse{
+    oneof campaign_result{
+        PartnerCampaignGrpcModel Campaign = 1;
+        PartnerError Error = 2;
+    }
+}
+
 // ========== Service ==========
 service PartnersGrpcService {
     rpc CreatePartnerCampaign(CreatePartnerCampaignGrpcRequest) returns (CreatePartnerCampaignGrpcResponse);
+    rpc UpdatePartnerCampaign(UpdatePartnerCampaignGrpcRequest) returns (UpdatePartnerCampaignGrpcResponse);
     rpc InsertOrUpdatePartnerProfile(PartnerProfileGrpcModel) returns (InsertOrUpdatePartnerProfileGrpcResponse);
     rpc InsertOrUpdatePartnerCampaignSettings(PartnerCampaignSettingsGrpcModel) returns (InsertOrUpdatePartnerCampaignSettingsGrpcResponse);
     rpc InsertOrUpdatePartnerCommissionSettings(PartnerCommissionSettingsGrpcModel) returns (InsertOrUpdatePartnerCommissionSettingsGrpcResponse);

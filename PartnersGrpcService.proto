@@ -1,39 +1,117 @@
-// syntax = "proto3";
-// package partners_grpc;
-// import "google/protobuf/empty.proto";
-// import "google/protobuf/timestamp.proto";
+syntax = "proto3";
+package partners_grpc;
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
 
-// message PartnerErrorType{
-    
-// }
+// ========== Errors and Enums ==========
+enum PartnerErrorType{
+    UNSPECIFIED = 0;
+    DATABASE_ERROR = 1;
+    USER_NOT_FOUND = 2;
+    USER_GROUP_NOT_FOUND = 3;
+    PARTNER_PROFILE_NOT_FOUND = 4;
+    GRPC_ERROR = 5;
+    CAMPAIGN_NOT_FOUND = 6;
+    VALIDATION_ERRORS = 7;
+    EVAL_EXP_ERRORS = 8;
+    CAMPAIGN_INVALID_COMMISSION_SETTINGS = 9;
+    REACHED_MAX_AMOUNT_OF_ACTIVE_CAMPAIGNS = 10;
+    REACHED_MAX_AMOUNT_CAMPAIGN_PARAMS = 11;
+}
 
+message PartnerError{
+    PartnerErrorType ErrorType = 1;
+    optional string Message = 2;
+}
 
-// enum PartnerCampaignGrpcStatus{
-//     Active = 0;
-//     Disabled = 1;
-//     Archive = 2;
-// }
+enum PartnerCampaignGrpcStatus{
+    Active = 0;
+    Disabled = 1;
+    Archive = 2;
+}
 
-// message PartnerCampaignParamGrpcModel{
-//     string Id = 1;
-//     string Name = 2;
-// }
+// ========== Models ==========
+message PartnerCampaignParamGrpcModel{
+    string Id = 1;
+    string Name = 2;
+}
 
-// message PartnerCampaignGrpcModel{
-//     string Id = 1;
-//     string UserId = 2;
-//     repeated PartnerCampaignParamGrpcModel Params = 3;
-//     PartnerCampaignGrpcStatus Status = 4;
-//     google.protobuf.Timestamp CreateDate = 5;
-//     google.protobuf.Timestamp UpdateDate = 6;
-// }
+message PartnerCampaignGrpcModel{
+    string Id = 1;
+    string UserId = 2;
+    repeated PartnerCampaignParamGrpcModel Params = 3;
+    PartnerCampaignGrpcStatus Status = 4;
+    double RebaitPercent = 6;
+    google.protobuf.Timestamp CreateDate = 7;
+    google.protobuf.Timestamp UpdateDate = 8;
+}
 
-// message CreateCampaignGrpcRequest{
-//     string UserId = 1;
-//     repeated string Params = 2;
-// }
+message PartnerCampaignSettingsGrpcModel{
+    string Name = 1;
+    string MinUserRebaitPercent = 2;
+    string MaxUserRebaitPercent = 3;
+    string MaxCampaignParams = 4;
+    string MaxActiveCampaign = 5;
+}
 
-// service PartnersGrpcService {
-//     rpc CreateCampaign(CreateCampaignGrpcRequest) 
-//     rpc Ping(google.protobuf.Empty) returns (google.protobuf.Empty);
-// }
+message PartnerCommissionEventConfigurationGrpcModel{
+    string Formula = 1;
+}
+
+message PartnerCommissionSettingsGrpcModel{
+    string Name = 1;
+    string YftCommission = 2;
+    map<string, PartnerCommissionEventConfigurationGrpcModel> Events = 3;
+}
+
+message PartnerProfileGrpcModel{
+    string Name = 1;
+    string BasicCommissionSettings = 2;
+    map<uint32, string> ProgressiveCommissionSettings = 3;
+    string BasicCampaignSettings = 4;
+    map<uint32, string> ProgressiveCampaignSettings = 5;
+}
+
+// ========== Request-Response Pairs ==========
+message CreatePartnerCampaignGrpcRequest{
+    string UserId = 1;
+    double RebaitPercent = 2;
+    repeated PartnerCampaignParamGrpcModel Params = 3;
+}
+
+message CreatePartnerCampaignGrpcResponse{
+    oneof campaign_result{
+        PartnerCampaignGrpcModel Campaign = 1;
+        PartnerError Error = 2;
+    }
+}
+
+message InsertOrUpdatePartnerProfileGrpcResponse{
+    oneof profile_result{
+        PartnerProfileGrpcModel Profile = 1;
+        PartnerError Error = 2;
+    }
+}
+
+message InsertOrUpdatePartnerCampaignSettingsGrpcResponse{
+    oneof campaign_settings_result{
+        PartnerCampaignSettingsGrpcModel CampaignSettings = 1;
+        PartnerError Error = 2;
+    }
+}
+
+message InsertOrUpdatePartnerCommissionSettingsGrpcResponse{
+    oneof commission_settings_result{
+        PartnerCommissionSettingsGrpcModel CommissionSettings = 1;
+        PartnerError Error = 2;
+    }
+}
+
+// ========== Service ==========
+service PartnersGrpcService {
+    rpc CreatePartnerCampaign(CreatePartnerCampaignGrpcRequest) returns (CreatePartnerCampaignGrpcResponse);
+    rpc InsertOrUpdatePartnerProfile(PartnerProfileGrpcModel) returns (InsertOrUpdatePartnerProfileGrpcResponse);
+    rpc InsertOrUpdatePartnerCampaignSettings(PartnerCampaignSettingsGrpcModel) returns (InsertOrUpdatePartnerCampaignSettingsGrpcResponse);
+    rpc InsertOrUpdatePartnerCommissionSettings(PartnerCommissionSettingsGrpcModel) returns (InsertOrUpdatePartnerCommissionSettingsGrpcResponse);
+    rpc Ping(google.protobuf.Empty) returns (google.protobuf.Empty);
+}

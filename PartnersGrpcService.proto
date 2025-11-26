@@ -29,6 +29,12 @@ enum PartnerCampaignGrpcStatus{
     Archive = 2;
 }
 
+enum BusinessEventType{
+    CYPHER_REGISTER = 0;
+    CYPHER_LOGIN = 1;
+    BROKER_REGISTER = 2;
+}
+
 // ========== Models ==========
 message PartnerCampaignParamGrpcModel{
     string Id = 1;
@@ -57,10 +63,15 @@ message PartnerCommissionEventConfigurationGrpcModel{
     string Formula = 1;
 }
 
+message PartnerCommissionEventGrpcModel{
+    BusinessEventType EventType = 1;
+    PartnerCommissionEventConfigurationGrpcModel Configuration = 2;
+}
+
 message PartnerCommissionSettingsGrpcModel{
     string Name = 1;
     string YftCommission = 2;
-    map<string, PartnerCommissionEventConfigurationGrpcModel> Events = 3;
+    repeated PartnerCommissionEventGrpcModel Events = 3;
 }
 
 message PartnerProfileGrpcModel{

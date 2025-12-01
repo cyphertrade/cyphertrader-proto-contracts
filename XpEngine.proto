@@ -18,13 +18,13 @@ message XpEngineGrpcError {
     optional string message = 2;
 }
 
-enum XpType {
+enum XpEngineXpGrpcType {
     PARTNER = 0;
     TRADER = 1;
     INFLUENCER = 2;
 }
 
-enum XpTransactionSource {
+enum XpEngineXpTransactionSourceGrpc {
     MANUAL = 0;
     SYSTEM = 1;
     EVENT = 2;
@@ -40,9 +40,9 @@ message XpEngineXpProgressionSettingsGrpcModel {
     google.protobuf.Timestamp updated_at = 5;
 }
 
-message UserXpStateGrpcModel {
+message XpEngineUserXpStateGrpcModel {
     string user_id = 1;
-    XpType xp_type = 2;
+    XpEngineXpGrpcType xp_type = 2;
     uint32 current_level = 3;
     uint64 current_level_xp = 4;
     google.protobuf.Timestamp last_update_date = 5;
@@ -51,15 +51,15 @@ message UserXpStateGrpcModel {
     string create_process_id = 8;
 }
 
-message UserXpStateTransactionGrpcModel {
+message XpEngineUserXpStateTransactionGrpcModel {
     string id = 1;
-    XpType xp_type = 2;
+    XpEngineXpGrpcType xp_type = 2;
     int64 xp_delta = 3;
     string process_id = 4;
     google.protobuf.Timestamp date = 5;
     optional string reference_operation_id = 6;
     optional string comment = 7;
-    XpTransactionSource source = 8;
+    XpEngineXpTransactionSourceGrpc source = 8;
 }
 
 message XpEngineInsertOrReplaceProgressionSettingsResponse{
@@ -71,40 +71,40 @@ message XpEngineInsertOrReplaceProgressionSettingsResponse{
 }
 
 // ========== Request-Response Pairs ==========
-message GetUserXpStateGrpcRequest {
+message XpEngineGetUserXpStateGrpcRequest {
     string user_id = 1;
-    XpType xp_type = 2;
+    XpEngineXpGrpcType xp_type = 2;
 }
 
-message GetUserXpStateGrpcResponse {
+message XpEngineGetUserXpStateGrpcResponse {
     oneof get_user_xp_state_result {
-        UserXpStateGrpcModel user_xp_state = 1;
+        XpEngineUserXpStateGrpcModel user_xp_state = 1;
         XpEngineGrpcError error = 2;
     }
 }
 
-message ChangeUserXpStateGrpcRequest {
+message XpEngineChangeUserXpStateGrpcRequest {
     string user_id = 1;
-    XpType xp_type = 2;
+    XpEngineXpGrpcType xp_type = 2;
     int64 delta = 3;
     string process_id = 4;
 }
 
-message ChangeUserXpStateGrpcResponse {
+message XpEngineChangeUserXpStateGrpcResponse {
     oneof change_user_xp_state_result {
-        ChangeUserXpStateSuccess success = 1;
+        XpEngineChangeUserXpStateSuccessGrpc success = 1;
         XpEngineGrpcError error = 2;
     }
 }
 
-message ChangeUserXpStateSuccess {
-    UserXpStateGrpcModel new_state = 1;
-    UserXpStateTransactionGrpcModel transaction = 2;
+message XpEngineChangeUserXpStateSuccessGrpc {
+    XpEngineUserXpStateGrpcModel new_state = 1;
+    XpEngineUserXpStateTransactionGrpcModel transaction = 2;
 }
 
 service XpEngineGrpcService{
     rpc InsertOrReplaceProgressionSettings(XpEngineXpProgressionSettingsGrpcModel) returns(XpEngineInsertOrReplaceProgressionSettingsResponse);
-    rpc GetUserXpState(GetUserXpStateGrpcRequest) returns(GetUserXpStateGrpcResponse);
-    rpc ChangeUserXpState(ChangeUserXpStateGrpcRequest) returns(ChangeUserXpStateGrpcResponse);
+    rpc GetUserXpState(XpEngineGetUserXpStateGrpcRequest) returns(XpEngineGetUserXpStateGrpcResponse);
+    rpc ChangeUserXpState(XpEngineChangeUserXpStateGrpcRequest) returns(XpEngineChangeUserXpStateGrpcResponse);
     rpc Ping(google.protobuf.Empty) returns (google.protobuf.Empty);
 }

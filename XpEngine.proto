@@ -74,6 +74,7 @@ message XpEngineInsertOrReplaceProgressionSettingsResponse{
 message GetUserXpStateGrpcRequest {
     string user_id = 1;
     XpType xp_type = 2;
+    bool lazy_init = 3;
 }
 
 message GetUserXpStateGrpcResponse {

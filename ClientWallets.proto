@@ -1,0 +1,72 @@
+
+syntax = "proto3";
+package client_wallets;
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+
+// ========== Enums ==========
+enum WalletTransactionDtoReason {
+    DEPOSIT = 0;
+    WITHDRAWAL = 1;
+    REBAIT = 2;
+    CORRECTION = 3;
+}
+
+message WalletTransactionGrpcModel {
+    string Id = 1;
+    string WalletId = 2;
+    string UserId = 3;
+    int64 PointsDelta = 4;
+    google.protobuf.Timestamp Date = 5;
+    string ProcessId = 6;
+    WalletTransactionDtoReason Reason = 7;
+    optional string Comment = 8;
+}
+
+message WalletGrpcModel {
+    string Id = 1;
+    string UserId = 2;
+    int64 Points = 3;
+    google.protobuf.Timestamp CreateDate = 4;
+    google.protobuf.Timestamp UpdateData = 5;
+    string CreateProcessId = 6;
+    string UpdateProcessId = 7;
+}
+
+message UpdateClientWalletGrpcRequest{
+    string WalletId = 1;
+    uint64 Delta = 2;
+    WalletTransactionDtoReason Reason = 3;
+    string Comment = 4;
+    string ProcessId = 5;
+}
+
+message UpdateClientWalletSuccessResult{
+    WalletGrpcModel Wallet = 1;
+    WalletTransactionGrpcModel Transaction = 2;
+}
+
+message UpdateClientWalletResponse{
+    oneof update_client_wallet_result{
+        UpdateClientWalletSuccessResult SuccessResult = 1;
+        WalletTransactionDtoReason Error = 2;
+    }
+}
+
+message CreateWalletGrpcRequest{
+    string UserId = 1;
+    string ProcessId = 2;
+}
+
+message CreateWalletGrpcResponse{
+    oneof update_client_wallet_result{
+        WalletGrpcModel Wallet = 1;
+        WalletTransactionDtoReason Error = 2;
+    }
+}
+
+service XpEngineGrpcService{
+    rpc CreateWallet(CreateWalletGrpcRequest) returns (CreateWalletGrpcResponse);
+    rpc UpdateClientWallet(UpdateClientWalletGrpcRequest) returns (UpdateClientWalletResponse);
+    rpc Ping(google.protobuf.Empty) returns (google.protobuf.Empty);
+}

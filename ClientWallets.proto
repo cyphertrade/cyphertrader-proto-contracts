@@ -65,7 +65,7 @@ message CreateWalletGrpcResponse{
     }
 }
 
-service XpEngineGrpcService{
+service ClientWalletsGrpcService{
     rpc CreateWallet(CreateWalletGrpcRequest) returns (CreateWalletGrpcResponse);
     rpc UpdateClientWallet(UpdateClientWalletGrpcRequest) returns (UpdateClientWalletResponse);
     rpc Ping(google.protobuf.Empty) returns (google.protobuf.Empty);

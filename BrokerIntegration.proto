@@ -18,7 +18,6 @@ message BrokerIntegrationErrorsGrpcModel{
 message BrokerIntegrationBrokerGrpcModel{
     string Id = 1;
     string Name = 2;
-
 }
 
 message BrokerIntegrationBrokerContestSettingsGrpcModel{

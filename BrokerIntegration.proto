@@ -1,0 +1,99 @@
+syntax = "proto3";
+package broker_integration;
+import "google/protobuf/empty.proto";
+
+enum BrokerIntegrationErrorType{
+    DifficultyNotFound = 0;
+}
+
+message BrokerIntegrationErrorGrpcModel{
+    BrokerIntegrationErrorType error_type = 1;
+    optional string message = 2;
+}
+
+message BrokerIntegrationErrorsGrpcModel{
+    repeated BrokerIntegrationErrorGrpcModel Errors = 1;
+}
+
+message BrokerIntegrationBrokerGrpcModel{
+    string Id = 1;
+    string Name = 2;
+
+}
+
+message BrokerIntegrationBrokerContestSettingsGrpcModel{
+    string DifficultyId = 1;
+    string MinEquityRatio = 2;
+    map<string, BrokerIntegrationBrokerContestSettingsInstrumentGrpcModel> InstrumentSettings = 3;
+}
+
+message BrokerIntegrationBrokerContestSettingsInstrumentGrpcModel{
+    int32 BitPip = 1;
+    int32 AskPip = 2;
+    uint32 MinSpeadPip = 3;
+    uint32 ManSpeadPip = 4;
+    repeated BrokerIntegrationBrokerContestSettingsInstrumentSwapGrpcModel Swaps = 5;
+}
+
+message BrokerIntegrationBrokerContestSettingsInstrumentSwapGrpcModel{
+    uint32 SwapPercent = 1;
+    uint64 SwapPeriodMin = 2;
+}
+
+message BrokerIntegrationSetupContestGrpcRequest{
+    string ContestId = 1;
+    string DificcultyId = 2;
+    double Leverage = 3;
+    double InitialBalance = 4;
+    repeated string AllowedAssets = 5;
+}
+
+message BrokerIntegrationSetupContestGrpcResponse{
+    oneof setup_contest_result{
+        string GroupName = 1;
+        BrokerIntegrationErrorsGrpcModel Errors = 2;
+    }
+}
+
+message BrokerIntegrationRegisterContestAccountGrpcRequest{
+    string ContestId = 1;
+    string UserId = 2;
+}
+
+message BrokerIntegrationRegisterContestAccountGrpcResponse{
+    oneof register_contest_account_result{
+        string AccountId = 1;
+        BrokerIntegrationErrorsGrpcModel Errors = 2;
+    }
+}
+
+message BrokerIntegrationProcessContestEndedGrpcRequest{
+    string ContestId = 1;
+}
+
+message BrokerIntegrationProcessContestEndedGrpcResponse{
+    oneof process_contest_ended_result{
+        google.protobuf.Empty Success = 1;
+        BrokerIntegrationErrorsGrpcModel Errors = 2;
+    }
+}
+
+message BrokerIntegrationInsertOrReplaceBrokerSettingsGrpcResponse{
+    oneof insert_or_replace_broker_settings_result{
+        BrokerIntegrationBrokerContestSettingsGrpcModel Settings = 1;
+        BrokerIntegrationErrorsGrpcModel Errors = 2;
+    }
+}
+
+service BrokerIntegrationGrpcService{
+    rpc InsertOrUpdateBrokerSettings(BrokerIntegrationBrokerContestSettingsGrpcModel) returns (BrokerIntegrationInsertOrReplaceBrokerSettingsGrpcResponse);
+
+    rpc SetupContest(BrokerIntegrationSetupContestGrpcRequest) returns (BrokerIntegrationSetupContestGrpcResponse);
+    rpc RegisterContestAccount(BrokerIntegrationRegisterContestAccountGrpcRequest) returns (BrokerIntegrationRegisterContestAccountGrpcResponse);
+    //Contest registration canceled
+
+    rpc ProcessContestEnded(BrokerIntegrationProcessContestEndedGrpcRequest) returns (BrokerIntegrationProcessContestEndedGrpcResponse);
+    //contest canceled
+
+    rpc Ping(google.protobuf.Empty) returns (google.protobuf.Empty);
+}

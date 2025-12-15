@@ -26,6 +26,13 @@ message UserGrpcModel{
     string UserGroup = 2;
 }
 
+message UserGroupGrpcModel{
+    string Name = 1;
+    string XpProgression = 2;
+    string PartnerProfile = 3;
+    string TraderProfile = 4;
+}
+
 message UserDataGrpcModel{
     UserGrpcModel User = 1;
     map<string, string> Sources = 2;
@@ -51,6 +58,13 @@ message UpdateUserGrpcRequest{
 message UpdateUserGrpcResponse{
     oneof update_user_result{
         UserGrpcModel User = 1;
+        UsersGrpcError Error = 2;
+    }
+}
+
+message InsertOrUpdateUserGroupGrpcResponse{
+    oneof update_user_result{
+        UserGroupGrpcModel Group = 1;
         UsersGrpcError Error = 2;
     }
 }
@@ -93,5 +107,7 @@ service UsersGrpcService {
     rpc UpdateUserSources (UpdateUserSourcesGrpcRequest) returns (UpdateUserSourcesGrpcResponse);
     rpc VerifyUserCredentials (VerifyUserCredentialsGrpcRequest) returns (VerifyUserCredentialsGrpcResponse);
     rpc GetUser (GetUserGrpcRequest) returns (GetUserGrpcResponse);
+    rpc InsertOrUpdateUserGroup (UserGroupGrpcModel) returns (InsertOrUpdateUserGroupGrpcResponse);
+
     rpc Ping(google.protobuf.Empty) returns (google.protobuf.Empty);
 }

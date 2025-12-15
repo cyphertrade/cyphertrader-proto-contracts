@@ -12,6 +12,7 @@ enum UsersGrpcErrorType {
     DB_ERROR = 5;
     INVALID_SETTINGS = 6;
     VALIDATION_ERROR = 7;
+    USER_GROUP_NOT_FOUND = 8;
 }
 
 // Error response model

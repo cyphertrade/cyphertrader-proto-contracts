@@ -157,6 +157,70 @@ message ContestEngineCancelRegistrationGrpcRequest{
     string ContestId = 2;
 }
 
+message ContestEngineContestDifficultyGrpcModel{
+    string Id = 1;
+    string Name = 2;
+}
+
+message ContestEngineInsertOrReplaceContestDifficultyGrpcResponse{
+    oneof insert_or_replace_contest_difficulty_result{
+        ContestEngineContestDifficultyGrpcModel Difficulty = 1;
+        ContestEngineErrorGrpcModel Error = 2;
+    }
+}
+
+message ContestEngineContestInstrumentGroupGrpcModel{
+    string Id = 1;
+    string Name = 2;
+}
+
+message ContestEngineInsertOrReplaceContestInstrumentGroupGrpcResponse{
+    oneof insert_or_replace_contest_instrument_group_result{
+        ContestEngineContestInstrumentGroupGrpcModel InstrumentGroup = 1;
+        ContestEngineErrorGrpcModel Error = 2;
+    }
+}
+
+message ContestEngineContestInstrumentGrpcModel{
+    string Id = 1;
+    string Name = 2;
+    string InstrumentGroupId = 3;
+}
+
+message ContestEngineInsertOrReplaceContestInstrumentGrpcResponse{
+    oneof insert_or_replace_contest_instrument_result{
+        ContestEngineContestInstrumentGrpcModel Instrument = 1;
+        ContestEngineErrorGrpcModel Error = 2;
+    }
+}
+
+message ContestEngineContestSettingsGrpcModel{
+    string Name = 1;
+    string PlatformCommission = 2;
+    string MinCreatorCommissionPercent = 3;
+    string MaxCreatorCommissionPercent = 4;
+    string MinContestParticipants = 5;
+    string MaxContestParticipants = 6;
+    string MinLeverage = 7;
+    string MaxLeverage = 8;
+    string MinInitialBalance = 9;
+    string MaxInitialBalance = 10;
+    uint32 MinContestDurationMinutes = 11;
+    uint32 MaxContestDurationMinutes = 12;
+    string MinContestBuyIn = 13;
+    string MaxContestBuyIn = 14;
+    repeated string AllowedDifficulties = 15;
+    repeated string AllowedBrokers = 16;
+    repeated string AllowedInstruments = 17;
+    optional uint64 MaxInitialPrizePool = 18;
+}
+
+message ContestEngineInsertOrReplaceContestSettingsGrpcResponse{
+    oneof insert_or_replace_contest_settings_result{
+        ContestEngineContestSettingsGrpcModel Settings = 1;
+        ContestEngineErrorGrpcModel Error = 2;
+    }
+}
 
 service ContestEngineGrpcService{
     rpc GetLiveContests(google.protobuf.Empty) returns (stream ContestEngineContestGrpcModel);
@@ -176,6 +240,11 @@ service ContestEngineGrpcService{
     rpc GetContestTeams(ContestEngineGetContestRegistrationsGrpcRequest) returns (stream ContestEngineContestTeamGrpcModel);
     rpc CreateContestTeam(ContestEngineInsertOrUpdateContestTeamGrpcRequest) returns (ContestEngineInsertOrUpdateContestTeamGrpcResponse);
     rpc UpdateContestTeam(ContestEngineInsertOrUpdateContestTeamGrpcRequest) returns (ContestEngineInsertOrUpdateContestTeamGrpcResponse);
+
+    rpc InsertOrReplaceContestDifficulty(ContestEngineContestDifficultyGrpcModel) returns (ContestEngineInsertOrReplaceContestDifficultyGrpcResponse);
+    rpc InsertOrReplaceContestInstrumentGroup(ContestEngineContestInstrumentGroupGrpcModel) returns (ContestEngineInsertOrReplaceContestInstrumentGroupGrpcResponse);
+    rpc InsertOrReplaceContestInstrument(ContestEngineContestInstrumentGrpcModel) returns (ContestEngineInsertOrReplaceContestInstrumentGrpcResponse);
+    rpc InsertOrReplaceContestSettings(ContestEngineContestSettingsGrpcModel) returns (ContestEngineInsertOrReplaceContestSettingsGrpcResponse);
 
     rpc Ping(google.protobuf.Empty) returns (google.protobuf.Empty);
 }

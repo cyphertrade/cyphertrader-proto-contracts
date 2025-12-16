@@ -1,10 +1,11 @@
 syntax = "proto3";
-package client_wallets;
+package contest_engine;
 import "google/protobuf/empty.proto";
 
 enum ContestEngineErrorType{
     ContestNotFound = 0;
     DatabaseError = 1;
+    ValidationError = 2;
 }
 
 enum ContestEngineContestRegistrationStatus{

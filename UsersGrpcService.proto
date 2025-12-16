@@ -66,7 +66,7 @@ message UpdateUserGrpcResponse{
 }
 
 message InsertOrUpdateUserGroupGrpcResponse{
-    oneof update_user_result{
+    oneof update_group_result{
         UserGroupGrpcModel Group = 1;
         UsersGrpcError Error = 2;
     }

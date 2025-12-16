@@ -18,7 +18,7 @@ enum UsersGrpcErrorType {
 // Error response model
 message UsersGrpcError {
     UsersGrpcErrorType error_type = 1;
-    optional string message = 2;  
+    optional string message = 2;
 }
 
 message UserGrpcModel{

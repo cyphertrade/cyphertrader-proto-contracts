@@ -4,6 +4,16 @@ import "google/protobuf/empty.proto";
 
 enum BrokerIntegrationErrorType{
     DifficultyNotFound = 0;
+    InvalidMinEquityRatio = 1;
+    DatabaseError = 2;
+    EmptyBrokerId = 3;
+    EmptyBrokerName = 4;
+    EmptyDifficultyId = 5;
+    EmptyInstrumentKey = 6;
+    InvalidSwapPeriodMin = 7;
+    MinEquityRatioTooHigh = 8;
+    NoInstruments = 9;
+    InvalidSpreadRange = 10;
 }
 
 message BrokerIntegrationErrorGrpcModel{
@@ -18,12 +28,11 @@ message BrokerIntegrationErrorsGrpcModel{
 message BrokerIntegrationBrokerGrpcModel{
     string Id = 1;
     string Name = 2;
-
 }
 
 message BrokerIntegrationBrokerContestSettingsGrpcModel{
     string DifficultyId = 1;
-    string MinEquityRatio = 2;
+    double MinEquityRatio = 2;
     map<string, BrokerIntegrationBrokerContestSettingsInstrumentGrpcModel> InstrumentSettings = 3;
 }
 
@@ -78,15 +87,21 @@ message BrokerIntegrationProcessContestEndedGrpcResponse{
     }
 }
 
+message BrokerIntegrationBrokerSettingsGrpcModel{
+    string BrokerId = 1;
+    string BrokerName = 2;
+    BrokerIntegrationBrokerContestSettingsGrpcModel ContestSettings = 3;
+}
+
 message BrokerIntegrationInsertOrReplaceBrokerSettingsGrpcResponse{
     oneof insert_or_replace_broker_settings_result{
-        BrokerIntegrationBrokerContestSettingsGrpcModel Settings = 1;
+        BrokerIntegrationBrokerSettingsGrpcModel Settings = 1;
         BrokerIntegrationErrorsGrpcModel Errors = 2;
     }
 }
 
 service BrokerIntegrationGrpcService{
-    rpc InsertOrUpdateBrokerSettings(BrokerIntegrationBrokerContestSettingsGrpcModel) returns (BrokerIntegrationInsertOrReplaceBrokerSettingsGrpcResponse);
+    rpc InsertOrUpdateBrokerSettings(BrokerIntegrationBrokerSettingsGrpcModel) returns (BrokerIntegrationInsertOrReplaceBrokerSettingsGrpcResponse);
 
     rpc SetupContest(BrokerIntegrationSetupContestGrpcRequest) returns (BrokerIntegrationSetupContestGrpcResponse);
     rpc RegisterContestAccount(BrokerIntegrationRegisterContestAccountGrpcRequest) returns (BrokerIntegrationRegisterContestAccountGrpcResponse);

@@ -100,15 +100,35 @@ message BrokerIntegrationInsertOrReplaceBrokerSettingsGrpcResponse{
     }
 }
 
+message BrokerIntegrationContestRegistrationCancelGrpcRequest{
+    string ContestId = 1;
+    string UserId = 2;
+}
+
+message BrokerIntegrationGetContestAccountAutoLoginGrpcRequest{
+    string ContestId = 1;
+    string UserId = 2;
+}
+
+message BrokerIntegrationGetContestAccountAutoLoginGrpcResponse{
+    oneof redirect_link{
+        string Url = 1;
+        BrokerIntegrationErrorsGrpcModel Errors = 2;
+    }
+}
+
+
 service BrokerIntegrationGrpcService{
     rpc InsertOrUpdateBrokerSettings(BrokerIntegrationBrokerSettingsGrpcModel) returns (BrokerIntegrationInsertOrReplaceBrokerSettingsGrpcResponse);
 
     rpc SetupContest(BrokerIntegrationSetupContestGrpcRequest) returns (BrokerIntegrationSetupContestGrpcResponse);
-    rpc RegisterContestAccount(BrokerIntegrationRegisterContestAccountGrpcRequest) returns (BrokerIntegrationRegisterContestAccountGrpcResponse);
-    //Contest registration canceled
 
+    rpc RegisterContestAccount(BrokerIntegrationRegisterContestAccountGrpcRequest) returns (BrokerIntegrationRegisterContestAccountGrpcResponse);
+    rpc GetContestAccountAutoLogin(BrokerIntegrationGetContestAccountAutoLoginGrpcRequest) returns (BrokerIntegrationGetContestAccountAutoLoginGrpcResponse);
+    rpc ContestRegistrationCanceled(BrokerIntegrationContestRegistrationCancelGrpcRequest) returns (BrokerIntegrationRegisterContestAccountGrpcResponse);
+
+    rpc ProcessContestCanceled(BrokerIntegrationProcessContestEndedGrpcRequest) returns (BrokerIntegrationProcessContestEndedGrpcResponse);
     rpc ProcessContestEnded(BrokerIntegrationProcessContestEndedGrpcRequest) returns (BrokerIntegrationProcessContestEndedGrpcResponse);
-    //contest canceled
 
     rpc Ping(google.protobuf.Empty) returns (google.protobuf.Empty);
 }

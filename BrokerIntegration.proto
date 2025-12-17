@@ -37,7 +37,7 @@ message BrokerIntegrationBrokerContestSettingsGrpcModel{
 }
 
 message BrokerIntegrationBrokerContestSettingsInstrumentGrpcModel{
-    int32 BitPip = 1;
+    int32 BidPip = 1;
     int32 AskPip = 2;
     uint32 MinSpeadPip = 3;
     uint32 ManSpeadPip = 4;
@@ -51,7 +51,7 @@ message BrokerIntegrationBrokerContestSettingsInstrumentSwapGrpcModel{
 
 message BrokerIntegrationSetupContestGrpcRequest{
     string ContestId = 1;
-    string DificcultyId = 2;
+    string DifficultyId = 2;
     double Leverage = 3;
     double InitialBalance = 4;
     repeated string AllowedAssets = 5;

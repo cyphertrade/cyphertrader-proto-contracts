@@ -37,10 +37,10 @@ message BrokerIntegrationBrokerContestSettingsGrpcModel{
 }
 
 message BrokerIntegrationBrokerContestSettingsInstrumentGrpcModel{
-    int32 BidPip = 1;
-    int32 AskPip = 2;
-    uint32 MinSpeadPip = 3;
-    uint32 ManSpeadPip = 4;
+    optional int32 BidPip = 1;
+    optional int32 AskPip = 2;
+    optional uint32 MinSpreadPip = 3;
+    optional uint32 MaxSpreadPip = 4;
     repeated BrokerIntegrationBrokerContestSettingsInstrumentSwapGrpcModel Swaps = 5;
 }
 

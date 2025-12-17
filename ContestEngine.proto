@@ -235,6 +235,19 @@ message ContestEngineUpdateContestRegistrationGrpcRequest{
     string ContestId = 1;
 }
 
+message ContestEngineGetLiveContestsGrpcRequest{
+}
+
+message ContestEngineGetRegisterOpenContestsGrpcRequest{
+}
+
+message ContestEngineGetClientContestsGrpcRequest{
+}
+
+message ContestEngineGetContestTeamsGrpcRequest{
+    string ContestId = 1;
+}
+
 message ContestEngineCancelRegistrationGrpcRequest{
     string UserId = 1;
     string ContestId = 2;
@@ -306,9 +319,9 @@ message ContestEngineInsertOrReplaceContestSettingsGrpcResponse{
 }
 
 service ContestEngineGrpcService{
-    rpc GetLiveContests(google.protobuf.Empty) returns (stream ContestEngineContestGrpcModel);
-    rpc GetRegisterOpenContests(google.protobuf.Empty) returns (stream ContestEngineContestGrpcModel);
-    rpc GetClientContests(google.protobuf.Empty) returns (stream ContestEngineContestGrpcModel);
+    rpc GetLiveContests(ContestEngineGetLiveContestsGrpcRequest) returns (stream ContestEngineContestGrpcModel);
+    rpc GetRegisterOpenContests(ContestEngineGetRegisterOpenContestsGrpcRequest) returns (stream ContestEngineContestGrpcModel);
+    rpc GetClientContests(ContestEngineGetClientContestsGrpcRequest) returns (stream ContestEngineContestGrpcModel);
 
     rpc CreateContest(ContestEngineCreateContestGrpcRequest) returns (ContestEngineCreateContestGrpcResponse);
     rpc UpdateContest(ContestEngineUpdateContestGrpcRequest) returns (ContestEngineUpdateContestGrpcResponse);
@@ -320,7 +333,7 @@ service ContestEngineGrpcService{
     rpc UpdateContestRegistration(ContestEngineUpdateContestRegistrationGrpcRequest) returns (ContestEngineContestRegistrationGrpcModel);
     rpc CancelContestRegistration(ContestEngineCancelRegistrationGrpcRequest) returns (ContestEngineContestRegistrationGrpcModel);
 
-    rpc GetContestTeams(ContestEngineGetContestRegistrationsGrpcRequest) returns (stream ContestEngineContestTeamGrpcModel);
+    rpc GetContestTeams(ContestEngineGetContestTeamsGrpcRequest) returns (stream ContestEngineContestTeamGrpcModel);
     rpc CreateContestTeam(ContestEngineCreateContestTeamGrpcRequest) returns (ContestEngineCreateContestTeamGrpcResponse);
     rpc UpdateContestTeam(ContestEngineUpdateContestTeamGrpcRequest) returns (ContestEngineUpdateContestTeamGrpcResponse);
 

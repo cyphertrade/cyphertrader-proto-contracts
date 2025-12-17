@@ -153,6 +153,88 @@ message ContestEngineInsertOrUpdateContestTeamGrpcResponse{
     }
 }
 
+message ContestEngineUpdateContestGrpcRequest{
+    string UserId = 1;
+    string Name = 2;
+    double CreatorCommission = 3;
+    double MinParticipants = 4;
+    double MaxParticipants = 5;
+    optional uint32 MinTeamSize = 6;
+    optional uint32 MaxTeamSize = 7;
+    double ContestLeverage = 8;
+    double ContestInitialBalance = 9;
+    uint32 ContestDurationMinutes = 10;
+    optional uint64 BuyIn = 11;
+    repeated string AllowedAssets = 12;
+    repeated string AllowedDifficulties = 13;
+    string Broker = 14;
+    optional uint64 InitialPrizePool = 15;
+    bool AutoStartWhenFull = 16;
+}
+
+message ContestEngineCreateContestGrpcResponse{
+    oneof create_contest_result{
+        ContestEngineContestGrpcModel Contest = 1;
+        ContestEngineErrorGrpcModel Error = 2;
+    }
+}
+
+message ContestEnginePublishContestGrpcRequest{
+    string ContestId = 1;
+    string UserId = 2;
+}
+
+message ContestEnginePublishContestGrpcResponse{
+    oneof publish_contest_result{
+        ContestEngineContestGrpcModel Contest = 1;
+        ContestEngineErrorGrpcModel Error = 2;
+    }
+}
+
+message ContestEngineCancelContestGrpcRequest{
+    string ContestId = 1;
+    string UserId = 2;
+}
+
+message ContestEngineCancelContestGrpcResponse{
+    oneof cancel_contest_result{
+        ContestEngineContestGrpcModel Contest = 1;
+        ContestEngineErrorGrpcModel Error = 2;
+    }
+}
+
+message ContestEngineCreateContestTeamGrpcRequest{
+    string ContestId = 1;
+    string TeamName = 2;
+    bool IsPublic = 3;
+    repeated ContestEngineContestRegistrationTeamMemberGrpcModel Members = 4;
+}
+
+message ContestEngineCreateContestTeamGrpcResponse{
+    oneof create_contest_team_result{
+        ContestEngineContestTeamGrpcModel Team = 1;
+        ContestEngineErrorGrpcModel Error = 2;
+    }
+}
+
+message ContestEngineUpdateContestTeamGrpcRequest{
+    string ContestId = 1;
+    string TeamName = 2;
+    bool IsPublic = 3;
+    repeated ContestEngineContestRegistrationTeamMemberGrpcModel Members = 4;
+}
+
+message ContestEngineUpdateContestTeamGrpcResponse{
+    oneof update_contest_team_result{
+        ContestEngineContestTeamGrpcModel Team = 1;
+        ContestEngineErrorGrpcModel Error = 2;
+    }
+}
+
+message ContestEngineUpdateContestRegistrationGrpcRequest{
+    string ContestId = 1;
+}
+
 message ContestEngineCancelRegistrationGrpcRequest{
     string UserId = 1;
     string ContestId = 2;
@@ -228,19 +310,19 @@ service ContestEngineGrpcService{
     rpc GetRegisterOpenContests(google.protobuf.Empty) returns (stream ContestEngineContestGrpcModel);
     rpc GetClientContests(google.protobuf.Empty) returns (stream ContestEngineContestGrpcModel);
 
-    rpc CreateContest(ContestEngineCreateContestGrpcRequest) returns (ContestEngineUpdateContestGrpcResponse);
-    rpc UpdateContest(ContestEngineCreateContestGrpcRequest) returns (ContestEngineUpdateContestGrpcResponse);
+    rpc CreateContest(ContestEngineCreateContestGrpcRequest) returns (ContestEngineCreateContestGrpcResponse);
+    rpc UpdateContest(ContestEngineUpdateContestGrpcRequest) returns (ContestEngineUpdateContestGrpcResponse);
 
-    rpc PublishContest(ContestEngineContestActionGrpcRequest) returns (ContestEngineUpdateContestGrpcResponse);
-    rpc CancelContest(ContestEngineContestActionGrpcRequest) returns (ContestEngineUpdateContestGrpcResponse);
+    rpc PublishContest(ContestEnginePublishContestGrpcRequest) returns (ContestEnginePublishContestGrpcResponse);
+    rpc CancelContest(ContestEngineCancelContestGrpcRequest) returns (ContestEngineCancelContestGrpcResponse);
     
     rpc GetContestRegistrations(ContestEngineGetContestRegistrationsGrpcRequest) returns (stream ContestEngineContestRegistrationGrpcModel);
-    rpc UpdateContestRegistration(ContestEngineGetContestRegistrationsGrpcRequest) returns (ContestEngineContestRegistrationGrpcModel);
+    rpc UpdateContestRegistration(ContestEngineUpdateContestRegistrationGrpcRequest) returns (ContestEngineContestRegistrationGrpcModel);
     rpc CancelContestRegistration(ContestEngineCancelRegistrationGrpcRequest) returns (ContestEngineContestRegistrationGrpcModel);
 
     rpc GetContestTeams(ContestEngineGetContestRegistrationsGrpcRequest) returns (stream ContestEngineContestTeamGrpcModel);
-    rpc CreateContestTeam(ContestEngineInsertOrUpdateContestTeamGrpcRequest) returns (ContestEngineInsertOrUpdateContestTeamGrpcResponse);
-    rpc UpdateContestTeam(ContestEngineInsertOrUpdateContestTeamGrpcRequest) returns (ContestEngineInsertOrUpdateContestTeamGrpcResponse);
+    rpc CreateContestTeam(ContestEngineCreateContestTeamGrpcRequest) returns (ContestEngineCreateContestTeamGrpcResponse);
+    rpc UpdateContestTeam(ContestEngineUpdateContestTeamGrpcRequest) returns (ContestEngineUpdateContestTeamGrpcResponse);
 
     rpc InsertOrReplaceContestDifficulty(ContestEngineContestDifficultyGrpcModel) returns (ContestEngineInsertOrReplaceContestDifficultyGrpcResponse);
     rpc InsertOrReplaceContestInstrumentGroup(ContestEngineContestInstrumentGroupGrpcModel) returns (ContestEngineInsertOrReplaceContestInstrumentGroupGrpcResponse);

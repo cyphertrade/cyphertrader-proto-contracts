@@ -87,6 +87,17 @@ message BrokerIntegrationProcessContestEndedGrpcResponse{
     }
 }
 
+message BrokerIntegrationProcessContestCanceledGrpcRequest{
+    string ContestId = 1;
+}
+
+message BrokerIntegrationProcessContestCanceledGrpcResponse{
+    oneof process_contest_canceled_result{
+        google.protobuf.Empty Success = 1;
+        BrokerIntegrationErrorsGrpcModel Errors = 2;
+    }
+}
+
 message BrokerIntegrationBrokerSettingsGrpcModel{
     string BrokerId = 1;
     string BrokerName = 2;
@@ -127,7 +138,7 @@ service BrokerIntegrationGrpcService{
     rpc GetContestAccountAutoLogin(BrokerIntegrationGetContestAccountAutoLoginGrpcRequest) returns (BrokerIntegrationGetContestAccountAutoLoginGrpcResponse);
     rpc ContestRegistrationCanceled(BrokerIntegrationContestRegistrationCancelGrpcRequest) returns (BrokerIntegrationRegisterContestAccountGrpcResponse);
 
-    rpc ProcessContestCanceled(BrokerIntegrationProcessContestEndedGrpcRequest) returns (BrokerIntegrationProcessContestEndedGrpcResponse);
+    rpc ProcessContestCanceled(BrokerIntegrationProcessContestCanceledGrpcRequest) returns (BrokerIntegrationProcessContestCanceledGrpcResponse);
     rpc ProcessContestEnded(BrokerIntegrationProcessContestEndedGrpcRequest) returns (BrokerIntegrationProcessContestEndedGrpcResponse);
 
     rpc Ping(google.protobuf.Empty) returns (google.protobuf.Empty);

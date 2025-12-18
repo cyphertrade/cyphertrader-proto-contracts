@@ -1,0 +1,52 @@
+syntax = "proto3";
+package broker_settings;
+import "google/protobuf/empty.proto";
+
+enum BrokeSettingsErrorType{
+    DifficultyNotFound = 0;
+    ContestInstrumentNotFound = 1;
+    
+}
+
+message BrokeSettingsErrorGrpcModel{
+    BrokeSettingsErrorType error_type = 1;
+    optional string message = 2;
+}
+
+
+message BrokeSettingsGrpcModel{
+    string BrokerId = 1;
+    string BrokerName = 2;
+    repeated BrokerContestDifficultyGrpcModel ContestSettings = 3;
+}
+
+message BrokerContestDifficultyGrpcModel{
+    string DifficultyId = 1;
+    double MinEquityRatio = 2;
+    map<string, BrokerIntegrationBrokerContestSettingsInstrumentGrpcModel> InstrumentSettings = 3;
+}
+
+message BrokerContestDifficultyInstrumentGrpcModel{
+    optional int32 BidPip = 1;
+    optional int32 AskPip = 2;
+    optional uint32 MinSpreadPip = 3;
+    optional uint32 MaxSpreadPip = 4;
+    repeated BrokerContestDifficultyInstrumentSwapGrpcModel Swaps = 5;
+}
+
+message BrokerContestDifficultyInstrumentSwapGrpcModel{
+    uint32 SwapPercent = 1;
+    uint64 SwapPeriodMin = 2;
+}
+
+message InsertOrUpdateBrokerSettingsGrpcResponse{
+    oneof insert_or_replace_broker_settings_result{
+        BrokeSettingsGrpcModel Settings = 1;
+        BrokeSettingsErrorGrpcModel Error = 2;
+    }
+}
+
+service BrokerSettingsGrpcService{
+    rpc InsertOrUpdateBrokerSettings(BrokeSettingsGrpcModel) returns (InsertOrUpdateBrokerSettingsGrpcResponse);
+    rpc Ping(google.protobuf.Empty) returns (google.protobuf.Empty);
+}

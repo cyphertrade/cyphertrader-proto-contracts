@@ -130,8 +130,6 @@ message BrokerIntegrationGetContestAccountAutoLoginGrpcResponse{
 
 
 service BrokerIntegrationGrpcService{
-    rpc InsertOrUpdateBrokerSettings(BrokerIntegrationBrokerSettingsGrpcModel) returns (BrokerIntegrationInsertOrReplaceBrokerSettingsGrpcResponse);
-
     rpc SetupContest(BrokerIntegrationSetupContestGrpcRequest) returns (BrokerIntegrationSetupContestGrpcResponse);
 
     rpc RegisterContestAccount(BrokerIntegrationRegisterContestAccountGrpcRequest) returns (BrokerIntegrationRegisterContestAccountGrpcResponse);

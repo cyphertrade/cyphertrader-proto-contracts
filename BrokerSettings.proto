@@ -32,6 +32,7 @@ message BrokerContestDifficultyInstrumentGrpcModel{
     optional uint32 MinSpreadPip = 3;
     optional uint32 MaxSpreadPip = 4;
     repeated BrokerContestDifficultyInstrumentSwapGrpcModel Swaps = 5;
+    optional double CommissionPerLot = 6;
 }
 
 message BrokerContestDifficultyInstrumentSwapGrpcModel{

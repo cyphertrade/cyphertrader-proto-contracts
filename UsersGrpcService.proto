@@ -113,7 +113,10 @@ message GetUserGrpcRequest{
 }
 
 message GetUserGrpcResponse{
-    optional UserDataGrpcModel UserData = 1;
+    oneof GetUserResult{
+        UserDataGrpcModel UserData = 1;
+        UsersGrpcError Error = 2;
+    }
 }
 
 service UsersGrpcService {

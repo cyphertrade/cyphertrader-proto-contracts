@@ -9,8 +9,8 @@ enum BrokeSettingsErrorType{
 }
 
 message BrokeSettingsErrorGrpcModel{
-    BrokeSettingsErrorType error_type = 1;
-    optional string message = 2;
+    BrokeSettingsErrorType ErrorType = 1;
+    optional string Message = 2;
 }
 
 
@@ -41,7 +41,7 @@ message BrokerContestDifficultyInstrumentSwapGrpcModel{
 }
 
 message InsertOrUpdateBrokerSettingsGrpcResponse{
-    oneof insert_or_replace_broker_settings_result{
+    oneof InsertOrReplaceBrokerSettingsResult{
         BrokeSettingsGrpcModel Settings = 1;
         BrokeSettingsErrorGrpcModel Error = 2;
     }

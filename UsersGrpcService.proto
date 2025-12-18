@@ -20,8 +20,8 @@ enum UsersGrpcErrorType {
 
 // Error response model
 message UsersGrpcError {
-    UsersGrpcErrorType error_type = 1;
-    optional string message = 2;
+    UsersGrpcErrorType ErrorType = 1;
+    optional string Message = 2;
 }
 
 message UserGrpcModel{
@@ -47,7 +47,7 @@ message RegisterUserGrpcRequest {
 }
 
 message RegisterUserGrpcResponse{
-    oneof register_user_result{
+    oneof RegisterUserResult{
         UserGrpcModel User = 1;
         UsersGrpcError Error = 2;
     }
@@ -59,14 +59,14 @@ message UpdateUserGrpcRequest{
 }
 
 message UpdateUserGrpcResponse{
-    oneof update_user_result{
+    oneof UpdateUserResult{
         UserGrpcModel User = 1;
         UsersGrpcError Error = 2;
     }
 }
 
 message InsertOrUpdateUserGroupGrpcResponse{
-    oneof update_group_result{
+    oneof UpdateGroupResult{
         UserGroupGrpcModel Group = 1;
         UsersGrpcError Error = 2;
     }
@@ -78,7 +78,7 @@ message UpdateUserSourcesGrpcRequest{
 }
 
 message UpdateUserSourcesGrpcResponse{
-    oneof update_user_sources_result{
+    oneof UpdateUserSourcesResult{
         UserDataGrpcModel UserData = 1;
         UsersGrpcError Error = 2;
     }
@@ -90,7 +90,7 @@ message VerifyUserCredentialsGrpcRequest{
 }
 
 message VerifyUserCredentialsGrpcResponse{
-    oneof verify_user_credentials_result{
+    oneof VerifyUserCredentialsResult{
         UserGrpcModel User = 1;
         UsersGrpcError Error = 2;
     }

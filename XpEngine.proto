@@ -14,8 +14,8 @@ enum XpEngineGrpcErrorType {
 }
 
 message XpEngineGrpcError {
-    XpEngineGrpcErrorType error_type = 1;
-    optional string message = 2;
+    XpEngineGrpcErrorType ErrorType = 1;
+    optional string Message = 2;
 }
 
 enum XpEngineXpGrpcType {
@@ -33,73 +33,74 @@ enum XpEngineXpTransactionSourceGrpc {
 // ========== Models ==========
 // XP Progression Settings model
 message XpEngineXpProgressionSettingsGrpcModel {
-    string name = 1;
-    string base = 2;  // base formula expression
-    map<uint32, string> progressive = 3;  // progressive formula settings
-    google.protobuf.Timestamp created_at = 4;
-    google.protobuf.Timestamp updated_at = 5;
+    string Name = 1;
+    string Base = 2;  // base formula expression
+    map<uint32, string> Progressive = 3;  // progressive formula settings
+    google.protobuf.Timestamp CreatedAt = 4;
+    google.protobuf.Timestamp UpdatedAt = 5;
 }
 
 message XpEngineUserXpStateGrpcModel {
-    string user_id = 1;
-    XpEngineXpGrpcType xp_type = 2;
-    uint32 current_level = 3;
-    uint64 current_level_xp = 4;
-    google.protobuf.Timestamp last_update_date = 5;
-    google.protobuf.Timestamp create_date = 6;
-    string last_update_process_id = 7;
-    string create_process_id = 8;
+    string UserId = 1;
+    XpEngineXpGrpcType XpType = 2;
+    uint32 CurrentLevel = 3;
+    uint64 CurrentLevelXp = 4;
+    google.protobuf.Timestamp LastUpdateDate = 5;
+    google.protobuf.Timestamp CreateDate = 6;
+    string LastUpdateProcessId = 7;
+    string CreateProcessId = 8;
 }
 
 message XpEngineUserXpStateTransactionGrpcModel {
-    string id = 1;
-    XpEngineXpGrpcType xp_type = 2;
-    int64 xp_delta = 3;
-    string process_id = 4;
-    google.protobuf.Timestamp date = 5;
-    optional string reference_operation_id = 6;
-    optional string comment = 7;
-    XpEngineXpTransactionSourceGrpc source = 8;
+    string Id = 1;
+    XpEngineXpGrpcType XpType = 2;
+    int64 XpDelta = 3;
+    string ProcessId = 4;
+    google.protobuf.Timestamp Date = 5;
+    optional string ReferenceOperationId = 6;
+    optional string Comment = 7;
+    XpEngineXpTransactionSourceGrpc Source = 8;
+    string UserId = 9;
 }
 
 message XpEngineInsertOrReplaceProgressionSettingsResponse{
-    oneof insert_or_replace_progression_result{
-        XpEngineXpProgressionSettingsGrpcModel progression = 1;
-        XpEngineGrpcError error = 2;
+    oneof InsertOrReplaceProgressionResult{
+        XpEngineXpProgressionSettingsGrpcModel Progression = 1;
+        XpEngineGrpcError Error = 2;
 
     }
 }
 
 // ========== Request-Response Pairs ==========
 message XpEngineGetUserXpStateGrpcRequest {
-    string user_id = 1;
-    XpEngineXpGrpcType xp_type = 2;
+    string UserId = 1;
+    XpEngineXpGrpcType XpType = 2;
 }
 
 message XpEngineGetUserXpStateGrpcResponse {
-    oneof get_user_xp_state_result {
-        XpEngineUserXpStateGrpcModel user_xp_state = 1;
-        XpEngineGrpcError error = 2;
+    oneof GetUserXpStateResult {
+        XpEngineUserXpStateGrpcModel UserXpState = 1;
+        XpEngineGrpcError Error = 2;
     }
 }
 
 message XpEngineChangeUserXpStateGrpcRequest {
-    string user_id = 1;
-    XpEngineXpGrpcType xp_type = 2;
-    int64 delta = 3;
-    string process_id = 4;
+    string UserId = 1;
+    XpEngineXpGrpcType XpType = 2;
+    int64 Delta = 3;
+    string ProcessId = 4;
 }
 
 message XpEngineChangeUserXpStateGrpcResponse {
-    oneof change_user_xp_state_result {
-        XpEngineChangeUserXpStateSuccessGrpc success = 1;
-        XpEngineGrpcError error = 2;
+    oneof ChangeUserXpStateResult {
+        XpEngineChangeUserXpStateSuccessGrpc Success = 1;
+        XpEngineGrpcError Error = 2;
     }
 }
 
 message XpEngineChangeUserXpStateSuccessGrpc {
-    XpEngineUserXpStateGrpcModel new_state = 1;
-    XpEngineUserXpStateTransactionGrpcModel transaction = 2;
+    XpEngineUserXpStateGrpcModel NewState = 1;
+    XpEngineUserXpStateTransactionGrpcModel Transaction = 2;
 }
 
 service XpEngineGrpcService{

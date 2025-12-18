@@ -90,28 +90,28 @@ message CreatePartnerCampaignGrpcRequest{
 }
 
 message CreatePartnerCampaignGrpcResponse{
-    oneof campaign_result{
+    oneof CampaignResult{
         PartnerCampaignGrpcModel Campaign = 1;
         PartnerError Error = 2;
     }
 }
 
 message InsertOrUpdatePartnerProfileGrpcResponse{
-    oneof profile_result{
+    oneof ProfileResult{
         PartnerProfileGrpcModel Profile = 1;
         PartnerError Error = 2;
     }
 }
 
 message InsertOrUpdatePartnerCampaignSettingsGrpcResponse{
-    oneof campaign_settings_result{
+    oneof CampaignSettingsResult{
         PartnerCampaignSettingsGrpcModel CampaignSettings = 1;
         PartnerError Error = 2;
     }
 }
 
 message InsertOrUpdatePartnerCommissionSettingsGrpcResponse{
-    oneof commission_settings_result{
+    oneof CommissionSettingsResult{
         PartnerCommissionSettingsGrpcModel CommissionSettings = 1;
         PartnerError Error = 2;
     }
@@ -125,7 +125,7 @@ message UpdatePartnerCampaignGrpcRequest{
 }
 
 message UpdatePartnerCampaignGrpcResponse{
-    oneof campaign_result{
+    oneof CampaignResult{
         PartnerCampaignGrpcModel Campaign = 1;
         PartnerError Error = 2;
     }

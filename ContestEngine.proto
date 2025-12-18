@@ -15,8 +15,8 @@ enum ContestEngineContestRegistrationStatus{
 
 
 message ContestEngineErrorGrpcModel{
-    ContestEngineErrorType error_type = 1;
-    optional string message = 2;
+    ContestEngineErrorType ErrorType = 1;
+    optional string Message = 2;
 }
 
 
@@ -117,7 +117,7 @@ message ContestEngineCreateContestGrpcRequest{
 }
 
 message ContestEngineUpdateContestGrpcResponse{
-    oneof create_contest_result{
+    oneof CreateContestResult{
         ContestEngineContestGrpcModel Contest = 1;
         ContestEngineErrorGrpcModel Error = 2;
     }
@@ -147,7 +147,7 @@ message ContestEngineInsertOrUpdateContestTeamGrpcRequest{
 }
 
 message ContestEngineInsertOrUpdateContestTeamGrpcResponse{
-    oneof create_contest_team_result{
+    oneof CreateContestTeamResult{
         ContestEngineContestTeamGrpcModel Team = 1;
         ContestEngineErrorGrpcModel Error = 2;
     }
@@ -173,7 +173,7 @@ message ContestEngineUpdateContestGrpcRequest{
 }
 
 message ContestEngineCreateContestGrpcResponse{
-    oneof create_contest_result{
+    oneof CreateContestResult{
         ContestEngineContestGrpcModel Contest = 1;
         ContestEngineErrorGrpcModel Error = 2;
     }
@@ -185,7 +185,7 @@ message ContestEnginePublishContestGrpcRequest{
 }
 
 message ContestEnginePublishContestGrpcResponse{
-    oneof publish_contest_result{
+    oneof PublishContestResult{
         ContestEngineContestGrpcModel Contest = 1;
         ContestEngineErrorGrpcModel Error = 2;
     }
@@ -197,7 +197,7 @@ message ContestEngineCancelContestGrpcRequest{
 }
 
 message ContestEngineCancelContestGrpcResponse{
-    oneof cancel_contest_result{
+    oneof CancelContestResult{
         ContestEngineContestGrpcModel Contest = 1;
         ContestEngineErrorGrpcModel Error = 2;
     }
@@ -211,7 +211,7 @@ message ContestEngineCreateContestTeamGrpcRequest{
 }
 
 message ContestEngineCreateContestTeamGrpcResponse{
-    oneof create_contest_team_result{
+    oneof CreateContestTeamResult{
         ContestEngineContestTeamGrpcModel Team = 1;
         ContestEngineErrorGrpcModel Error = 2;
     }
@@ -225,7 +225,7 @@ message ContestEngineUpdateContestTeamGrpcRequest{
 }
 
 message ContestEngineUpdateContestTeamGrpcResponse{
-    oneof update_contest_team_result{
+    oneof UpdateContestTeamResult{
         ContestEngineContestTeamGrpcModel Team = 1;
         ContestEngineErrorGrpcModel Error = 2;
     }
@@ -259,7 +259,7 @@ message ContestEngineContestDifficultyGrpcModel{
 }
 
 message ContestEngineInsertOrReplaceContestDifficultyGrpcResponse{
-    oneof insert_or_replace_contest_difficulty_result{
+    oneof InsertOrReplaceContestDifficultyResult{
         ContestEngineContestDifficultyGrpcModel Difficulty = 1;
         ContestEngineErrorGrpcModel Error = 2;
     }
@@ -271,7 +271,7 @@ message ContestEngineContestInstrumentGroupGrpcModel{
 }
 
 message ContestEngineInsertOrReplaceContestInstrumentGroupGrpcResponse{
-    oneof insert_or_replace_contest_instrument_group_result{
+    oneof InsertOrReplaceContestInstrumentGroupResult{
         ContestEngineContestInstrumentGroupGrpcModel InstrumentGroup = 1;
         ContestEngineErrorGrpcModel Error = 2;
     }
@@ -284,7 +284,7 @@ message ContestEngineContestInstrumentGrpcModel{
 }
 
 message ContestEngineInsertOrReplaceContestInstrumentGrpcResponse{
-    oneof insert_or_replace_contest_instrument_result{
+    oneof InsertOrReplaceContestInstrumentResult{
         ContestEngineContestInstrumentGrpcModel Instrument = 1;
         ContestEngineErrorGrpcModel Error = 2;
     }
@@ -312,7 +312,7 @@ message ContestEngineContestSettingsGrpcModel{
 }
 
 message ContestEngineInsertOrReplaceContestSettingsGrpcResponse{
-    oneof insert_or_replace_contest_settings_result{
+    oneof InsertOrReplaceContestSettingsResult{
         ContestEngineContestSettingsGrpcModel Settings = 1;
         ContestEngineErrorGrpcModel Error = 2;
     }

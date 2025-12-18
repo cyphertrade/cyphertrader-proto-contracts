@@ -54,7 +54,7 @@ message UpdateClientWalletSuccessResult{
 }
 
 message UpdateClientWalletResponse{
-    oneof update_client_wallet_result{
+    oneof UpdateClientWalletResult{
         UpdateClientWalletSuccessResult SuccessResult = 1;
         WalletGrpcError Error = 2;
     }
@@ -66,7 +66,7 @@ message CreateWalletGrpcRequest{
 }
 
 message CreateWalletGrpcResponse{
-    oneof update_client_wallet_result{
+    oneof UpdateClientWalletResult{
         WalletGrpcModel Wallet = 1;
         WalletGrpcError Error = 2;
     }

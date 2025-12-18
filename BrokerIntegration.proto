@@ -17,8 +17,8 @@ enum BrokerIntegrationErrorType{
 }
 
 message BrokerIntegrationErrorGrpcModel{
-    BrokerIntegrationErrorType error_type = 1;
-    optional string message = 2;
+    BrokerIntegrationErrorType ErrorType = 1;
+    optional string Message = 2;
 }
 
 message BrokerIntegrationErrorsGrpcModel{
@@ -58,7 +58,7 @@ message BrokerIntegrationSetupContestGrpcRequest{
 }
 
 message BrokerIntegrationSetupContestGrpcResponse{
-    oneof setup_contest_result{
+    oneof SetupContestResult{
         string GroupName = 1;
         BrokerIntegrationErrorsGrpcModel Errors = 2;
     }
@@ -70,7 +70,7 @@ message BrokerIntegrationRegisterContestAccountGrpcRequest{
 }
 
 message BrokerIntegrationRegisterContestAccountGrpcResponse{
-    oneof register_contest_account_result{
+    oneof RegisterContestAccountResult{
         string AccountId = 1;
         BrokerIntegrationErrorsGrpcModel Errors = 2;
     }
@@ -81,7 +81,7 @@ message BrokerIntegrationProcessContestEndedGrpcRequest{
 }
 
 message BrokerIntegrationProcessContestEndedGrpcResponse{
-    oneof process_contest_ended_result{
+    oneof ProcessContestEndedResult{
         google.protobuf.Empty Success = 1;
         BrokerIntegrationErrorsGrpcModel Errors = 2;
     }
@@ -92,7 +92,7 @@ message BrokerIntegrationProcessContestCanceledGrpcRequest{
 }
 
 message BrokerIntegrationProcessContestCanceledGrpcResponse{
-    oneof process_contest_canceled_result{
+    oneof ProcessContestCanceledResult{
         google.protobuf.Empty Success = 1;
         BrokerIntegrationErrorsGrpcModel Errors = 2;
     }
@@ -105,7 +105,7 @@ message BrokerIntegrationBrokerSettingsGrpcModel{
 }
 
 message BrokerIntegrationInsertOrReplaceBrokerSettingsGrpcResponse{
-    oneof insert_or_replace_broker_settings_result{
+    oneof InsertOrReplaceBrokerSettingsResult{
         BrokerIntegrationBrokerSettingsGrpcModel Settings = 1;
         BrokerIntegrationErrorsGrpcModel Errors = 2;
     }
@@ -122,7 +122,7 @@ message BrokerIntegrationGetContestAccountAutoLoginGrpcRequest{
 }
 
 message BrokerIntegrationGetContestAccountAutoLoginGrpcResponse{
-    oneof redirect_link{
+    oneof RedirectLink{
         string Url = 1;
         BrokerIntegrationErrorsGrpcModel Errors = 2;
     }

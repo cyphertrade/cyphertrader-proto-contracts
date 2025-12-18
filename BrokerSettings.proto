@@ -23,7 +23,7 @@ message BrokeSettingsGrpcModel{
 message BrokerContestDifficultyGrpcModel{
     string DifficultyId = 1;
     double MinEquityRatio = 2;
-    map<string, BrokerIntegrationBrokerContestSettingsInstrumentGrpcModel> InstrumentSettings = 3;
+    map<string, BrokerContestDifficultyInstrumentGrpcModel> InstrumentSettings = 3;
 }
 
 message BrokerContestDifficultyInstrumentGrpcModel{

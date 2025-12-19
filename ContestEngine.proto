@@ -19,6 +19,10 @@ message ContestEngineErrorGrpcModel{
     optional string Message = 2;
 }
 
+message ContestEngineErrorsGrpcModel{
+    repeated ContestEngineErrorGrpcModel Errors = 1;
+}
+
 
 enum ContestEngineContestGrpcStatus{
     Draft = 0;
@@ -119,7 +123,7 @@ message ContestEngineCreateContestGrpcRequest{
 message ContestEngineUpdateContestGrpcResponse{
     oneof CreateContestResult{
         ContestEngineContestGrpcModel Contest = 1;
-        ContestEngineErrorGrpcModel Error = 2;
+        ContestEngineErrorsGrpcModel Error = 2;
     }
 }
 
@@ -175,7 +179,7 @@ message ContestEngineUpdateContestGrpcRequest{
 message ContestEngineCreateContestGrpcResponse{
     oneof CreateContestResult{
         ContestEngineContestGrpcModel Contest = 1;
-        ContestEngineErrorGrpcModel Error = 2;
+        ContestEngineErrorsGrpcModel Error = 2;
     }
 }
 
@@ -187,7 +191,7 @@ message ContestEnginePublishContestGrpcRequest{
 message ContestEnginePublishContestGrpcResponse{
     oneof PublishContestResult{
         ContestEngineContestGrpcModel Contest = 1;
-        ContestEngineErrorGrpcModel Error = 2;
+        ContestEngineErrorsGrpcModel Error = 2;
     }
 }
 

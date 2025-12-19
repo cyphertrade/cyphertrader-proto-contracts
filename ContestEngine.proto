@@ -3,9 +3,27 @@ package contest_engine;
 import "google/protobuf/empty.proto";
 
 enum ContestEngineErrorType{
-    ContestNotFound = 0;
-    DatabaseError = 1;
-    ValidationError = 2;
+    DatabaseError = 0;
+    NoSqlError = 1;
+    EvalExpError = 2;
+    ContestValidationInvalidCreatorCommission = 3;
+    ContestValidationMinParticipantsTooLow = 4;
+    ContestValidationMinParticipantsTooHigh = 5;
+    ContestValidationMaxParticipantsTooLow = 6;
+    ContestValidationMaxParticipantsTooHigh = 7;
+    ContestValidationMinParticipantsGreaterThanMax = 8;
+    ContestValidationInvalidLeverage = 9;
+    ContestValidationInitialBalanceTooLow = 10;
+    ContestValidationInitialBalanceTooHigh = 11;
+    ContestValidationDurationTooLow = 12;
+    ContestValidationDurationTooHigh = 13;
+    ContestValidationBuyInTooLow = 14;
+    ContestValidationBuyInTooHigh = 15;
+    ContestValidationInvalidAllowedAsset = 16;
+    ContestValidationInvalidAllowedDifficulty = 17;
+    ContestValidationInvalidBroker = 18;
+    ContestValidationInitialPrizePoolTooHigh = 19;
+    ContestValidationMinTeamSizeGreaterThanMax = 20;
 }
 
 enum ContestEngineContestRegistrationStatus{

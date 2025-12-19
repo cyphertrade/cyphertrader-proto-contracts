@@ -114,6 +114,7 @@ message ContestEngineCreateContestGrpcRequest{
     string Broker = 14;
     optional uint64 InitialPrizePool = 15;
     bool AutoStartWhenFull = 16;
+    uint64 ContestStartDateTimeUnixMs = 17;
 }
 
 message ContestEngineUpdateContestGrpcResponse{

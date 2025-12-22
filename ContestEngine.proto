@@ -24,6 +24,10 @@ enum ContestEngineErrorType{
     ContestValidationInvalidBroker = 18;
     ContestValidationInitialPrizePoolTooHigh = 19;
     ContestValidationMinTeamSizeGreaterThanMax = 20;
+    InstrumentGroupNotFound = 21;
+    BrokerNotFound = 22;
+    InstrumentNotFound = 23;
+    DifficultyNotFound = 24;
 }
 
 enum ContestEngineContestRegistrationStatus{

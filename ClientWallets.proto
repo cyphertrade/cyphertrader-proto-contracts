@@ -10,6 +10,7 @@ enum WalletTransactionGrpcReason {
     WITHDRAWAL = 1;
     REBAIT = 2;
     CORRECTION = 3;
+    CONTEST = 4;
 }
 
 enum WalletGrpcError{

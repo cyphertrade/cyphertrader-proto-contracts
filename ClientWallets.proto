@@ -74,8 +74,24 @@ message CreateWalletGrpcResponse{
     }
 }
 
+message GetClientWalletsGrpcRequest{
+    string UserId = 1;
+}
+
+message GetClientWalletsSuccessResult{
+    repeated WalletGrpcModel Wallets = 1;
+}
+
+message GetClientWalletsGrpcResponse{
+    oneof GetClientWalletsResult{
+        GetClientWalletsSuccessResult SuccessResult = 1;
+        WalletGrpcError Error = 2;
+    }
+}
+
 service ClientWalletsGrpcService{
     rpc CreateWallet(CreateWalletGrpcRequest) returns (CreateWalletGrpcResponse);
     rpc UpdateClientWallet(UpdateClientWalletGrpcRequest) returns (UpdateClientWalletResponse);
+    rpc GetClientWallets(GetClientWalletsGrpcRequest) returns (GetClientWalletsGrpcResponse);
     rpc Ping(google.protobuf.Empty) returns (google.protobuf.Empty);
 }

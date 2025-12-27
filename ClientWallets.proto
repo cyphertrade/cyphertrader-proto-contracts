@@ -43,7 +43,7 @@ message WalletGrpcModel {
 
 message UpdateClientWalletGrpcRequest{
     string WalletId = 1;
-    uint64 Delta = 2;
+    int64 Delta = 2;
     WalletTransactionGrpcReason Reason = 3;
     string Comment = 4;
     string ProcessId = 5;

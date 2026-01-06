@@ -7,6 +7,7 @@ import "google/protobuf/empty.proto";
 enum TraderSettingsGrpcError {
     VALIDATION_ERROR = 0;
     CONTEST_SETTINGS_NOT_FOUND = 1;
+    DATABASE_ERROR = 2;
 }
 
 message TraderProfileContestSettingsGrpcModel {

@@ -1,8 +1,7 @@
 syntax = "proto3";
-
 package trader_settings;
-
 import "google/protobuf/empty.proto";
+import "google/protobuf/duration.proto";
 
 enum TraderSettingsGrpcError {
     VALIDATION_ERROR = 0;
@@ -21,8 +20,8 @@ message TraderProfileContestSettingsGrpcModel {
     string max_leverage = 8;
     string min_initial_balance = 9;
     string max_initial_balance = 10;
-    string min_contest_duration = 11;
-    string max_contest_duration = 12;
+    google.protobuf.Duration min_contest_duration = 11;
+    google.protobuf.Duration max_contest_duration = 12;
     string min_contest_buy_in = 13;
     string max_contest_buy_in = 14;
     repeated string allowed_difficulties = 15;
@@ -32,10 +31,10 @@ message TraderProfileContestSettingsGrpcModel {
 }
 
 message TraderProfileGrpcRequestModel {
-  string id = 1;
-  string name = 2;
-  optional string base_contest_settings = 3;
-  map<uint32, string> progressive_contest_settings = 4;
+    string id = 1;
+    string name = 2;
+    optional string base_contest_settings = 3;
+    map<uint32, string> progressive_contest_settings = 4;
 }
 
 message TraderProfileGrpcResponseModel {
@@ -43,7 +42,7 @@ message TraderProfileGrpcResponseModel {
     string name = 2;
     optional TraderProfileContestSettingsGrpcModel base_contest_settings = 3;
     map<uint32, TraderProfileContestSettingsGrpcModel> progressive_contest_settings = 4;
-  }
+}
 
 message InsertOrReplaceTraderProfileGrpcResponse {
     oneof InsertOrReplaceTraderProfileResult {

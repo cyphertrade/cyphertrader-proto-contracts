@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package trader_settings;
+
+import "google/protobuf/empty.proto";
+
+enum TraderSettingsGrpcError {
+    VALIDATION_ERROR = 0;
+    CONTEST_SETTINGS_NOT_FOUND = 1;
+}
+
+message TraderProfileGrpcModel {
+  string id = 1;
+  string name = 2;
+  optional string base_contest_settings = 3;
+  map<uint32, string> progressive_contest_settings = 4;
+}
+
+message InsertOrReplaceTraderProfileGrpcResponse {
+    oneof InsertOrReplaceTraderProfileResult {
+        TraderProfileGrpcModel TraderProfile = 1;
+        TraderSettingsGrpcError Error = 2;
+    }
+}
+
+service TraderSettingsGrpcService {
+    rpc InsertOrReplaceTraderProfile(TraderProfileGrpcModel) returns (InsertOrReplaceTraderProfileGrpcResponse);
+    rpc Ping(google.protobuf.Empty) returns (google.protobuf.Empty);
+}

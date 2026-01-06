@@ -9,21 +9,49 @@ enum TraderSettingsGrpcError {
     CONTEST_SETTINGS_NOT_FOUND = 1;
 }
 
-message TraderProfileGrpcModel {
+message TraderProfileContestSettingsGrpcModel {
+    string name = 1;
+    string platform_commission = 2;
+    string min_creator_commission_percent = 3;
+    string max_creator_commission_percent = 4;
+    string min_contest_participants = 5;
+    string max_contest_participants = 6;
+    string min_leverage = 7;
+    string max_leverage = 8;
+    string min_initial_balance = 9;
+    string max_initial_balance = 10;
+    string min_contest_duration = 11;
+    string max_contest_duration = 12;
+    string min_contest_buy_in = 13;
+    string max_contest_buy_in = 14;
+    repeated string allowed_difficulties = 15;
+    repeated string allowed_brokers = 16;
+    repeated string allowed_instruments = 17;
+    optional uint64 max_initial_prize_pool = 18;
+}
+
+message TraderProfileGrpcRequestModel {
   string id = 1;
   string name = 2;
   optional string base_contest_settings = 3;
   map<uint32, string> progressive_contest_settings = 4;
 }
 
+message TraderProfileGrpcResponseModel {
+    string id = 1;
+    string name = 2;
+    optional TraderProfileContestSettingsGrpcModel base_contest_settings = 3;
+    map<uint32, TraderProfileContestSettingsGrpcModel> progressive_contest_settings = 4;
+  }
+
 message InsertOrReplaceTraderProfileGrpcResponse {
     oneof InsertOrReplaceTraderProfileResult {
-        TraderProfileGrpcModel TraderProfile = 1;
+        TraderProfileGrpcResponseModel TraderProfile = 1;
         TraderSettingsGrpcError Error = 2;
     }
 }
 
 service TraderSettingsGrpcService {
-    rpc InsertOrReplaceTraderProfile(TraderProfileGrpcModel) returns (InsertOrReplaceTraderProfileGrpcResponse);
+    rpc InsertOrReplaceTraderProfile(TraderProfileGrpcRequestModel) returns (InsertOrReplaceTraderProfileGrpcResponse);
     rpc Ping(google.protobuf.Empty) returns (google.protobuf.Empty);
 }

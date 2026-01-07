@@ -82,6 +82,7 @@ message BrokerIntegrationRegisterContestAccountGrpcResponse{
 
 message BrokerIntegrationProcessContestEndedGrpcRequest{
     string ContestId = 1;
+    string DifficultyId = 2;
 }
 
 message BrokerIntegrationProcessContestEndedGrpcResponse{
@@ -93,6 +94,7 @@ message BrokerIntegrationProcessContestEndedGrpcResponse{
 
 message BrokerIntegrationProcessContestCanceledGrpcRequest{
     string ContestId = 1;
+    string DifficultyId = 2;
 }
 
 message BrokerIntegrationProcessContestCanceledGrpcResponse{
@@ -118,6 +120,7 @@ message BrokerIntegrationInsertOrReplaceBrokerSettingsGrpcResponse{
 message BrokerIntegrationContestRegistrationCancelGrpcRequest{
     string ContestId = 1;
     string UserId = 2;
+    string DifficultyId = 3;
 }
 
 message BrokerIntegrationGetContestAccountAutoLoginGrpcRequest{

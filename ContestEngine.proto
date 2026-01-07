@@ -1,303 +1,411 @@
 syntax = "proto3";
 package contest_engine;
+
 import "google/protobuf/empty.proto";
 
-enum ContestEngineErrorType{
-    DatabaseError = 0;
-    NoSqlError = 1;
-    EvalExpError = 2;
-    ContestValidationInvalidCreatorCommission = 3;
-    ContestValidationMinParticipantsTooLow = 4;
-    ContestValidationMinParticipantsTooHigh = 5;
-    ContestValidationMaxParticipantsTooLow = 6;
-    ContestValidationMaxParticipantsTooHigh = 7;
-    ContestValidationMinParticipantsGreaterThanMax = 8;
-    ContestValidationInvalidLeverage = 9;
-    ContestValidationInitialBalanceTooLow = 10;
-    ContestValidationInitialBalanceTooHigh = 11;
-    ContestValidationDurationTooLow = 12;
-    ContestValidationDurationTooHigh = 13;
-    ContestValidationBuyInTooLow = 14;
-    ContestValidationBuyInTooHigh = 15;
-    ContestValidationInvalidAllowedAsset = 16;
-    ContestValidationInvalidAllowedDifficulty = 17;
-    ContestValidationInvalidBroker = 18;
-    ContestValidationInitialPrizePoolTooHigh = 19;
-    ContestValidationMinTeamSizeGreaterThanMax = 20;
-    InstrumentGroupNotFound = 21;
-    BrokerNotFound = 22;
-    InstrumentNotFound = 23;
-    DifficultyNotFound = 24;
+enum ContestEngineErrorType {
+  DatabaseError = 0;
+  NoSqlError = 1;
+  EvalExpError = 2;
+
+  ContestValidationInvalidCreatorCommission = 3;
+  ContestValidationMinParticipantsTooLow = 4;
+  ContestValidationMinParticipantsTooHigh = 5;
+  ContestValidationMaxParticipantsTooLow = 6;
+  ContestValidationMaxParticipantsTooHigh = 7;
+  ContestValidationMinParticipantsGreaterThanMax = 8;
+  ContestValidationInvalidLeverage = 9;
+  ContestValidationInitialBalanceTooLow = 10;
+  ContestValidationInitialBalanceTooHigh = 11;
+  ContestValidationDurationTooLow = 12;
+  ContestValidationDurationTooHigh = 13;
+  ContestValidationBuyInTooLow = 14;
+  ContestValidationBuyInTooHigh = 15;
+  ContestValidationInvalidAllowedAsset = 16;
+  ContestValidationInvalidAllowedDifficulty = 17;
+  ContestValidationInvalidBroker = 18;
+  ContestValidationInitialPrizePoolTooHigh = 19;
+  ContestValidationMinTeamSizeGreaterThanMax = 20;
+
+  InstrumentGroupNotFound = 21;
+  BrokerNotFound = 22;
+  InstrumentNotFound = 23;
+  DifficultyNotFound = 24;
+
+  // Registration / start rules
+  ContestAlreadyStarted = 25;
+  ContestRegistrationCancellationNotAllowed = 26;
+  ContestRegistrationNotFound = 27;
 }
 
-enum ContestEngineContestRegistrationStatus{
-    Registered = 0;
-    Canceled = 1;
+enum ContestEngineContestRegistrationStatus {
+  Registered = 0;
+  Canceled = 1;
 }
 
-
-message ContestEngineErrorGrpcModel{
-    ContestEngineErrorType ErrorType = 1;
-    optional string Message = 2;
+message ContestEngineErrorGrpcModel {
+  ContestEngineErrorType ErrorType = 1;
+  optional string Message = 2;
 }
 
-message ContestEngineErrorsGrpcModel{
-    repeated ContestEngineErrorGrpcModel Errors = 1;
+message ContestEngineErrorsGrpcModel {
+  repeated ContestEngineErrorGrpcModel Errors = 1;
 }
 
-
-enum ContestEngineContestGrpcStatus{
-    Draft = 0;
-    RegistrationOpen = 1;
-    Active = 2;
-    ContestCanceled = 3;
-    Failed = 4;
+enum ContestEngineContestGrpcStatus {
+  Draft = 0;
+  RegistrationOpen = 1;
+  Active = 2;
+  ContestCanceled = 3;
+  Failed = 4;
 }
 
 message ContestEngineContestGrpcModel {
-    string Id = 1;
-    string Name = 2;
-    string CreatorUserId = 3;
+  string Id = 1;
+  string Name = 2;
+  string CreatorUserId = 3;
 
-    double PlatformCommissionPercent = 4;
-    double CreatorCommissionPercent = 5;
+  double PlatformCommissionPercent = 4;
+  double CreatorCommissionPercent = 5;
 
-    uint32 MinParticipants = 6;
-    uint32 MaxParticipants = 7;
+  uint32 MinParticipants = 6;
+  uint32 MaxParticipants = 7;
 
-    double ContestLeverage = 8;
-    double ContestInitialBalance = 9;
+  double ContestLeverage = 8;
+  double ContestInitialBalance = 9;
 
-    uint32 ContestDurationMin = 10;
-    optional uint64 BuyIn = 11;
+  uint32 ContestDurationMin = 10;
+  optional uint64 BuyIn = 11;
 
-    repeated string AllowedAssets = 12;
-    repeated string AllowedDifficulties = 13;
+  repeated string AllowedAssets = 12;
+  repeated string AllowedDifficulties = 13;
 
-    string Broker = 14;
-    optional uint64 InitialPrizePool = 15;
+  string Broker = 14;
+  optional uint64 InitialPrizePool = 15;
 
-    uint64 ContestStartDateTimeUnixMs = 16;
-    ContestEngineContestGrpcStatus Status = 17;
-    
-    optional uint32 MinTeamSize = 18;
-    optional uint32 MaxTeamSize = 19;
-    
-    bool FillInstantStart = 20;
+  uint64 ContestStartDateTimeUnixMs = 16;
+  ContestEngineContestGrpcStatus Status = 17;
+
+  optional uint32 MinTeamSize = 18;
+  optional uint32 MaxTeamSize = 19;
+
+  // unified naming with request (was FillInstantStart)
+  bool AutoStartWhenFull = 20;
 }
 
+message ContestEngineContestRegistrationGrpcModel {
+  string UserId = 1;
+  ContestEngineContestAccountGrpcModel ContestAccount = 2; // can be omitted pre-start if you want
+  ContestEngineContestRegistrationStatus Status = 3;
 
-message ContestEngineContestRegistrationGrpcModel{
-    string UserId = 1;
-    ContestEngineContestAccountGrpcModel ContestAccount = 2;
-    ContestEngineContestRegistrationStatus Status = 3;
+  // extra audit fields (optional but useful)
+  optional uint64 JoinedAtUnixMs = 4;
+  optional uint64 CanceledAtUnixMs = 5;
 }
 
-message ContestEngineContestAccountGrpcModel{
-    string Id = 1;
-    string ContestId = 2;
-    string UserId = 3;
-    double Balance = 4;
-    double Equity = 5;
-    double Margin = 6;
-    double FreeMargin = 7;
+message ContestEngineContestAccountGrpcModel {
+  string Id = 1;
+  string ContestId = 2;
+  string UserId = 3;
+  double Balance = 4;
+  double Equity = 5;
+  double Margin = 6;
+  double FreeMargin = 7;
 }
 
-message ContestEngineCreateContestGrpcRequest{
-    string UserId = 1;
-    string Name = 2;
-    double CreatorCommission = 3;
-    double MinParticipants = 4;
-    double MaxParticipants = 5;
+message ContestEngineCreateContestGrpcRequest {
+  string UserId = 1;
+  string Name = 2;
+  double CreatorCommission = 3;
 
-    optional uint32 MinTeamSize = 6;
-    optional uint32 MaxTeamSize = 7;
+  // FIX: counts should be integers
+  uint32 MinParticipants = 4;
+  uint32 MaxParticipants = 5;
 
-    double ContestLeverage = 8;
-    double ContestInitialBalance = 9;
+  optional uint32 MinTeamSize = 6;
+  optional uint32 MaxTeamSize = 7;
 
-    uint32 ContestDurationMinutes = 10;
+  double ContestLeverage = 8;
+  double ContestInitialBalance = 9;
 
-    optional uint64 BuyIn = 11;
-    repeated string AllowedAssets = 12;
-    repeated string AllowedDifficulties = 13;
-    string Broker = 14;
-    optional uint64 InitialPrizePool = 15;
-    bool AutoStartWhenFull = 16;
-    uint64 ContestStartDateTimeUnixMs = 17;
+  uint32 ContestDurationMinutes = 10;
+
+  optional uint64 BuyIn = 11;
+  repeated string AllowedAssets = 12;
+  repeated string AllowedDifficulties = 13;
+  string Broker = 14;
+  optional uint64 InitialPrizePool = 15;
+
+  bool AutoStartWhenFull = 16;
+  uint64 ContestStartDateTimeUnixMs = 17;
 }
 
-message ContestEngineUpdateContestGrpcResponse{
-    oneof CreateContestResult{
-        ContestEngineContestGrpcModel Contest = 1;
-        ContestEngineErrorsGrpcModel Error = 2;
-    }
+message ContestEngineUpdateContestGrpcRequest {
+  string UserId = 1;
+  string Name = 2;
+  double CreatorCommission = 3;
+
+  // FIX: counts should be integers
+  uint32 MinParticipants = 4;
+  uint32 MaxParticipants = 5;
+
+  optional uint32 MinTeamSize = 6;
+  optional uint32 MaxTeamSize = 7;
+
+  double ContestLeverage = 8;
+  double ContestInitialBalance = 9;
+  uint32 ContestDurationMinutes = 10;
+
+  optional uint64 BuyIn = 11;
+  repeated string AllowedAssets = 12;
+  repeated string AllowedDifficulties = 13;
+  string Broker = 14;
+  optional uint64 InitialPrizePool = 15;
+
+  bool AutoStartWhenFull = 16;
+  optional uint64 ContestStartDateTimeUnixMs = 17; // added for parity with create
 }
 
-
-message ContestEngineContestActionGrpcRequest{
-    string ContestId = 1;
-    string UserId = 2;
+message ContestEngineCreateContestGrpcResponse {
+  oneof CreateContestResult {
+    ContestEngineContestGrpcModel Contest = 1;
+    ContestEngineErrorsGrpcModel Error = 2;
+  }
 }
 
-message ContestEngineGetContestRegistrationsGrpcRequest{
-    string ContestId = 1;
+message ContestEngineUpdateContestGrpcResponse {
+  oneof UpdateContestResult {
+    ContestEngineContestGrpcModel Contest = 1;
+    ContestEngineErrorsGrpcModel Error = 2;
+  }
 }
 
-message ContestEngineRegisterToContestGrpcRequest{
-    string ContestId = 1;
-    string UserId = 2;
+message ContestEngineContestActionGrpcRequest {
+  string ContestId = 1;
+  string UserId = 2;
 }
 
-
-message ContestEngineUpdateContestGrpcRequest{
-    string UserId = 1;
-    string Name = 2;
-    double CreatorCommission = 3;
-    double MinParticipants = 4;
-    double MaxParticipants = 5;
-    optional uint32 MinTeamSize = 6;
-    optional uint32 MaxTeamSize = 7;
-    double ContestLeverage = 8;
-    double ContestInitialBalance = 9;
-    uint32 ContestDurationMinutes = 10;
-    optional uint64 BuyIn = 11;
-    repeated string AllowedAssets = 12;
-    repeated string AllowedDifficulties = 13;
-    string Broker = 14;
-    optional uint64 InitialPrizePool = 15;
-    bool AutoStartWhenFull = 16;
+message ContestEngineGetContestRegistrationsGrpcRequest {
+  string ContestId = 1;
 }
 
-message ContestEngineCreateContestGrpcResponse{
-    oneof CreateContestResult{
-        ContestEngineContestGrpcModel Contest = 1;
-        ContestEngineErrorsGrpcModel Error = 2;
-    }
+message ContestEngineRegisterToContestGrpcRequest {
+  string ContestId = 1;
+  string UserId = 2;
 }
 
-message ContestEnginePublishContestGrpcRequest{
-    string ContestId = 1;
-    string UserId = 2;
+message ContestEnginePublishContestGrpcRequest {
+  string ContestId = 1;
+  string UserId = 2;
 }
 
-message ContestEnginePublishContestGrpcResponse{
-    oneof PublishContestResult{
-        ContestEngineContestGrpcModel Contest = 1;
-        ContestEngineErrorsGrpcModel Error = 2;
-    }
+message ContestEnginePublishContestGrpcResponse {
+  oneof PublishContestResult {
+    ContestEngineContestGrpcModel Contest = 1;
+    ContestEngineErrorsGrpcModel Error = 2;
+  }
 }
 
-message ContestEngineCancelContestGrpcRequest{
-    string ContestId = 1;
-    string UserId = 2;
+message ContestEngineCancelContestGrpcRequest {
+  string ContestId = 1;
+  string UserId = 2;
 }
 
-message ContestEngineCancelContestGrpcResponse{
-    oneof CancelContestResult{
-        ContestEngineContestGrpcModel Contest = 1;
-        ContestEngineErrorGrpcModel Error = 2;
-    }
+message ContestEngineCancelContestGrpcResponse {
+  oneof CancelContestResult {
+    ContestEngineContestGrpcModel Contest = 1;
+    ContestEngineErrorGrpcModel Error = 2;
+  }
 }
 
-message ContestEngineInsertOrReplaceContestRegistration{
-    string ContestId = 1;
-    string UserId = 2;
+message ContestEngineInsertOrReplaceContestRegistration {
+  string ContestId = 1;
+  string UserId = 2;
 }
 
-message ContestEngineGetLiveContestsGrpcRequest{
+message ContestEngineUpsertContestRegistrationGrpcResponse {
+  oneof UpsertContestRegistrationResult {
+    ContestEngineContestRegistrationGrpcModel Registration = 1;
+    ContestEngineErrorGrpcModel Error = 2;
+  }
 }
 
-message ContestEngineGetRegisterOpenContestsGrpcRequest{
+message ContestEngineCancelRegistrationGrpcRequest {
+  string UserId = 1;
+  string ContestId = 2;
 }
 
-message ContestEngineGetClientContestsGrpcRequest{
+message ContestEngineCancelContestRegistrationGrpcResponse {
+  oneof CancelContestRegistrationResult {
+    ContestEngineContestRegistrationGrpcModel Registration = 1;
+    ContestEngineErrorGrpcModel Error = 2;
+  }
 }
 
-message ContestEngineCancelRegistrationGrpcRequest{
-    string UserId = 1;
-    string ContestId = 2;
+enum ContestEngineContestParticipantStatus {
+  InProcess = 0;
+  Finished = 1;
+  Disqualified = 2;
 }
 
-message ContestEngineContestDifficultyGrpcModel{
-    string Id = 1;
-    string Name = 2;
+message ContestEngineContestParticipantGrpcModel {
+  string ContestId = 1;
+  string UserId = 2;
+
+  ContestEngineContestParticipantStatus Status = 3;
+
+  ContestEngineContestAccountGrpcModel ContestAccount = 4;
+
+  // leaderboard / performance
+  optional int32 Rank = 5;
+  optional double Pnl = 6;
+  optional double ReturnPercent = 7;
+
+  // timestamps
+  optional uint64 JoinedAtUnixMs = 8;      // from registration
+  optional uint64 ActivatedAtUnixMs = 9;   // when contest started for the user
+  optional uint64 LastUpdatedUnixMs = 10;
+
+  optional string TeamId = 11;
 }
 
-message ContestEngineInsertOrReplaceContestDifficultyGrpcResponse{
-    oneof InsertOrReplaceContestDifficultyResult{
-        ContestEngineContestDifficultyGrpcModel Difficulty = 1;
-        ContestEngineErrorGrpcModel Error = 2;
-    }
+message ContestEngineGetMyContestParticipantGrpcRequest {
+  string ContestId = 1;
+  string UserId = 2;
 }
 
-message ContestEngineContestInstrumentGroupGrpcModel{
-    string Id = 1;
-    string Name = 2;
+message ContestEngineGetMyContestParticipantGrpcResponse {
+  oneof GetMyContestParticipantResult {
+    ContestEngineContestParticipantGrpcModel Participant = 1;
+    ContestEngineErrorGrpcModel Error = 2;
+  }
 }
 
-message ContestEngineInsertOrReplaceContestInstrumentGroupGrpcResponse{
-    oneof InsertOrReplaceContestInstrumentGroupResult{
-        ContestEngineContestInstrumentGroupGrpcModel InstrumentGroup = 1;
-        ContestEngineErrorGrpcModel Error = 2;
-    }
+message ContestEngineGetContestParticipantsGrpcRequest {
+  string ContestId = 1;
 }
 
-message ContestEngineContestInstrumentGrpcModel{
-    string Id = 1;
-    string Name = 2;
-    string InstrumentGroupId = 3;
+message ContestEngineContestLeaderboardEntryGrpcModel {
+  string ContestId = 1;
+  string UserId = 2;
+
+  int32 Rank = 3;
+  double Equity = 4;
+  double Pnl = 5;
+  double ReturnPercent = 6;
+
+  optional string TeamId = 7;
 }
 
-message ContestEngineInsertOrReplaceContestInstrumentGrpcResponse{
-    oneof InsertOrReplaceContestInstrumentResult{
-        ContestEngineContestInstrumentGrpcModel Instrument = 1;
-        ContestEngineErrorGrpcModel Error = 2;
-    }
+message ContestEngineGetContestLeaderboardGrpcRequest {
+  string ContestId = 1;
 }
 
-message ContestEngineContestSettingsGrpcModel{
-    string Name = 1;
-    string PlatformCommission = 2;
-    string MinCreatorCommissionPercent = 3;
-    string MaxCreatorCommissionPercent = 4;
-    string MinContestParticipants = 5;
-    string MaxContestParticipants = 6;
-    string MinLeverage = 7;
-    string MaxLeverage = 8;
-    string MinInitialBalance = 9;
-    string MaxInitialBalance = 10;
-    uint32 MinContestDurationMinutes = 11;
-    uint32 MaxContestDurationMinutes = 12;
-    string MinContestBuyIn = 13;
-    string MaxContestBuyIn = 14;
-    repeated string AllowedDifficulties = 15;
-    repeated string AllowedBrokers = 16;
-    repeated string AllowedInstruments = 17;
-    optional uint64 MaxInitialPrizePool = 18;
+// -------------------
+// DICTS / SETTINGS
+// -------------------
+
+message ContestEngineContestDifficultyGrpcModel {
+  string Id = 1;
+  string Name = 2;
 }
 
-message ContestEngineInsertOrReplaceContestSettingsGrpcResponse{
-    oneof InsertOrReplaceContestSettingsResult{
-        ContestEngineContestSettingsGrpcModel Settings = 1;
-        ContestEngineErrorGrpcModel Error = 2;
-    }
+message ContestEngineInsertOrReplaceContestDifficultyGrpcResponse {
+  oneof InsertOrReplaceContestDifficultyResult {
+    ContestEngineContestDifficultyGrpcModel Difficulty = 1;
+    ContestEngineErrorGrpcModel Error = 2;
+  }
 }
 
-service ContestEngineGrpcService{
-    rpc CreateContest(ContestEngineCreateContestGrpcRequest) returns (ContestEngineCreateContestGrpcResponse);
-    rpc UpdateContest(ContestEngineUpdateContestGrpcRequest) returns (ContestEngineUpdateContestGrpcResponse);
-    rpc PublishContest(ContestEnginePublishContestGrpcRequest) returns (ContestEnginePublishContestGrpcResponse);
-    rpc CancelContest(ContestEngineCancelContestGrpcRequest) returns (ContestEngineCancelContestGrpcResponse);
-    
-    rpc GetContestRegistrations(ContestEngineGetContestRegistrationsGrpcRequest) returns (stream ContestEngineContestRegistrationGrpcModel);
-    rpc InsertOrUpdateContestRegistration(ContestEngineInsertOrReplaceContestRegistration) returns (ContestEngineContestRegistrationGrpcModel);
-    rpc CancelContestRegistration(ContestEngineCancelRegistrationGrpcRequest) returns (ContestEngineContestRegistrationGrpcModel);
+message ContestEngineContestInstrumentGroupGrpcModel {
+  string Id = 1;
+  string Name = 2;
+}
 
-    rpc InsertOrReplaceContestDifficulty(ContestEngineContestDifficultyGrpcModel) returns (ContestEngineInsertOrReplaceContestDifficultyGrpcResponse);
-    rpc InsertOrReplaceContestInstrumentGroup(ContestEngineContestInstrumentGroupGrpcModel) returns (ContestEngineInsertOrReplaceContestInstrumentGroupGrpcResponse);
-    rpc InsertOrReplaceContestInstrument(ContestEngineContestInstrumentGrpcModel) returns (ContestEngineInsertOrReplaceContestInstrumentGrpcResponse);
-    rpc InsertOrReplaceContestSettings(ContestEngineContestSettingsGrpcModel) returns (ContestEngineInsertOrReplaceContestSettingsGrpcResponse);
+message ContestEngineInsertOrReplaceContestInstrumentGroupGrpcResponse {
+  oneof InsertOrReplaceContestInstrumentGroupResult {
+    ContestEngineContestInstrumentGroupGrpcModel InstrumentGroup = 1;
+    ContestEngineErrorGrpcModel Error = 2;
+  }
+}
 
-    rpc Ping(google.protobuf.Empty) returns (google.protobuf.Empty);
+message ContestEngineContestInstrumentGrpcModel {
+  string Id = 1;
+  string Name = 2;
+  string InstrumentGroupId = 3;
+}
+
+message ContestEngineInsertOrReplaceContestInstrumentGrpcResponse {
+  oneof InsertOrReplaceContestInstrumentResult {
+    ContestEngineContestInstrumentGrpcModel Instrument = 1;
+    ContestEngineErrorGrpcModel Error = 2;
+  }
+}
+
+message ContestEngineContestSettingsGrpcModel {
+  string Name = 1;
+  string PlatformCommission = 2;
+  string MinCreatorCommissionPercent = 3;
+  string MaxCreatorCommissionPercent = 4;
+  string MinContestParticipants = 5;
+  string MaxContestParticipants = 6;
+  string MinLeverage = 7;
+  string MaxLeverage = 8;
+  string MinInitialBalance = 9;
+  string MaxInitialBalance = 10;
+  uint32 MinContestDurationMinutes = 11;
+  uint32 MaxContestDurationMinutes = 12;
+  string MinContestBuyIn = 13;
+  string MaxContestBuyIn = 14;
+  repeated string AllowedDifficulties = 15;
+  repeated string AllowedBrokers = 16;
+  repeated string AllowedInstruments = 17;
+  optional uint64 MaxInitialPrizePool = 18;
+}
+
+message ContestEngineInsertOrReplaceContestSettingsGrpcResponse {
+  oneof InsertOrReplaceContestSettingsResult {
+    ContestEngineContestSettingsGrpcModel Settings = 1;
+    ContestEngineErrorGrpcModel Error = 2;
+  }
+}
+
+service ContestEngineGrpcService {
+  rpc CreateContest(ContestEngineCreateContestGrpcRequest) returns (ContestEngineCreateContestGrpcResponse);
+  rpc UpdateContest(ContestEngineUpdateContestGrpcRequest) returns (ContestEngineUpdateContestGrpcResponse);
+
+  rpc PublishContest(ContestEnginePublishContestGrpcRequest) returns (ContestEnginePublishContestGrpcResponse);
+  rpc CancelContest(ContestEngineCancelContestGrpcRequest) returns (ContestEngineCancelContestGrpcResponse);
+
+  rpc GetContestRegistrations(ContestEngineGetContestRegistrationsGrpcRequest)
+      returns (stream ContestEngineContestRegistrationGrpcModel);
+
+  rpc InsertOrUpdateContestRegistration(ContestEngineInsertOrReplaceContestRegistration)
+      returns (ContestEngineUpsertContestRegistrationGrpcResponse);
+
+  rpc CancelContestRegistration(ContestEngineCancelRegistrationGrpcRequest)
+      returns (ContestEngineCancelContestRegistrationGrpcResponse);
+
+  rpc GetMyContestParticipant(ContestEngineGetMyContestParticipantGrpcRequest)
+      returns (ContestEngineGetMyContestParticipantGrpcResponse);
+
+  rpc GetContestParticipants(ContestEngineGetContestParticipantsGrpcRequest)
+      returns (stream ContestEngineContestParticipantGrpcModel);
+
+  rpc GetContestLeaderboard(ContestEngineGetContestLeaderboardGrpcRequest)
+      returns (stream ContestEngineContestLeaderboardEntryGrpcModel);
+
+  rpc InsertOrReplaceContestDifficulty(ContestEngineContestDifficultyGrpcModel)
+      returns (ContestEngineInsertOrReplaceContestDifficultyGrpcResponse);
+
+  rpc InsertOrReplaceContestInstrumentGroup(ContestEngineContestInstrumentGroupGrpcModel)
+      returns (ContestEngineInsertOrReplaceContestInstrumentGroupGrpcResponse);
+
+  rpc InsertOrReplaceContestInstrument(ContestEngineContestInstrumentGrpcModel)
+      returns (ContestEngineInsertOrReplaceContestInstrumentGrpcResponse);
+
+  rpc InsertOrReplaceContestSettings(ContestEngineContestSettingsGrpcModel)
+      returns (ContestEngineInsertOrReplaceContestSettingsGrpcResponse);
+
+  rpc Ping(google.protobuf.Empty) returns (google.protobuf.Empty);
 }

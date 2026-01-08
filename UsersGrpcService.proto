@@ -28,6 +28,26 @@ enum UsersGrpcErrorType {
     EMAIL_LABEL_EDGE_HYPHEN = 20;
     EMAIL_LABEL_INVALID_CHARS = 21;
     EMAIL_TLD_INVALID = 22;
+    // Public profile validation errors
+    INVALID_INSTAGRAM_URL = 23;
+    INVALID_DISCORD_URL = 24;
+    PROFILE_DESCRIPTION_TOO_LONG = 25;
+    IMAGE_NOT_FOUND = 26;
+    // Personal data validation errors
+    FIRST_NAME_REQUIRED = 27;
+    LAST_NAME_REQUIRED = 28;
+    FIRST_NAME_TOO_LONG = 29;
+    LAST_NAME_TOO_LONG = 30;
+    INVALID_COUNTRY_CODE = 31;
+    INVALID_NATIONALITY_CODE = 32;
+    INVALID_PHONE_NUMBER = 33;
+    INVALID_DATE_OF_BIRTH = 34;
+}
+
+enum GenderGrpcType {
+    None = 0;
+    Male = 1;
+    Female = 2;
 }
 
 // Error response model
@@ -51,6 +71,29 @@ message UserGroupGrpcModel{
 message UserDataGrpcModel{
     UserGrpcModel User = 1;
     map<string, string> Sources = 2;
+}
+
+message PublicProfileSettingsGrpcModel{
+    string UserId = 1;
+    optional string InstagramLink = 2;
+    optional string DiscordLink = 3;
+    optional string ProfileDescription = 4;
+    optional string ImageIdFromCdn = 5;
+    bool ShowRealName = 6;
+    bool ShowTradingActivity = 7;
+}
+
+message PersonalDataGrpcModel{
+    string UserId = 1;
+    string FirstName = 2;
+    string LastName = 3;
+    optional string CountryCode = 4;
+    optional string NationalityCode = 5;
+    optional GenderGrpcType Gender = 6;
+    optional string PhoneNumber = 7;
+    optional string AddressLine1 = 8;
+    optional string AddressLine2 = 9;
+    optional string DateOfBirth = 10;
 }
 
 message RegisterUserGrpcRequest {
@@ -119,6 +162,28 @@ message GetUserGrpcResponse{
     }
 }
 
+message PublicProfileSettingsGrpcRequest {
+    PublicProfileSettingsGrpcModel ProfileSettings = 1;
+}
+
+message PublicProfileSettingsGrpcResponse{
+    oneof PublicProfileSettingsResult{
+        PublicProfileSettingsGrpcModel ProfileSettings = 1;
+        UsersGrpcError Error = 2;
+    }
+}
+
+message PersonalDataGrpcRequest {
+    PersonalDataGrpcModel PersonalData = 1;
+}
+
+message PersonalDataGrpcResponse{
+    oneof PersonalDataResult{
+        PersonalDataGrpcModel PersonalData = 1;
+        UsersGrpcError Error = 2;
+    }
+}
+
 service UsersGrpcService {
     rpc RegisterUser (RegisterUserGrpcRequest) returns (RegisterUserGrpcResponse);
     rpc UpdateUser (UpdateUserGrpcRequest) returns (UpdateUserGrpcResponse);
@@ -126,6 +191,8 @@ service UsersGrpcService {
     rpc VerifyUserCredentials (VerifyUserCredentialsGrpcRequest) returns (VerifyUserCredentialsGrpcResponse);
     rpc GetUser (GetUserGrpcRequest) returns (GetUserGrpcResponse);
     rpc InsertOrUpdateUserGroup (UserGroupGrpcModel) returns (InsertOrUpdateUserGroupGrpcResponse);
+    rpc InsertOrReplacePublicProfileData (PublicProfileSettingsGrpcRequest) returns (PublicProfileSettingsGrpcResponse);
+    rpc InsertOrReplacePersonalData (PersonalDataGrpcRequest) returns (PersonalDataGrpcResponse);
 
     rpc Ping(google.protobuf.Empty) returns (google.protobuf.Empty);
 }

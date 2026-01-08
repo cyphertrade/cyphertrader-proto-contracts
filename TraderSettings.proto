@@ -50,7 +50,23 @@ message InsertOrReplaceTraderProfileGrpcResponse {
     }
 }
 
+message SystemDefaultsGrpcRequestModel {
+    optional string default_user_group = 1;
+}
+
+message SystemDefaultsGrpcResponseModel {
+    optional string default_user_group = 1;
+}
+
+message InsertOrReplaceSystemDefaultsGrpcResponse {
+    oneof InsertOrReplaceSystemDefaultsResult {
+        SystemDefaultsGrpcResponseModel SystemDefaults = 1;
+        TraderSettingsGrpcError Error = 2;
+    }
+}
+
 service TraderSettingsGrpcService {
     rpc InsertOrReplaceTraderProfile(TraderProfileGrpcRequestModel) returns (InsertOrReplaceTraderProfileGrpcResponse);
+    rpc InsertOrReplaceSystemDefaults(SystemDefaultsGrpcRequestModel) returns (InsertOrReplaceSystemDefaultsGrpcResponse);
     rpc Ping(google.protobuf.Empty) returns (google.protobuf.Empty);
 }

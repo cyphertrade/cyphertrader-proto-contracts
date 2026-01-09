@@ -90,10 +90,12 @@ message PersonalDataGrpcModel{
     optional string CountryCode = 4;
     optional string NationalityCode = 5;
     optional GenderGrpcType Gender = 6;
-    optional string PhoneNumber = 7;
+    optional string PhoneCode = 7;
     optional string AddressLine1 = 8;
     optional string AddressLine2 = 9;
     optional string DateOfBirth = 10;
+    optional string PostalCode = 11;
+    optional string PhoneNumber = 12;
 }
 
 message RegisterUserGrpcRequest {

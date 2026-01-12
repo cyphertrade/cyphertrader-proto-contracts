@@ -15,6 +15,11 @@ enum BrokerIntegrationErrorType{
     NoInstruments = 9;
     InvalidSpreadRange = 10;
     InvalidInstrument = 11;
+    ValidationError = 12;
+    IntegrationApiUnauthorized = 13;
+    IntegrationApiForbidden = 14;
+    IntegrationApiNetworkError = 15;
+    IntegrationApiValidationError = 16;
 }
 
 message BrokerIntegrationErrorGrpcModel{

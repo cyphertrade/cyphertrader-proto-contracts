@@ -5,42 +5,43 @@ import "google/protobuf/empty.proto";
 enum TraderSettingsGrpcError {
     VALIDATION_ERROR = 0;
     CONTEST_SETTINGS_NOT_FOUND = 1;
-    DATABASE_ERROR = 2;
+    USER_GROUP_NOT_FOUND = 2;
+    DATABASE_ERROR = 3;
 }
 
 message TraderProfileContestSettingsGrpcModel {
-    string name = 1;
-    string platform_commission = 2;
-    string min_creator_commission_percent = 3;
-    string max_creator_commission_percent = 4;
-    string min_contest_participants = 5;
-    string max_contest_participants = 6;
-    string min_leverage = 7;
-    string max_leverage = 8;
-    string min_initial_balance = 9;
-    string max_initial_balance = 10;
-    int64 min_contest_duration = 11;
-    int64 max_contest_duration = 12;
-    string min_contest_buy_in = 13;
-    string max_contest_buy_in = 14;
-    repeated string allowed_difficulties = 15;
-    repeated string allowed_brokers = 16;
-    repeated string allowed_instruments = 17;
-    optional uint64 max_initial_prize_pool = 18;
+    string Name = 1;
+    string PlatformCommission = 2;
+    string MinCreatorCommissionPercent = 3;
+    string MaxCreatorCommissionPercent = 4;
+    string MinContestParticipants = 5;
+    string MaxContestParticipants = 6;
+    string MinLeverage = 7;
+    string MaxLeverage = 8;
+    string MinInitialBalance = 9;
+    string MaxInitialBalance = 10;
+    int64 MinContestDuration = 11;
+    int64 MaxContestDuration = 12;
+    string MinContestBuyIn = 13;
+    string MaxContestBuyIn = 14;
+    repeated string AllowedDifficulties = 15;
+    repeated string AllowedBrokers = 16;
+    repeated string AllowedInstruments = 17;
+    optional uint64 MaxInitialPrizePool = 18;
 }
 
 message TraderProfileGrpcRequestModel {
-    string id = 1;
-    string name = 2;
-    optional string base_contest_settings = 3;
-    map<uint32, string> progressive_contest_settings = 4;
+    string Id = 1;
+    string Name = 2;
+    optional string BaseContestSettings = 3;
+    map<uint32, string> ProgressiveContestSettings = 4;
 }
 
 message TraderProfileGrpcResponseModel {
-    string id = 1;
-    string name = 2;
-    optional TraderProfileContestSettingsGrpcModel base_contest_settings = 3;
-    map<uint32, TraderProfileContestSettingsGrpcModel> progressive_contest_settings = 4;
+    string Id = 1;
+    string Name = 2;
+    optional TraderProfileContestSettingsGrpcModel BaseContestSettings = 3;
+    map<uint32, TraderProfileContestSettingsGrpcModel> ProgressiveContestSettings = 4;
 }
 
 message InsertOrReplaceTraderProfileGrpcResponse {
@@ -50,7 +51,23 @@ message InsertOrReplaceTraderProfileGrpcResponse {
     }
 }
 
+message SystemDefaultsGrpcRequestModel {
+    optional string DefaultUserGroup = 1;
+}
+
+message SystemDefaultsGrpcResponseModel {
+    optional string DefaultUserGroup = 1;
+}
+
+message InsertOrReplaceSystemDefaultsGrpcResponse {
+    oneof InsertOrReplaceSystemDefaultsResult {
+        SystemDefaultsGrpcResponseModel SystemDefaults = 1;
+        TraderSettingsGrpcError Error = 2;
+    }
+}
+
 service TraderSettingsGrpcService {
     rpc InsertOrReplaceTraderProfile(TraderProfileGrpcRequestModel) returns (InsertOrReplaceTraderProfileGrpcResponse);
+    rpc InsertOrReplaceSystemDefaults(SystemDefaultsGrpcRequestModel) returns (InsertOrReplaceSystemDefaultsGrpcResponse);
     rpc Ping(google.protobuf.Empty) returns (google.protobuf.Empty);
 }

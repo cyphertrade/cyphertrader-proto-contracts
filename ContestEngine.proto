@@ -218,13 +218,20 @@ message ContestEngineCancelContestGrpcResponse {
   }
 }
 
-message ContestEngineInsertOrReplaceContestRegistration {
+message ContestEngineRegisterToContestGrpcResponse {
+  oneof RegisterToContestResult {
+    ContestEngineContestRegistrationGrpcModel Registration = 1;
+    ContestEngineErrorGrpcModel Error = 2;
+  }
+}
+
+message ContestEngineUpdateContestRegistrationGrpcRequest {
   string ContestId = 1;
   string UserId = 2;
 }
 
-message ContestEngineUpsertContestRegistrationGrpcResponse {
-  oneof UpsertContestRegistrationResult {
+message ContestEngineUpdateContestRegistrationGrpcResponse {
+  oneof UpdateContestRegistrationResult {
     ContestEngineContestRegistrationGrpcModel Registration = 1;
     ContestEngineErrorGrpcModel Error = 2;
   }
@@ -380,11 +387,14 @@ service ContestEngineGrpcService {
   rpc GetContestRegistrations(ContestEngineGetContestRegistrationsGrpcRequest)
       returns (stream ContestEngineContestRegistrationGrpcModel);
 
-  rpc InsertOrUpdateContestRegistration(ContestEngineInsertOrReplaceContestRegistration)
-      returns (ContestEngineUpsertContestRegistrationGrpcResponse);
+  rpc RegisterToContest(ContestEngineRegisterToContestGrpcRequest)
+      returns (ContestEngineRegisterToContestGrpcResponse);
 
   rpc CancelContestRegistration(ContestEngineCancelRegistrationGrpcRequest)
       returns (ContestEngineCancelContestRegistrationGrpcResponse);
+
+  rpc UpdateContestRegistration(ContestEngineUpdateContestRegistrationGrpcRequest)
+      returns (ContestEngineUpdateContestRegistrationGrpcResponse);
 
   rpc GetMyContestParticipant(ContestEngineGetMyContestParticipantGrpcRequest)
       returns (ContestEngineGetMyContestParticipantGrpcResponse);

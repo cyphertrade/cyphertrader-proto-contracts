@@ -95,7 +95,7 @@ message ContestEngineContestGrpcModel {
 
 message ContestEngineContestRegistrationGrpcModel {
   string UserId = 1;
-  ContestEngineContestAccountGrpcModel ContestAccount = 2; // can be omitted pre-start if you want
+  string ContestAccount = 2;
   ContestEngineContestRegistrationStatus Status = 3;
 
   // extra audit fields (optional but useful)
@@ -103,15 +103,6 @@ message ContestEngineContestRegistrationGrpcModel {
   optional uint64 CanceledAtUnixMs = 5;
 }
 
-message ContestEngineContestAccountGrpcModel {
-  string Id = 1;
-  string ContestId = 2;
-  string UserId = 3;
-  double Balance = 4;
-  double Equity = 5;
-  double Margin = 6;
-  double FreeMargin = 7;
-}
 
 message ContestEngineCreateContestGrpcRequest {
   string UserId = 1;
@@ -261,7 +252,7 @@ message ContestEngineContestParticipantGrpcModel {
 
   ContestEngineContestParticipantStatus Status = 3;
 
-  ContestEngineContestAccountGrpcModel ContestAccount = 4;
+  string ContestAccount = 4;
 
   // leaderboard / performance
   optional int32 Rank = 5;

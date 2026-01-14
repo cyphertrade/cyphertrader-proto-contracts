@@ -1,11 +1,11 @@
 syntax = "proto3";
 package broker_settings;
 import "google/protobuf/empty.proto";
+import "google/protobuf/wrappers.proto";
 
 enum BrokeSettingsErrorType{
     DifficultyNotFound = 0;
     ContestInstrumentNotFound = 1;
-    
 }
 
 message BrokeSettingsErrorGrpcModel{
@@ -28,12 +28,12 @@ message BrokerContestDifficultyGrpcModel{
 }
 
 message BrokerContestDifficultyInstrumentGrpcModel{
-    optional int32 BidPip = 1;
-    optional int32 AskPip = 2;
-    optional uint32 MinSpreadPip = 3;
-    optional uint32 MaxSpreadPip = 4;
+    google.protobuf.Int32Value BidPip = 1;
+    google.protobuf.Int32Value AskPip = 2;
+    google.protobuf.UInt32Value MinSpreadPip = 3;
+    google.protobuf.UInt32Value MaxSpreadPip = 4;
     repeated BrokerContestDifficultyInstrumentSwapGrpcModel Swaps = 5;
-    optional double CommissionPerLot = 6;
+    google.protobuf.DoubleValue CommissionPerLot = 6;
 }
 
 message BrokerContestDifficultyInstrumentSwapGrpcModel{

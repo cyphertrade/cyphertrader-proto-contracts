@@ -37,7 +37,7 @@ message BrokerContestDifficultyInstrumentGrpcModel{
 }
 
 message BrokerContestDifficultyInstrumentSwapGrpcModel{
-    uint32 SwapPercent = 1;
+    double SwapPercent = 1;
     uint64 SwapPeriodMin = 2;
 }
 

@@ -36,6 +36,28 @@ enum ContestEngineErrorType {
   ContestAlreadyStarted = 25;
   ContestRegistrationCancellationNotAllowed = 26;
   ContestRegistrationNotFound = 27;
+
+  // Entity not found errors
+  UserNotFound = 28;
+  UserGroupNotFound = 29;
+  TraderProfileNotFound = 30;
+  ContestSettingsNotFound = 31;
+  ContestNotFound = 32;
+  ContestAccountNotFound = 33;
+  CreatorWalletNotFound = 34;
+
+  // External service errors
+  XpEngineError = 35;
+  WalletGrpcError = 36;
+
+  // Contest status validation errors
+  InvalidContestStatusForPublish = 37;
+  InvalidContestStatusForCancel = 38;
+  InvalidContestStatusForUpdate = 39;
+  InvalidContestStatusForRegistration = 40;
+
+  // Contest account errors
+  ContestAccountMismatch = 41;
 }
 
 enum ContestEngineContestRegistrationStatus {

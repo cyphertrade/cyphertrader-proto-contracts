@@ -145,7 +145,7 @@ message ContestEngineCreateContestGrpcRequest {
 
   optional uint64 BuyIn = 11;
   repeated string AllowedAssets = 12;
-  repeated string AllowedDifficulties = 13;
+  string AllowedDifficulties = 13;
   string Broker = 14;
   optional uint64 InitialPrizePool = 15;
 
@@ -171,7 +171,7 @@ message ContestEngineUpdateContestGrpcRequest {
 
   optional uint64 BuyIn = 11;
   repeated string AllowedAssets = 12;
-  repeated string AllowedDifficulties = 13;
+  string AllowedDifficulties = 13;
   string Broker = 14;
   optional uint64 InitialPrizePool = 15;
 

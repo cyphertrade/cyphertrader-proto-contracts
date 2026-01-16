@@ -177,6 +177,7 @@ message ContestEngineUpdateContestGrpcRequest {
 
   bool AutoStartWhenFull = 16;
   optional uint64 ContestStartDateTimeUnixMs = 17; // added for parity with create
+  string ContestId = 18;
 }
 
 message ContestEngineCreateContestGrpcResponse {

@@ -43,6 +43,8 @@ enum UsersGrpcErrorType {
     INVALID_PHONE_NUMBER = 33;
     INVALID_DATE_OF_BIRTH = 34;
     INVALID_POSTAL_CODE = 35;
+    FIRST_NAME_TOO_SHORT = 36;
+    LAST_NAME_TOO_SHORT = 37;
 }
 
 enum GenderGrpcType {

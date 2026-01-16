@@ -94,7 +94,7 @@ message PersonalDataGrpcModel{
     optional string PhoneCode = 7;
     optional string AddressLine1 = 8;
     optional string AddressLine2 = 9;
-    optional string DateOfBirth = 10;
+    optional uint64 DateOfBirth = 10;
     optional string PostalCode = 11;
     optional string PhoneNumber = 12;
 }

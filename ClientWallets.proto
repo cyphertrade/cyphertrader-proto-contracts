@@ -13,11 +13,20 @@ enum WalletTransactionGrpcReason {
     CONTEST = 4;
 }
 
-enum WalletGrpcError{
+enum ClientWalletsErrorType {
     NegativeBalanceNotAllowed = 0;
     WalletNotFound = 1;
     WalletAlreadyExists = 2;
     DatabaseError = 3;
+}
+
+message ClientWalletsErrorGrpcModel {
+    ClientWalletsErrorType ErrorType = 1;
+    optional string Message = 2;
+}
+
+message ClientWalletsErrorsGrpcModel {
+    repeated ClientWalletsErrorGrpcModel Errors = 1;
 }
 
 message WalletTransactionGrpcModel {
@@ -58,7 +67,7 @@ message UpdateClientWalletSuccessResult{
 message UpdateClientWalletResponse{
     oneof UpdateClientWalletResult{
         UpdateClientWalletSuccessResult SuccessResult = 1;
-        WalletGrpcError Error = 2;
+        ClientWalletsErrorGrpcModel Error = 2;
     }
 }
 
@@ -70,7 +79,7 @@ message CreateWalletGrpcRequest{
 message CreateWalletGrpcResponse{
     oneof UpdateClientWalletResult{
         WalletGrpcModel Wallet = 1;
-        WalletGrpcError Error = 2;
+        ClientWalletsErrorGrpcModel Error = 2;
     }
 }
 
@@ -85,7 +94,7 @@ message GetClientWalletsSuccessResult{
 message GetClientWalletsGrpcResponse{
     oneof GetClientWalletsResult{
         GetClientWalletsSuccessResult SuccessResult = 1;
-        WalletGrpcError Error = 2;
+        ClientWalletsErrorGrpcModel Error = 2;
     }
 }
 

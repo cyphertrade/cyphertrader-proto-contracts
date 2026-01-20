@@ -40,8 +40,8 @@ message TraderProfileGrpcRequestModel {
 message TraderProfileGrpcResponseModel {
     string Id = 1;
     string Name = 2;
-    optional TraderProfileContestSettingsGrpcModel BaseContestSettings = 3;
-    map<uint32, TraderProfileContestSettingsGrpcModel> ProgressiveContestSettings = 4;
+    optional string BaseContestSettings = 3;
+    map<uint32, string> ProgressiveContestSettings = 4;
 }
 
 message InsertOrReplaceTraderProfileGrpcResponse {

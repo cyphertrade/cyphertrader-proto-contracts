@@ -6,6 +6,7 @@ import "google/protobuf/wrappers.proto";
 enum BrokeSettingsErrorType{
     DifficultyNotFound = 0;
     ContestInstrumentNotFound = 1;
+    ValidationError = 2;
 }
 
 message BrokeSettingsErrorGrpcModel{

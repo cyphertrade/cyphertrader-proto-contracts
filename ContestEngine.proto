@@ -54,15 +54,16 @@ enum ContestEngineErrorType {
   // External service errors
   XpEngineError = 40;
   WalletGrpcError = 41;
+  BrokerIntegrationGrpcError = 42;
 
   // Contest status validation errors
-  InvalidContestStatusForPublish = 42;
-  InvalidContestStatusForCancel = 43;
-  InvalidContestStatusForUpdate = 44;
-  InvalidContestStatusForRegistration = 45;
+  InvalidContestStatusForPublish = 43;
+  InvalidContestStatusForCancel = 44;
+  InvalidContestStatusForUpdate = 45;
+  InvalidContestStatusForRegistration = 46;
 
   // Contest account errors
-  ContestAccountMismatch = 46;
+  ContestAccountMismatch = 47;
 }
 
 enum ContestEngineContestRegistrationStatus {

@@ -1,0 +1,130 @@
+syntax = "proto3";
+package static_files;
+import "google/protobuf/empty.proto";
+
+message UploadFileChunk {
+    oneof upload_chunk {
+        UploadFileMetadata metadata = 1;
+        bytes data = 2;
+    }
+}
+
+message UploadFileMetadata {
+    string file_name = 1;
+    string content_type = 2;
+    optional int64 file_size = 3;
+    repeated string tags = 4;
+    map<string, string> custom_metadata = 5;
+}
+
+message UploadFileResponse {
+    oneof upload_result {
+        UploadFileSuccess success = 1;
+        StaticFilesError error = 2;
+    }
+}
+
+message UploadFileSuccess {
+    string file_id = 1;
+    int64 file_size = 2;
+    string content_type = 3;
+    string file_name = 4;
+    int64 uploaded_at = 5;
+}
+
+message DownloadFileRequest {
+    string file_id = 1;
+    optional int64 range_start = 2;
+    optional int64 range_end = 3;
+}
+
+message DownloadFileChunk {
+    oneof download_chunk {
+        FileMetadata metadata = 1;
+        bytes data = 2;
+    }
+}
+
+message FileMetadata {
+    string file_id = 1;
+    string file_name = 2;
+    string content_type = 3;
+    int64 file_size = 4;
+    int64 uploaded_at = 5;
+    repeated string tags = 6;
+    map<string, string> custom_metadata = 7;
+}
+
+message GetFileMetadataRequest {
+    string file_id = 1;
+}
+
+message GetFileMetadataResponse {
+    oneof metadata_result {
+        FileMetadata metadata = 1;
+        StaticFilesError error = 2;
+    }
+}
+
+message DeleteFileRequest {
+    string file_id = 1;
+}
+
+message DeleteFileResponse {
+    oneof delete_result {
+        DeleteFileSuccess success = 1;
+        StaticFilesError error = 2;
+    }
+}
+
+message DeleteFileSuccess {
+    string file_id = 1;
+}
+
+message ListFilesRequest {
+    optional string content_type = 1;
+    repeated string tags = 2;
+    optional string file_name_pattern = 3;
+    optional int32 limit = 4;
+    optional int32 offset = 5;
+}
+
+message ListFilesResponse {
+    oneof list_result {
+        FileMetadata file = 1;
+        StaticFilesError error = 2;
+    }
+}
+
+message StaticFilesError {
+    StaticFilesErrorCode code = 1;
+    string message = 2;
+}
+
+enum StaticFilesErrorCode {
+    UNKNOWN = 0;
+    FILE_NOT_FOUND = 1;
+    FILE_ALREADY_EXISTS = 2;
+    INVALID_FILE_ID = 3;
+    FILE_TOO_LARGE = 4;
+    INVALID_CONTENT_TYPE = 5;
+    STORAGE_ERROR = 6;
+    INVALID_REQUEST = 7;
+    UPLOAD_CANCELLED = 8;
+    INVALID_RANGE = 9;
+}
+
+service StaticFilesService {
+    rpc UploadFile(stream UploadFileChunk) returns (UploadFileResponse);
+
+    rpc DownloadFile(DownloadFileRequest) returns (stream DownloadFileChunk);
+
+    rpc GetFileMetadata(GetFileMetadataRequest) returns (GetFileMetadataResponse);
+
+    rpc DeleteFile(DeleteFileRequest) returns (DeleteFileResponse);
+
+    rpc ListFiles(ListFilesRequest) returns (stream ListFilesResponse);
+
+    rpc Ping(google.protobuf.Empty) returns (google.protobuf.Empty);
+
+}

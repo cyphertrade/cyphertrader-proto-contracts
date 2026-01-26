@@ -26,38 +26,44 @@ enum ContestEngineErrorType {
   ContestValidationInvalidBroker = 18;
   ContestValidationInitialPrizePoolTooHigh = 19;
   ContestValidationMinTeamSizeGreaterThanMax = 20;
+  ContestValidationInvalidName = 21;
+  ContestValidationInvalidContestId = 22;
+  ContestValidationInvalidUserId = 23;
+  ContestValidationContestStartDateInvalid = 24;
 
-  InstrumentGroupNotFound = 21;
-  BrokerNotFound = 22;
-  InstrumentNotFound = 23;
-  DifficultyNotFound = 24;
+  InstrumentGroupNotFound = 25;
+  BrokerNotFound = 26;
+  InstrumentNotFound = 27;
+  DifficultyNotFound = 28;
 
   // Registration / start rules
-  ContestAlreadyStarted = 25;
-  ContestRegistrationCancellationNotAllowed = 26;
-  ContestRegistrationNotFound = 27;
+  ContestAlreadyStarted = 29;
+  ContestRegistrationCancellationNotAllowed = 30;
+  ContestRegistrationNotFound = 31;
+  ContestMaxParticipantsExceeded = 32;
 
   // Entity not found errors
-  UserNotFound = 28;
-  UserGroupNotFound = 29;
-  TraderProfileNotFound = 30;
-  ContestSettingsNotFound = 31;
-  ContestNotFound = 32;
-  ContestAccountNotFound = 33;
-  CreatorWalletNotFound = 34;
+  UserNotFound = 33;
+  UserGroupNotFound = 34;
+  TraderProfileNotFound = 35;
+  ContestSettingsNotFound = 36;
+  ContestNotFound = 37;
+  ContestAccountNotFound = 38;
+  CreatorWalletNotFound = 39;
 
   // External service errors
-  XpEngineError = 35;
-  WalletGrpcError = 36;
+  XpEngineError = 40;
+  WalletGrpcError = 41;
+  BrokerIntegrationGrpcError = 42;
 
   // Contest status validation errors
-  InvalidContestStatusForPublish = 37;
-  InvalidContestStatusForCancel = 38;
-  InvalidContestStatusForUpdate = 39;
-  InvalidContestStatusForRegistration = 40;
+  InvalidContestStatusForPublish = 43;
+  InvalidContestStatusForCancel = 44;
+  InvalidContestStatusForUpdate = 45;
+  InvalidContestStatusForRegistration = 46;
 
   // Contest account errors
-  ContestAccountMismatch = 41;
+  ContestAccountMismatch = 47;
 }
 
 enum ContestEngineContestRegistrationStatus {

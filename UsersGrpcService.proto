@@ -66,9 +66,11 @@ message UserGrpcModel{
 
 message UserGroupGrpcModel{
     string Name = 1;
-    string XpProgression = 2;
-    string PartnerProfile = 3;
-    string TraderProfile = 4;
+    string TraderXpProgression = 2;
+    string PartnerXpProgression = 3;
+    string InfluencerXpProgression = 4;
+    string PartnerProfile = 5;
+    string TraderProfile = 6;
 }
 
 message UserDataGrpcModel{

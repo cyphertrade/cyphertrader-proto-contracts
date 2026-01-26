@@ -64,6 +64,7 @@ enum ContestEngineErrorType {
 
   // Contest account errors
   ContestAccountMismatch = 47;
+  ValidationError = 48;
 }
 
 enum ContestEngineContestRegistrationStatus {

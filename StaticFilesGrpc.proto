@@ -3,102 +3,102 @@ package static_files;
 import "google/protobuf/empty.proto";
 
 message UploadFileChunk {
-    oneof upload_chunk {
-        UploadFileMetadata metadata = 1;
-        bytes data = 2;
+    oneof UploadChunk {
+        UploadFileMetadata Metadata = 1;
+        bytes Data = 2;
     }
 }
 
 message UploadFileMetadata {
-    string file_name = 1;
-    string content_type = 2;
-    optional int64 file_size = 3;
-    repeated string tags = 4;
-    map<string, string> custom_metadata = 5;
+    string FileName = 1;
+    string ContentType = 2;
+    optional int64 FileSize = 3;
+    repeated string Tags = 4;
+    map<string, string> CustomMetadata = 5;
 }
 
 message UploadFileResponse {
-    oneof upload_result {
-        UploadFileSuccess success = 1;
-        StaticFilesError error = 2;
+    oneof UploadResult {
+        UploadFileSuccess Success = 1;
+        StaticFilesError Error = 2;
     }
 }
 
 message UploadFileSuccess {
-    string file_id = 1;
-    int64 file_size = 2;
-    string content_type = 3;
-    string file_name = 4;
-    int64 uploaded_at = 5;
+    string FileId = 1;
+    int64 FileSize = 2;
+    string ContentType = 3;
+    string FileName = 4;
+    int64 UploadedAt = 5;
 }
 
 message DownloadFileRequest {
-    string file_id = 1;
-    optional int64 range_start = 2;
-    optional int64 range_end = 3;
+    string FileId = 1;
+    optional int64 RangeStart = 2;
+    optional int64 RangeEnd = 3;
 }
 
 message DownloadFileChunk {
-    oneof download_chunk {
-        FileMetadata metadata = 1;
-        bytes data = 2;
+    oneof DownloadChunk {
+        FileMetadata Metadata = 1;
+        bytes Data = 2;
     }
 }
 
 message FileMetadata {
-    string file_id = 1;
-    string file_name = 2;
-    string content_type = 3;
-    int64 file_size = 4;
-    int64 uploaded_at = 5;
-    repeated string tags = 6;
-    map<string, string> custom_metadata = 7;
+    string FileId = 1;
+    string FileName = 2;
+    string ContentType = 3;
+    int64 FileSize = 4;
+    int64 UploadedAt = 5;
+    repeated string Tags = 6;
+    map<string, string> CustomMetadata = 7;
 }
 
 message GetFileMetadataRequest {
-    string file_id = 1;
+    string FileId = 1;
 }
 
 message GetFileMetadataResponse {
-    oneof metadata_result {
-        FileMetadata metadata = 1;
-        StaticFilesError error = 2;
+    oneof MetadataResult {
+        FileMetadata Metadata = 1;
+        StaticFilesError Error = 2;
     }
 }
 
 message DeleteFileRequest {
-    string file_id = 1;
+    string FileId = 1;
 }
 
 message DeleteFileResponse {
-    oneof delete_result {
-        DeleteFileSuccess success = 1;
-        StaticFilesError error = 2;
+    oneof DeleteResult {
+        DeleteFileSuccess Success = 1;
+        StaticFilesError Error = 2;
     }
 }
 
 message DeleteFileSuccess {
-    string file_id = 1;
+    string FileId = 1;
 }
 
 message ListFilesRequest {
-    optional string content_type = 1;
-    repeated string tags = 2;
-    optional string file_name_pattern = 3;
-    optional int32 limit = 4;
-    optional int32 offset = 5;
+    optional string ContentType = 1;
+    repeated string Tags = 2;
+    optional string FileNamePattern = 3;
+    optional int32 Limit = 4;
+    optional int32 Offset = 5;
 }
 
 message ListFilesResponse {
-    oneof list_result {
-        FileMetadata file = 1;
-        StaticFilesError error = 2;
+    oneof ListResult {
+        FileMetadata File = 1;
+        StaticFilesError Error = 2;
     }
 }
 
 message StaticFilesError {
-    StaticFilesErrorCode code = 1;
-    string message = 2;
+    StaticFilesErrorCode Code = 1;
+    string Message = 2;
 }
 
 enum StaticFilesErrorCode {

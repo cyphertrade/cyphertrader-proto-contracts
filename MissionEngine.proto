@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+package contest_engine;
+
+enum ContestEngineErrorType {
+    ValidationError = 0;
+}
+
+message ContestEngineMissionsGroupGrpcModel {
+  string Name = 1;
+  string Description = 2;
+  optional string Picture = 3;
+  uint32 MinLevel = 4;
+}
+
+message ContestEngineRewardPackGrpcModel {
+  string Name = 1;
+  uint64 RewardPoints = 2;
+  string Description = 3;
+  map<string, string> Metadata = 4;
+}
+
+message ContestEngineErrorGrpcModel {
+    ContestEngineErrorType ErrorType = 1;
+    optional string Message = 2;
+  }
+
+message ContestEngineInsertOrReplaceMissionsGroupGrpcResponse {
+  oneof InsertOrReplaceMissionsGroupResult {
+    ContestEngineMissionsGroupGrpcModel MissionsGroup = 1;
+    ContestEngineErrorGrpcModel Error = 2;
+  }
+}
+
+message ContestEngineInsertOrReplaceRewardPackGrpcResponse {
+  oneof InsertOrReplaceRewardPackResult {
+    ContestEngineRewardPackGrpcModel RewardPack = 1;
+    ContestEngineErrorGrpcModel Error = 2;
+  }
+}
+
+service ContestEngineGrpcService {  
+  rpc InsertOrReplaceMissionsGroup(ContestEngineMissionsGroupGrpcModel) 
+    returns (ContestEngineInsertOrReplaceMissionsGroupGrpcResponse);
+  
+  rpc InsertOrReplaceRewardPack(ContestEngineRewardPackGrpcModel) 
+    returns (ContestEngineInsertOrReplaceRewardPackGrpcResponse);
+}

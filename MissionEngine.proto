@@ -4,6 +4,7 @@ package contest_engine;
 
 enum ContestEngineErrorType {
     ValidationError = 0;
+    NoSqlError = 1;
 }
 
 message ContestEngineMissionsGroupGrpcModel {

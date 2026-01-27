@@ -67,6 +67,22 @@ enum ContestEngineErrorType {
   ValidationError = 48;
 }
 
+message ContestEngineContestRewardProgressive{
+  double reward_decay = 1;
+  uint32 winnable_places = 2;
+}
+
+message ContestEngineContestRewardFixed{
+  map<u32, double> places = 1;
+}
+
+message ContestEngineContestRewardSetupGrpcModel{
+    oneof reward{
+      ContestEngineContestRewardProgressive Progressive = 1;
+      ContestEngineContestRewardFixed Fixed = 2;
+    }
+}
+
 enum ContestEngineContestRegistrationStatus {
   Registered = 0;
   Canceled = 1;
@@ -120,6 +136,8 @@ message ContestEngineContestGrpcModel {
 
   // unified naming with request (was FillInstantStart)
   bool AutoStartWhenFull = 20;
+
+  ContestEngineContestRewardSetupGrpcModel RewardConfiguration = 21;
 }
 
 message ContestEngineContestRegistrationGrpcModel {
@@ -158,6 +176,8 @@ message ContestEngineCreateContestGrpcRequest {
 
   bool AutoStartWhenFull = 16;
   uint64 ContestStartDateTimeUnixMs = 17;
+  
+  ContestEngineContestRewardSetupGrpcModel RewardConfiguration = 18;
 }
 
 message ContestEngineUpdateContestGrpcRequest {
@@ -185,6 +205,8 @@ message ContestEngineUpdateContestGrpcRequest {
   bool AutoStartWhenFull = 16;
   optional uint64 ContestStartDateTimeUnixMs = 17; // added for parity with create
   string ContestId = 18;
+
+  ContestEngineContestRewardSetupGrpcModel RewardConfiguration = 19;
 }
 
 message ContestEngineCreateContestGrpcResponse {
@@ -405,38 +427,19 @@ service ContestEngineGrpcService {
   rpc PublishContest(ContestEnginePublishContestGrpcRequest) returns (ContestEnginePublishContestGrpcResponse);
   rpc CancelContest(ContestEngineCancelContestGrpcRequest) returns (ContestEngineCancelContestGrpcResponse);
 
-  rpc GetContestRegistrations(ContestEngineGetContestRegistrationsGrpcRequest)
-      returns (stream ContestEngineContestRegistrationGrpcModel);
+  rpc GetContestRegistrations(ContestEngineGetContestRegistrationsGrpcRequest) returns (stream ContestEngineContestRegistrationGrpcModel);
+  rpc RegisterToContest(ContestEngineRegisterToContestGrpcRequest) returns (ContestEngineRegisterToContestGrpcResponse);
+  rpc CancelContestRegistration(ContestEngineCancelRegistrationGrpcRequest) returns (ContestEngineCancelContestRegistrationGrpcResponse);
+  rpc UpdateContestRegistration(ContestEngineUpdateContestRegistrationGrpcRequest) returns (ContestEngineUpdateContestRegistrationGrpcResponse);
 
-  rpc RegisterToContest(ContestEngineRegisterToContestGrpcRequest)
-      returns (ContestEngineRegisterToContestGrpcResponse);
+  rpc GetMyContestParticipant(ContestEngineGetMyContestParticipantGrpcRequest) returns (ContestEngineGetMyContestParticipantGrpcResponse);
+  rpc GetContestParticipants(ContestEngineGetContestParticipantsGrpcRequest) returns (stream ContestEngineContestParticipantGrpcModel);
+  rpc GetContestLeaderboard(ContestEngineGetContestLeaderboardGrpcRequest) returns (stream ContestEngineContestLeaderboardEntryGrpcModel);
 
-  rpc CancelContestRegistration(ContestEngineCancelRegistrationGrpcRequest)
-      returns (ContestEngineCancelContestRegistrationGrpcResponse);
-
-  rpc UpdateContestRegistration(ContestEngineUpdateContestRegistrationGrpcRequest)
-      returns (ContestEngineUpdateContestRegistrationGrpcResponse);
-
-  rpc GetMyContestParticipant(ContestEngineGetMyContestParticipantGrpcRequest)
-      returns (ContestEngineGetMyContestParticipantGrpcResponse);
-
-  rpc GetContestParticipants(ContestEngineGetContestParticipantsGrpcRequest)
-      returns (stream ContestEngineContestParticipantGrpcModel);
-
-  rpc GetContestLeaderboard(ContestEngineGetContestLeaderboardGrpcRequest)
-      returns (stream ContestEngineContestLeaderboardEntryGrpcModel);
-
-  rpc InsertOrReplaceContestDifficulty(ContestEngineContestDifficultyGrpcModel)
-      returns (ContestEngineInsertOrReplaceContestDifficultyGrpcResponse);
-
-  rpc InsertOrReplaceContestInstrumentGroup(ContestEngineContestInstrumentGroupGrpcModel)
-      returns (ContestEngineInsertOrReplaceContestInstrumentGroupGrpcResponse);
-
-  rpc InsertOrReplaceContestInstrument(ContestEngineContestInstrumentGrpcModel)
-      returns (ContestEngineInsertOrReplaceContestInstrumentGrpcResponse);
-
-  rpc InsertOrReplaceContestSettings(ContestEngineContestSettingsGrpcModel)
-      returns (ContestEngineInsertOrReplaceContestSettingsGrpcResponse);
+  rpc InsertOrReplaceContestDifficulty(ContestEngineContestDifficultyGrpcModel) returns (ContestEngineInsertOrReplaceContestDifficultyGrpcResponse);
+  rpc InsertOrReplaceContestInstrumentGroup(ContestEngineContestInstrumentGroupGrpcModel) returns (ContestEngineInsertOrReplaceContestInstrumentGroupGrpcResponse);
+  rpc InsertOrReplaceContestInstrument(ContestEngineContestInstrumentGrpcModel) returns (ContestEngineInsertOrReplaceContestInstrumentGrpcResponse);
+  rpc InsertOrReplaceContestSettings(ContestEngineContestSettingsGrpcModel) returns (ContestEngineInsertOrReplaceContestSettingsGrpcResponse);
 
   rpc Ping(google.protobuf.Empty) returns (google.protobuf.Empty);
 }

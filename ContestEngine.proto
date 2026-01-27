@@ -103,6 +103,7 @@ enum ContestEngineContestGrpcStatus {
   Active = 2;
   ContestCanceled = 3;
   Failed = 4;
+  Ended = 5;
 }
 
 message ContestEngineContestGrpcModel {

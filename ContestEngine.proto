@@ -73,7 +73,7 @@ message ContestEngineContestRewardProgressive{
 }
 
 message ContestEngineContestRewardFixed{
-  map<u32, double> places = 1;
+  map<uint32, double> places = 1;
 }
 
 message ContestEngineContestRewardSetupGrpcModel{

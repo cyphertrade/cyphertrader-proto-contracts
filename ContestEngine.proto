@@ -307,17 +307,11 @@ message ContestEngineContestParticipantGrpcModel {
 
   string ContestAccount = 4;
 
-  // leaderboard / performance
-  optional int32 Rank = 5;
-  optional double Pnl = 6;
-  optional double ReturnPercent = 7;
-
   // timestamps
-  optional uint64 JoinedAtUnixMs = 8;      // from registration
-  optional uint64 ActivatedAtUnixMs = 9;   // when contest started for the user
-  optional uint64 LastUpdatedUnixMs = 10;
+  optional uint64 JoinedAtUnixMs = 5;      // from registration
+  optional uint64 ActivatedAtUnixMs = 6;   // when contest started for the user
+  optional uint64 LastUpdatedUnixMs = 7;
 
-  optional string TeamId = 11;
 }
 
 message ContestEngineGetMyContestParticipantGrpcRequest {

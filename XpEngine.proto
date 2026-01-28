@@ -77,6 +77,10 @@ message XpEngineGetUserXpStateGrpcRequest {
     XpEngineXpGrpcType XpType = 2;
 }
 
+message XpEngineGetUserXpStatesGrpcRequest {
+    string UserId = 1;
+}
+
 message XpEngineGetUserXpStateGrpcResponse {
     oneof GetUserXpStateResult {
         XpEngineUserXpStateGrpcModel UserXpState = 1;
@@ -106,6 +110,7 @@ message XpEngineChangeUserXpStateSuccessGrpc {
 service XpEngineGrpcService{
     rpc InsertOrReplaceProgressionSettings(XpEngineXpProgressionSettingsGrpcModel) returns(XpEngineInsertOrReplaceProgressionSettingsResponse);
     rpc GetUserXpState(XpEngineGetUserXpStateGrpcRequest) returns(XpEngineGetUserXpStateGrpcResponse);
+    rpc GetUserXpStates(XpEngineGetUserXpStatesGrpcRequest) returns(stream XpEngineUserXpStateGrpcModel);
     rpc ChangeUserXpState(XpEngineChangeUserXpStateGrpcRequest) returns(XpEngineChangeUserXpStateGrpcResponse);
     rpc Ping(google.protobuf.Empty) returns (google.protobuf.Empty);
 }

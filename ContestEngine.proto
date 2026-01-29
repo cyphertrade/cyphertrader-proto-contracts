@@ -415,6 +415,11 @@ message ContestEngineInsertOrReplaceContestSettingsGrpcResponse {
   }
 }
 
+message ContestEngineGetContestsGrpcRequest{
+  optional ContestEngineContestGrpcStatus Stats = 1;
+  optional string CreatorId = 2;
+}
+
 service ContestEngineGrpcService {
   rpc CreateContest(ContestEngineCreateContestGrpcRequest) returns (ContestEngineCreateContestGrpcResponse);
   rpc UpdateContest(ContestEngineUpdateContestGrpcRequest) returns (ContestEngineUpdateContestGrpcResponse);
@@ -435,6 +440,8 @@ service ContestEngineGrpcService {
   rpc InsertOrReplaceContestInstrumentGroup(ContestEngineContestInstrumentGroupGrpcModel) returns (ContestEngineInsertOrReplaceContestInstrumentGroupGrpcResponse);
   rpc InsertOrReplaceContestInstrument(ContestEngineContestInstrumentGrpcModel) returns (ContestEngineInsertOrReplaceContestInstrumentGrpcResponse);
   rpc InsertOrReplaceContestSettings(ContestEngineContestSettingsGrpcModel) returns (ContestEngineInsertOrReplaceContestSettingsGrpcResponse);
+
+  rpc GetContests(ContestEngineGetContestsGrpcRequest) returns (stream ContestEngineContestGrpcModel);
 
   rpc Ping(google.protobuf.Empty) returns (google.protobuf.Empty);
 }

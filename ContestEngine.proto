@@ -211,6 +211,8 @@ message ContestEngineUpdateContestGrpcRequest {
 
   ContestEngineContestRewardSetupGrpcModel RewardConfiguration = 19;
   optional string Description = 20;
+
+  optional string ValidationUserId = 21;
 }
 
 message ContestEngineCreateContestGrpcResponse {

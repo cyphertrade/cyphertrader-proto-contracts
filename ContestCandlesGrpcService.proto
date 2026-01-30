@@ -1,0 +1,57 @@
+syntax = "proto3";
+package contest_candles_grpc;
+import "google/protobuf/empty.proto";
+
+// Error types enumeration
+enum ContestCandlesGrpcErrorType {
+    UNSPECIFIED = 0;
+    DB_ERROR = 1;
+    CONTEST_NOT_FOUND = 2;
+    VALIDATION_ERROR = 3;
+    INVALID_DATE_RANGE = 4;
+}
+
+// Error response model
+message ContestCandlesGrpcError {
+    ContestCandlesGrpcErrorType ErrorType = 1;
+    optional string Message = 2;
+}
+
+// Candle model
+message ContestCandleGrpcModel {
+    string Id = 1;
+    string ContestId = 2;
+    string ContestAccountId = 3;
+    int64 Date = 4;  // microseconds timestamp
+    string Open = 5;  // Decimal as string
+    string High = 6;  // Decimal as string
+    string Low = 7;   // Decimal as string
+    string Close = 8; // Decimal as string
+    int64 CreatedAt = 9; // microseconds timestamp
+}
+
+// Request to get candles with filters
+message GetCandlesGrpcRequest {
+    string ContestId = 1;
+    repeated string Accounts = 2;  // Optional: if empty, get all accounts
+    optional int64 DateFrom = 3;   // microseconds timestamp, optional
+    optional int64 DateTo = 4;     // microseconds timestamp, optional
+}
+
+// Response with candles
+message GetCandlesGrpcResponse {
+    oneof GetCandlesResult {
+        GetCandlesGrpcSuccess Success = 1;
+        ContestCandlesGrpcError Error = 2;
+    }
+}
+
+message GetCandlesGrpcSuccess {
+    repeated ContestCandleGrpcModel Candles = 1;
+}
+
+// Service definition
+service ContestCandlesGrpcService {
+    rpc Ping(google.protobuf.Empty) returns (google.protobuf.Empty);
+    rpc GetCandles(GetCandlesGrpcRequest) returns (GetCandlesGrpcResponse);
+}

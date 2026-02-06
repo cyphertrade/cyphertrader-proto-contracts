@@ -23,120 +23,74 @@ message PartnerError{
     optional string Message = 2;
 }
 
-enum PartnerCampaignGrpcStatus{
-    Active = 0;
-    Disabled = 1;
-    Archive = 2;
-}
-
-enum BusinessEventType{
-    CYPHER_REGISTER = 0;
-    CYPHER_LOGIN = 1;
-    BROKER_REGISTER = 2;
-}
-
-// ========== Models ==========
-message PartnerCampaignParamGrpcModel{
+// ========== Campaign Models ==========
+message CampaignGrpcModel {
     string Id = 1;
+    string PartnerId = 2;
+    string Name = 3;
+    map<string, string> DefaultUtms = 4;
+}
+
+// ========== Get Campaign ==========
+message GetPartnerCampaignGrpcRequest {
+    optional string CampaignId = 1;
+    optional string PartnerId = 2;
+    optional string Name = 3;
+    map<string, string> UtmFilters = 4; // Filter by each UTM key-value pair
+}
+
+message GetPartnerCampaignGrpcResponse {
+    oneof GetPartnerCampaignResult {
+        CampaignGrpcModel Campaign = 1;
+        PartnerError Error = 2;
+    }
+}
+
+// ========== Create Campaign ==========
+message CreatePartnerCampaignGrpcRequest {
+    string PartnerId = 1;
     string Name = 2;
+    map<string, string> DefaultUtms = 3;
 }
 
-message PartnerCampaignGrpcModel{
-    string Id = 1;
-    string UserId = 2;
-    repeated PartnerCampaignParamGrpcModel Params = 3;
-    PartnerCampaignGrpcStatus Status = 4;
-    double RebaitPercent = 6;
-    uint64 CreateDate = 7;
-    uint64 UpdateDate = 8;
-}
-
-message PartnerCampaignSettingsGrpcModel{
-    string Name = 1;
-    string MinUserRebaitPercent = 2;
-    string MaxUserRebaitPercent = 3;
-    string MaxCampaignParams = 4;
-    string MaxActiveCampaign = 5;
-}
-
-message PartnerCommissionEventConfigurationGrpcModel{
-    string Formula = 1;
-}
-
-message PartnerCommissionEventGrpcModel{
-    BusinessEventType EventType = 1;
-    PartnerCommissionEventConfigurationGrpcModel Configuration = 2;
-}
-
-message PartnerCommissionSettingsGrpcModel{
-    string Name = 1;
-    string YftCommission = 2;
-    repeated PartnerCommissionEventGrpcModel Events = 3;
-}
-
-message PartnerProfileGrpcModel{
-    string Name = 1;
-    string BasicCommissionSettings = 2;
-    map<uint32, string> ProgressiveCommissionSettings = 3;
-    string BasicCampaignSettings = 4;
-    map<uint32, string> ProgressiveCampaignSettings = 5;
-}
-
-// ========== Request-Response Pairs ==========
-message CreatePartnerCampaignGrpcRequest{
-    string UserId = 1;
-    double RebaitPercent = 2;
-    repeated PartnerCampaignParamGrpcModel Params = 3;
-}
-
-message CreatePartnerCampaignGrpcResponse{
-    oneof CampaignResult{
-        PartnerCampaignGrpcModel Campaign = 1;
+message CreatePartnerCampaignGrpcResponse {
+    oneof CreatePartnerCampaignResult {
+        CampaignGrpcModel Campaign = 1;
         PartnerError Error = 2;
     }
 }
 
-message InsertOrUpdatePartnerProfileGrpcResponse{
-    oneof ProfileResult{
-        PartnerProfileGrpcModel Profile = 1;
+// ========== Update Campaign ==========
+message UpdatePartnerCampaignGrpcRequest {
+    string CampaignId = 1;
+    optional string Name = 2;
+    optional map<string, string> DefaultUtms = 3;
+}
+
+message UpdatePartnerCampaignGrpcResponse {
+    oneof UpdatePartnerCampaignResult {
+        CampaignGrpcModel Campaign = 1;
         PartnerError Error = 2;
     }
 }
 
-message InsertOrUpdatePartnerCampaignSettingsGrpcResponse{
-    oneof CampaignSettingsResult{
-        PartnerCampaignSettingsGrpcModel CampaignSettings = 1;
-        PartnerError Error = 2;
-    }
+// ========== Delete Campaign ==========
+message DeletePartnerCampaignGrpcRequest {
+    string CampaignId = 1;
 }
 
-message InsertOrUpdatePartnerCommissionSettingsGrpcResponse{
-    oneof CommissionSettingsResult{
-        PartnerCommissionSettingsGrpcModel CommissionSettings = 1;
-        PartnerError Error = 2;
-    }
-}
-
-message UpdatePartnerCampaignGrpcRequest{
-    string Id = 1;
-    optional double RebaitPercent = 2;
-    repeated PartnerCampaignParamGrpcModel Params = 3;
-    optional PartnerCampaignGrpcStatus Status = 4;
-}
-
-message UpdatePartnerCampaignGrpcResponse{
-    oneof CampaignResult{
-        PartnerCampaignGrpcModel Campaign = 1;
+message DeletePartnerCampaignGrpcResponse {
+    oneof DeletePartnerCampaignResult {
+        google.protobuf.Empty Success = 1;
         PartnerError Error = 2;
     }
 }
 
 // ========== Service ==========
 service PartnersGrpcService {
+    rpc GetPartnerCampaign(GetPartnerCampaignGrpcRequest) returns (GetPartnerCampaignGrpcResponse);
     rpc CreatePartnerCampaign(CreatePartnerCampaignGrpcRequest) returns (CreatePartnerCampaignGrpcResponse);
     rpc UpdatePartnerCampaign(UpdatePartnerCampaignGrpcRequest) returns (UpdatePartnerCampaignGrpcResponse);
-    rpc InsertOrUpdatePartnerProfile(PartnerProfileGrpcModel) returns (InsertOrUpdatePartnerProfileGrpcResponse);
-    rpc InsertOrUpdatePartnerCampaignSettings(PartnerCampaignSettingsGrpcModel) returns (InsertOrUpdatePartnerCampaignSettingsGrpcResponse);
-    rpc InsertOrUpdatePartnerCommissionSettings(PartnerCommissionSettingsGrpcModel) returns (InsertOrUpdatePartnerCommissionSettingsGrpcResponse);
+    rpc DeletePartnerCampaign(DeletePartnerCampaignGrpcRequest) returns (DeletePartnerCampaignGrpcResponse);
     rpc Ping(google.protobuf.Empty) returns (google.protobuf.Empty);
 }

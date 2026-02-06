@@ -67,18 +67,13 @@ enum ContestEngineErrorType {
   ValidationError = 48;
 }
 
-message ContestEngineContestRewardProgressive{
-  double reward_decay = 1;
-  uint32 winnable_places = 2;
-}
-
 message ContestEngineContestRewardFixed{
   map<uint32, double> places = 1;
 }
 
 message ContestEngineContestRewardSetupGrpcModel{
     oneof reward{
-      ContestEngineContestRewardProgressive Progressive = 1;
+      uint32 ProgressivePlaces = 1;
       ContestEngineContestRewardFixed Fixed = 2;
     }
 }

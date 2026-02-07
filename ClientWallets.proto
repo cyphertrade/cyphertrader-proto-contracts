@@ -119,5 +119,6 @@ service ClientWalletsGrpcService{
     rpc CreateWallet(CreateWalletGrpcRequest) returns (CreateWalletGrpcResponse);
     rpc UpdateClientWallet(UpdateClientWalletGrpcRequest) returns (UpdateClientWalletResponse);
     rpc GetClientWallets(GetClientWalletsGrpcRequest) returns (GetClientWalletsGrpcResponse);
+    rpc UpdateClientBalance(UpdateClientWalletBalanceGrpcRequest) returns (UpdateClientWalletBalanceGrpcResponse);
     rpc Ping(google.protobuf.Empty) returns (google.protobuf.Empty);
 }

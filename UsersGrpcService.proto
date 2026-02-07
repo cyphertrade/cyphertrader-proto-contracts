@@ -62,6 +62,7 @@ message UsersGrpcError {
 message UserGrpcModel{
     string Id = 1;
     string UserGroup = 2;
+    optional string UserName = 3;
 }
 
 message UserGroupGrpcModel{
@@ -117,7 +118,7 @@ message RegisterUserGrpcResponse{
 
 message UpdateUserGrpcRequest{
     string Id = 1;
-    string UserGroup = 2;
+    string UserName = 2;
 }
 
 message UpdateUserGrpcResponse{

@@ -65,6 +65,8 @@ enum ContestEngineErrorType {
   // Contest account errors
   ContestAccountMismatch = 47;
   ValidationError = 48;
+  ContestValidationMinTeamSizeOutOfRange = 49;
+  ContestValidationMaxTeamSizeExceedsMaxParticipants = 50;
 }
 
 message ContestEngineContestRewardFixed{

@@ -75,7 +75,6 @@ message BrokerIntegrationSetupContestGrpcResponse{
 message BrokerIntegrationRegisterContestAccountGrpcRequest{
     string ContestId = 1;
     string UserId = 2;
-    string DifficultyId = 3;
 }
 
 message BrokerIntegrationRegisterContestAccountGrpcResponse{
@@ -87,7 +86,6 @@ message BrokerIntegrationRegisterContestAccountGrpcResponse{
 
 message BrokerIntegrationProcessContestEndedGrpcRequest{
     string ContestId = 1;
-    string DifficultyId = 2;
 }
 
 message BrokerIntegrationProcessContestEndedGrpcResponse{
@@ -99,7 +97,6 @@ message BrokerIntegrationProcessContestEndedGrpcResponse{
 
 message BrokerIntegrationProcessContestCanceledGrpcRequest{
     string ContestId = 1;
-    string DifficultyId = 2;
 }
 
 message BrokerIntegrationProcessContestCanceledGrpcResponse{
@@ -111,7 +108,6 @@ message BrokerIntegrationProcessContestCanceledGrpcResponse{
 
 message BrokerIntegrationStartContestGrpcRequest{
     string ContestId = 1;
-    string DifficultyId = 2;
 }
 
 message BrokerIntegrationStartContestGrpcResponse{
@@ -137,13 +133,11 @@ message BrokerIntegrationInsertOrReplaceBrokerSettingsGrpcResponse{
 message BrokerIntegrationContestRegistrationCancelGrpcRequest{
     string ContestId = 1;
     string UserId = 2;
-    string DifficultyId = 3;
 }
 
 message BrokerIntegrationGetContestAccountAutoLoginGrpcRequest{
     string ContestId = 1;
     string UserId = 2;
-    string DifficultyId = 3;
 }
 
 message BrokerIntegrationGetContestAccountAutoLoginGrpcResponse{

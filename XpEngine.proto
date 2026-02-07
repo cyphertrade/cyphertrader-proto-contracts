@@ -49,6 +49,7 @@ message XpEngineUserXpStateGrpcModel {
     google.protobuf.Timestamp CreateDate = 6;
     string LastUpdateProcessId = 7;
     string CreateProcessId = 8;
+    uint64 NextLevelRequiredXp = 9;
 }
 
 message XpEngineUserXpStateTransactionGrpcModel {

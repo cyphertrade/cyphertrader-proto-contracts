@@ -67,6 +67,7 @@ enum ContestEngineErrorType {
   ValidationError = 48;
   ContestValidationMinTeamSizeOutOfRange = 49;
   ContestValidationMaxTeamSizeExceedsMaxParticipants = 50;
+  AlreadyRegisteredToContest = 51;
 }
 
 message ContestEngineContestRewardFixed{

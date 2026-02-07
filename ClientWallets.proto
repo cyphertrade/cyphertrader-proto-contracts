@@ -18,6 +18,7 @@ enum ClientWalletsErrorType {
     WalletNotFound = 1;
     WalletAlreadyExists = 2;
     DatabaseError = 3;
+    ClientMultipleWallets = 4;
 }
 
 message ClientWalletsErrorGrpcModel {
@@ -94,6 +95,22 @@ message GetClientWalletsSuccessResult{
 message GetClientWalletsGrpcResponse{
     oneof GetClientWalletsResult{
         GetClientWalletsSuccessResult SuccessResult = 1;
+        ClientWalletsErrorGrpcModel Error = 2;
+    }
+}
+
+message UpdateClientWalletBalanceGrpcRequest{
+    string UserId = 1;
+    int64 Delta = 2;
+    WalletTransactionGrpcReason Reason = 3;
+    string Comment = 4;
+    string ProcessId = 5;
+    bool AllowNegativeBalance =6;
+}
+
+message UpdateClientWalletBalanceGrpcResponse{
+    oneof UpdateClientWalletBalance{
+        UpdateClientWalletSuccessResult SuccessResult = 1;
         ClientWalletsErrorGrpcModel Error = 2;
     }
 }

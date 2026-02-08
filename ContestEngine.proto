@@ -337,25 +337,25 @@ message ContestEngineGetContestParticipantsGrpcRequest {
   string ContestId = 1;
 }
 
+
+
 message ContestEngineContestLeaderboardEntryGrpcModel {
   string ContestId = 1;
   string UserId = 2;
 
-  int32 Rank = 3;
-  double Equity = 4;
-  double Pnl = 5;
-  double ReturnPercent = 6;
+  int32 PeakRank = 3;
+  int32 Rank = 4;
+  double Positions = 5;
+  double CurrentEquity = 6;
+  double MaxDrawDown = 7;
+  double TotalPnl = 8;
 
-  optional string TeamId = 7;
+  optional string TeamId = 9;
 }
 
 message ContestEngineGetContestLeaderboardGrpcRequest {
   string ContestId = 1;
 }
-
-// -------------------
-// DICTS / SETTINGS
-// -------------------
 
 message ContestEngineContestDifficultyGrpcModel {
   string Id = 1;

@@ -64,7 +64,7 @@ message CreatePartnerCampaignGrpcResponse {
 message UpdatePartnerCampaignGrpcRequest {
     string CampaignId = 1;
     optional string Name = 2;
-    optional map<string, string> DefaultUtms = 3;
+    map<string, string> DefaultUtms = 3;
 }
 
 message UpdatePartnerCampaignGrpcResponse {

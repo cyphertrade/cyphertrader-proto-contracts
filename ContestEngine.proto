@@ -144,10 +144,11 @@ message ContestEngineContestRegistrationGrpcModel {
   string UserId = 1;
   string ContestAccount = 2;
   ContestEngineContestRegistrationStatus Status = 3;
+  string ContestId = 4;
 
   // extra audit fields (optional but useful)
-  optional uint64 JoinedAtUnixMs = 4;
-  optional uint64 CanceledAtUnixMs = 5;
+  optional uint64 JoinedAtUnixMs = 5;
+  optional uint64 CanceledAtUnixMs = 6;
 }
 
 
@@ -320,6 +321,11 @@ message ContestEngineGetMyContestParticipantGrpcRequest {
   string UserId = 2;
 }
 
+message ContestEngineGetContestParticipationLoginGrpcRequest {
+  string ContestId = 1;
+  string UserId = 2;
+}
+
 message ContestEngineGetMyContestParticipantGrpcResponse {
   oneof GetMyContestParticipantResult {
     ContestEngineContestParticipantGrpcModel Participant = 1;
@@ -424,6 +430,13 @@ message ContestEngineGetContestsGrpcRequest{
   optional string ContestId = 5;
 }
 
+message ContestEngineGetContestParticipationLoginGrpcResponse{
+  oneof ContestParticipationLoginResult {
+    string AutoLoginLink = 1;
+    ContestEngineErrorGrpcModel Error = 2;
+  }
+}
+
 service ContestEngineGrpcService {
   rpc CreateContest(ContestEngineCreateContestGrpcRequest) returns (ContestEngineCreateContestGrpcResponse);
   rpc UpdateContest(ContestEngineUpdateContestGrpcRequest) returns (ContestEngineUpdateContestGrpcResponse);
@@ -439,6 +452,7 @@ service ContestEngineGrpcService {
   rpc GetMyContestParticipant(ContestEngineGetMyContestParticipantGrpcRequest) returns (ContestEngineGetMyContestParticipantGrpcResponse);
   rpc GetContestParticipants(ContestEngineGetContestParticipantsGrpcRequest) returns (stream ContestEngineContestParticipantGrpcModel);
   rpc GetContestLeaderboard(ContestEngineGetContestLeaderboardGrpcRequest) returns (stream ContestEngineContestLeaderboardEntryGrpcModel);
+  rpc GetContestParticipationLogin(ContestEngineGetContestParticipationLoginGrpcRequest) returns (ContestEngineGetContestParticipationLoginGrpcResponse);
 
   rpc InsertOrReplaceContestDifficulty(ContestEngineContestDifficultyGrpcModel) returns (ContestEngineInsertOrReplaceContestDifficultyGrpcResponse);
   rpc InsertOrReplaceContestInstrumentGroup(ContestEngineContestInstrumentGroupGrpcModel) returns (ContestEngineInsertOrReplaceContestInstrumentGroupGrpcResponse);

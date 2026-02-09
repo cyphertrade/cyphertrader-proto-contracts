@@ -20,6 +20,7 @@ enum BrokerIntegrationErrorType{
     IntegrationApiForbidden = 14;
     IntegrationApiNetworkError = 15;
     IntegrationApiValidationError = 16;
+    AccountAlreadyExists = 17;
 }
 
 message BrokerIntegrationErrorGrpcModel{

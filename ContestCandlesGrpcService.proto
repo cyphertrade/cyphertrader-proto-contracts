@@ -19,23 +19,21 @@ message ContestCandlesGrpcError {
 
 // Candle model
 message ContestCandleGrpcModel {
-    string Id = 1;
-    string ContestId = 2;
-    string ContestAccountId = 3;
-    int64 Date = 4;  // microseconds timestamp
-    string Open = 5;  // Decimal as string
-    string High = 6;  // Decimal as string
-    string Low = 7;   // Decimal as string
-    string Close = 8; // Decimal as string
-    int64 CreatedAt = 9; // microseconds timestamp
+    string ContestId = 1;
+    string ContestAccountId = 2;
+    int64 Date = 3;  // milliseconds timestamp
+    string Open = 4;  // Decimal as string
+    string High = 5;  // Decimal as string
+    string Low = 6;   // Decimal as string
+    string Close = 7; // Decimal as string
 }
 
 // Request to get candles with filters
 message GetCandlesGrpcRequest {
     string ContestId = 1;
     repeated string Accounts = 2;  // Optional: if empty, get all accounts
-    optional int64 DateFrom = 3;   // microseconds timestamp, optional
-    optional int64 DateTo = 4;     // microseconds timestamp, optional
+    int64 DateFrom = 3;   // milliseconds timestamp, required
+    int64 DateTo = 4;     // milliseconds timestamp, required
 }
 
 // Response with candles

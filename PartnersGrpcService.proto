@@ -34,7 +34,7 @@ message CampaignGrpcModel {
 // ========== Get Campaign ==========
 message GetPartnerCampaignGrpcRequest {
     optional string CampaignId = 1;
-    optional string PartnerId = 2;
+    string PartnerId = 2;
     optional string Name = 3;
     map<string, string> UtmFilters = 4; // Filter by each UTM key-value pair
 }
@@ -63,8 +63,9 @@ message CreatePartnerCampaignGrpcResponse {
 // ========== Update Campaign ==========
 message UpdatePartnerCampaignGrpcRequest {
     string CampaignId = 1;
-    optional string Name = 2;
-    map<string, string> DefaultUtms = 3;
+    string PartnerId = 2;
+    optional string Name = 3;
+    map<string, string> DefaultUtms = 4;
 }
 
 message UpdatePartnerCampaignGrpcResponse {
@@ -77,6 +78,7 @@ message UpdatePartnerCampaignGrpcResponse {
 // ========== Delete Campaign ==========
 message DeletePartnerCampaignGrpcRequest {
     string CampaignId = 1;
+    string PartnerId = 2;
 }
 
 message DeletePartnerCampaignGrpcResponse {

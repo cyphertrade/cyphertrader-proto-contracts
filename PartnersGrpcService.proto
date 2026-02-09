@@ -39,9 +39,13 @@ message GetPartnerCampaignGrpcRequest {
     map<string, string> UtmFilters = 4; // Filter by each UTM key-value pair
 }
 
+message GetPartnerCampaignsList {
+    repeated CampaignGrpcModel Campaigns = 1;
+}
+
 message GetPartnerCampaignGrpcResponse {
     oneof GetPartnerCampaignResult {
-        CampaignGrpcModel Campaign = 1;
+        GetPartnerCampaignsList Campaigns = 1;
         PartnerError Error = 2;
     }
 }

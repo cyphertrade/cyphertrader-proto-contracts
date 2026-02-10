@@ -212,6 +212,7 @@ message ContestEngineUpdateContestGrpcRequest {
   optional string Description = 20;
 }
 
+
 message ContestEngineCreateContestGrpcResponse {
   oneof CreateContestResult {
     ContestEngineContestGrpcModel Contest = 1;
@@ -221,6 +222,29 @@ message ContestEngineCreateContestGrpcResponse {
 
 message ContestEngineUpdateContestGrpcResponse {
   oneof UpdateContestResult {
+    ContestEngineContestGrpcModel Contest = 1;
+    ContestEngineErrorsGrpcModel Error = 2;
+  }
+}
+
+message ContestEngineCreateBattleGrpcRequest {
+  string UserId = 1;
+  string Name = 2;
+
+  double ContestLeverage = 3;
+  double ContestInitialBalance = 4;
+
+  uint32 ContestDurationMinutes = 5;
+
+  optional uint64 BuyIn = 6;
+  repeated string AllowedAssets = 7;
+  string AllowedDifficulty = 8;
+  string Broker = 9;
+  optional string Description = 10;
+}
+
+message ContestEngineCreateBattleGrpcResponse {
+  oneof CreateContestResult {
     ContestEngineContestGrpcModel Contest = 1;
     ContestEngineErrorsGrpcModel Error = 2;
   }
@@ -440,6 +464,8 @@ message ContestEngineGetContestParticipationLoginGrpcResponse{
 service ContestEngineGrpcService {
   rpc CreateContest(ContestEngineCreateContestGrpcRequest) returns (ContestEngineCreateContestGrpcResponse);
   rpc UpdateContest(ContestEngineUpdateContestGrpcRequest) returns (ContestEngineUpdateContestGrpcResponse);
+  
+  rpc CreateBattle(ContestEngineCreateBattleGrpcRequest) returns (ContestEngineCreateBattleGrpcResponse);
 
   rpc PublishContest(ContestEnginePublishContestGrpcRequest) returns (ContestEnginePublishContestGrpcResponse);
   rpc CancelContest(ContestEngineCancelContestGrpcRequest) returns (ContestEngineCancelContestGrpcResponse);

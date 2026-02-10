@@ -257,7 +257,8 @@ message ContestEngineContestActionGrpcRequest {
 }
 
 message ContestEngineGetContestRegistrationsGrpcRequest {
-  string ContestId = 1;
+  optional string ContestId = 1;
+  optional string UserId = 2;
 }
 
 message ContestEngineRegisterToContestGrpcRequest {

@@ -119,6 +119,7 @@ message RegisterUserGrpcResponse{
 message UpdateUserGrpcRequest{
     string Id = 1;
     string UserName = 2;
+    string UserGroup = 3;
 }
 
 message UpdateUserGrpcResponse{

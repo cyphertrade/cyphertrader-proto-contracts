@@ -71,7 +71,7 @@ enum ContestEngineErrorType {
 }
 
 message ContestEngineContestRewardFixed{
-  map<uint32, double> places = 1;
+  repeated double places_rewards = 1;
 }
 
 message ContestEngineContestRewardSetupGrpcModel{

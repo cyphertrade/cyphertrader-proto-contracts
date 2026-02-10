@@ -92,11 +92,75 @@ message DeletePartnerCampaignGrpcResponse {
     }
 }
 
+// ========== Partner Profile Models ==========
+message PartnerProfileGrpcModel {
+    string Name = 1;
+    string BaseRegisterLink = 2;
+    optional PartnerProfileCommissionsGrpcModel Commissions = 3;
+}
+
+message PartnerProfileCommissionsGrpcModel {
+    int64 LadderResetInHours = 1;
+    map<int64, CommissionLadderStepGrpcModel> LadderSettings = 2;
+}
+
+message CommissionLadderStepGrpcModel {
+    optional double BrokerCpaPercent = 1;
+    optional double BrokerRevSharePercent = 2;
+    optional double BattlesRevshare = 3;
+    optional double ContestsRevshare = 4;
+}
+
+// ========== Get Partner Profile ==========
+message GetPartnerProfileGrpcRequest {
+    optional string Name = 1;
+}
+
+message GetPartnerProfilesList {
+    repeated PartnerProfileGrpcModel Profiles = 1;
+}
+
+message GetPartnerProfileGrpcResponse {
+    oneof GetPartnerProfileResult {
+        GetPartnerProfilesList Profiles = 1;
+        PartnerError Error = 2;
+    }
+}
+
+// ========== Insert Or Update Partner Profile ==========
+message InsertOrUpdatePartnerProfileGrpcRequest {
+    string Name = 1;
+    optional string BaseRegisterLink = 2;
+    optional PartnerProfileCommissionsGrpcModel Commissions = 3;
+}
+
+message InsertOrUpdatePartnerProfileGrpcResponse {
+    oneof InsertOrUpdatePartnerProfileResult {
+        PartnerProfileGrpcModel Profile = 1;
+        PartnerError Error = 2;
+    }
+}
+
+// ========== Delete Partner Profile ==========
+message DeletePartnerProfileGrpcRequest {
+    string Name = 1;
+}
+
+message DeletePartnerProfileGrpcResponse {
+    oneof DeletePartnerProfileResult {
+        google.protobuf.Empty Success = 1;
+        PartnerError Error = 2;
+    }
+}
+
 // ========== Service ==========
 service PartnersGrpcService {
     rpc GetPartnerCampaign(GetPartnerCampaignGrpcRequest) returns (GetPartnerCampaignGrpcResponse);
     rpc CreatePartnerCampaign(CreatePartnerCampaignGrpcRequest) returns (CreatePartnerCampaignGrpcResponse);
     rpc UpdatePartnerCampaign(UpdatePartnerCampaignGrpcRequest) returns (UpdatePartnerCampaignGrpcResponse);
     rpc DeletePartnerCampaign(DeletePartnerCampaignGrpcRequest) returns (DeletePartnerCampaignGrpcResponse);
+    rpc GetPartnerProfile(GetPartnerProfileGrpcRequest) returns (GetPartnerProfileGrpcResponse);
+    rpc InsertOrUpdatePartnerProfile(InsertOrUpdatePartnerProfileGrpcRequest) returns (InsertOrUpdatePartnerProfileGrpcResponse);
+    rpc DeletePartnerProfile(DeletePartnerProfileGrpcRequest) returns (DeletePartnerProfileGrpcResponse);
     rpc Ping(google.protobuf.Empty) returns (google.protobuf.Empty);
 }

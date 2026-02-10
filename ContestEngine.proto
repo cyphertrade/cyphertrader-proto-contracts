@@ -83,7 +83,8 @@ message ContestEngineContestRewardSetupGrpcModel{
 
 enum ContestEngineContestRegistrationStatus {
   Registered = 0;
-  Canceled = 1;
+  Executed = 1;
+  Canceled = 2;
 }
 
 message ContestEngineErrorGrpcModel {
@@ -259,6 +260,7 @@ message ContestEngineContestActionGrpcRequest {
 message ContestEngineGetContestRegistrationsGrpcRequest {
   optional string ContestId = 1;
   optional string UserId = 2;
+  optional ContestEngineContestRegistrationStatus Status = 3;
 }
 
 message ContestEngineRegisterToContestGrpcRequest {

@@ -241,6 +241,7 @@ message ContestEngineCreateBattleGrpcRequest {
   string AllowedDifficulty = 8;
   string Broker = 9;
   optional string Description = 10;
+  optional uint64 ContestStartDateTimeUnixMs = 11; // added for parity with create
 }
 
 message ContestEngineCreateBattleGrpcResponse {

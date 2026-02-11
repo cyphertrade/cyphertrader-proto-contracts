@@ -1,6 +1,7 @@
 syntax = "proto3";
 package partners_grpc;
 import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
 
 // ========== Errors and Enums ==========
 enum PartnerErrorType{
@@ -153,6 +154,73 @@ message DeletePartnerProfileGrpcResponse {
     }
 }
 
+// ========== Refferals ==========
+message RefferalGrpcModel {
+    string Id = 1;
+    string UserId = 2;
+    string PartnerId = 3;
+    string Status = 4;
+    string CampaignId = 5;
+    map<string, string> UtmSources = 6;
+    google.protobuf.Timestamp CreateDate = 7;
+    google.protobuf.Timestamp LastUpdateDate = 8;
+    string CreateProcessId = 9;
+    string UpdateProcessId = 10;
+}
+
+message GetRefferalsGrpcRequest {
+    optional string Id = 1;
+    optional string UserId = 2;
+    string PartnerId = 3;
+    optional string Status = 4;
+    optional string CampaignId = 5;
+    map<string, string> UtmSources = 6;
+    optional google.protobuf.Timestamp FromDate = 7;
+    optional google.protobuf.Timestamp ToDate = 8;
+}
+
+message GetRefferalsList {
+    repeated RefferalGrpcModel Refferals = 1;
+}
+
+message GetRefferalsGrpcResponse {
+    oneof GetRefferalsResult {
+        GetRefferalsList Refferals = 1;
+        PartnerError Error = 2;
+    }
+}
+
+// ========== Partner Transactions ==========
+message PartnerTransactionGrpcModel {
+    string Id = 1;
+    string PartnerId = 2;
+    string RefferalId = 3;
+    string TransactionType = 4;
+    int64 Delta = 5;
+    google.protobuf.Timestamp CreateDate = 6;
+    string CreateProcessId = 7;
+}
+
+message GetPartnerTransactionsGrpcRequest {
+    optional string Id = 1;
+    optional string RefferalId = 2;
+    string PartnerId = 3;
+    optional string TransactionType = 4;
+    optional google.protobuf.Timestamp FromDate = 5;
+    optional google.protobuf.Timestamp ToDate = 6;
+}
+
+message GetPartnerTransactionsList {
+    repeated PartnerTransactionGrpcModel Transactions = 1;
+}
+
+message GetPartnerTransactionsGrpcResponse {
+    oneof GetPartnerTransactionsResult {
+        GetPartnerTransactionsList Transactions = 1;
+        PartnerError Error = 2;
+    }
+}
+
 // ========== Service ==========
 service PartnersGrpcService {
     rpc GetPartnerCampaign(GetPartnerCampaignGrpcRequest) returns (GetPartnerCampaignGrpcResponse);
@@ -162,5 +230,7 @@ service PartnersGrpcService {
     rpc GetPartnerProfile(GetPartnerProfileGrpcRequest) returns (GetPartnerProfileGrpcResponse);
     rpc InsertOrUpdatePartnerProfile(InsertOrUpdatePartnerProfileGrpcRequest) returns (InsertOrUpdatePartnerProfileGrpcResponse);
     rpc DeletePartnerProfile(DeletePartnerProfileGrpcRequest) returns (DeletePartnerProfileGrpcResponse);
+    rpc GetRefferals(GetRefferalsGrpcRequest) returns (GetRefferalsGrpcResponse);
+    rpc GetPartnerTransactions(GetPartnerTransactionsGrpcRequest) returns (GetPartnerTransactionsGrpcResponse);
     rpc Ping(google.protobuf.Empty) returns (google.protobuf.Empty);
 }

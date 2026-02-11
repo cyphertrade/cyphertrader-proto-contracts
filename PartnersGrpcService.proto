@@ -1,7 +1,6 @@
 syntax = "proto3";
 package partners_grpc;
 import "google/protobuf/empty.proto";
-import "google/protobuf/timestamp.proto";
 
 // ========== Errors and Enums ==========
 enum PartnerErrorType{
@@ -162,8 +161,8 @@ message RefferalGrpcModel {
     string Status = 4;
     string CampaignId = 5;
     map<string, string> UtmSources = 6;
-    google.protobuf.Timestamp CreateDate = 7;
-    google.protobuf.Timestamp LastUpdateDate = 8;
+    int64 CreateDateMs = 7;      // Unix timestamp, milliseconds
+    int64 LastUpdateDateMs = 8;   // Unix timestamp, milliseconds
     string CreateProcessId = 9;
     string UpdateProcessId = 10;
 }
@@ -175,8 +174,8 @@ message GetRefferalsGrpcRequest {
     optional string Status = 4;
     optional string CampaignId = 5;
     map<string, string> UtmSources = 6;
-    optional google.protobuf.Timestamp FromDate = 7;
-    optional google.protobuf.Timestamp ToDate = 8;
+    optional int64 FromDateMs = 7;  // Unix timestamp, milliseconds
+    optional int64 ToDateMs = 8;     // Unix timestamp, milliseconds
 }
 
 message GetRefferalsList {
@@ -197,7 +196,7 @@ message PartnerTransactionGrpcModel {
     string RefferalId = 3;
     string TransactionType = 4;
     int64 Delta = 5;
-    google.protobuf.Timestamp CreateDate = 6;
+    int64 CreateDateMs = 6;  // Unix timestamp, milliseconds
     string CreateProcessId = 7;
 }
 
@@ -206,8 +205,8 @@ message GetPartnerTransactionsGrpcRequest {
     optional string RefferalId = 2;
     string PartnerId = 3;
     optional string TransactionType = 4;
-    optional google.protobuf.Timestamp FromDate = 5;
-    optional google.protobuf.Timestamp ToDate = 6;
+    optional int64 FromDateMs = 5;  // Unix timestamp, milliseconds
+    optional int64 ToDateMs = 6;    // Unix timestamp, milliseconds
 }
 
 message GetPartnerTransactionsList {

@@ -1,0 +1,29 @@
+syntax = "proto3";
+package broker_affiliate_integration;
+import "google/protobuf/empty.proto";
+
+enum BrokerAffiliateIntegrationErrorType{
+    NoSqlError = 0;
+}
+
+message BrokerAffiliateIntegrationError{
+    BrokerAffiliateIntegrationErrorType ErrorType = 1;
+    optional string Message = 2;
+}
+
+message BrokerAffiliateIntegrationGetRegisterLinkGrpcRequest{
+    string UserId = 1;
+}
+
+message BrokerAffiliateIntegrationGetRegisterLinkGrpcResponse{
+    oneof GetRegisterLinkResult{
+        string RegisterLink = 1;
+        BrokerAffiliateIntegrationError Error = 2;
+    }
+}
+
+service BrokerAffiliateIntegrationGrpcService{
+    rpc GetRegisterLink(BrokerAffiliateIntegrationGetRegisterLinkGrpcRequest) returns (BrokerAffiliateIntegrationGetRegisterLinkGrpcResponse);
+
+    rpc Ping(google.protobuf.Empty) returns (google.protobuf.Empty);
+}

@@ -68,7 +68,6 @@ message UserGrpcModel{
 message UserGroupGrpcModel{
     string Name = 1;
     string TraderXpProgression = 2;
-    string PartnerXpProgression = 3;
     string InfluencerXpProgression = 4;
     string PartnerProfile = 5;
     string TraderProfile = 6;
@@ -119,6 +118,7 @@ message RegisterUserGrpcResponse{
 message UpdateUserGrpcRequest{
     string Id = 1;
     string UserName = 2;
+    string UserGroup = 3;
 }
 
 message UpdateUserGrpcResponse{

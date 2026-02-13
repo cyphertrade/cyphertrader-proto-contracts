@@ -5,6 +5,7 @@ import "google/protobuf/empty.proto";
 enum BrokerAffiliateIntegrationErrorType{
     NoSqlError = 0;
     MissingBaseReferalLink = 1;
+    BrokerSettingsNotFound = 2;
 }
 
 message BrokerAffiliateIntegrationError{

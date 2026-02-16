@@ -11,6 +11,7 @@ enum XpEngineGrpcErrorType {
     VALIDATION_ERRORS = 3;
     DATABASE_ERROR = 4;
     SETTINGS_NOT_FOUND = 5;
+    SERVICE_BUS_ERROR = 6;
 }
 
 message XpEngineGrpcError {

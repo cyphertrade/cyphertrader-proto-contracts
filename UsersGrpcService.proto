@@ -106,6 +106,7 @@ message PersonalDataGrpcModel{
 message RegisterUserGrpcRequest {
     string Email = 1;
     string Password = 2;
+    map<string, string> UtmMap = 3;
 }
 
 message RegisterUserGrpcResponse{

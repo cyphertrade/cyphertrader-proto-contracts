@@ -45,6 +45,7 @@ enum UsersGrpcErrorType {
     INVALID_POSTAL_CODE = 35;
     FIRST_NAME_TOO_SHORT = 36;
     LAST_NAME_TOO_SHORT = 37;
+    USERNAME_ALREADY_EXISTS = 38;
 }
 
 enum GenderGrpcType {

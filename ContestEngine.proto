@@ -140,6 +140,8 @@ message ContestEngineContestGrpcModel {
 
   ContestEngineContestRewardSetupGrpcModel RewardConfiguration = 21;
   optional string Description = 22;
+
+  uint64 CreatedAtUnixMs = 23;
 }
 
 message ContestEngineContestRegistrationGrpcModel {

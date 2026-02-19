@@ -20,6 +20,7 @@ message BrokeSettingsGrpcModel{
     string BrokerName = 2;
     repeated BrokerContestDifficultyGrpcModel ContestSettings = 3;
     map<string, string> InstrumentMapping = 4;
+    optional string BaseReferalLink = 5;
 }
 
 message BrokerContestDifficultyGrpcModel{

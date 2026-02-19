@@ -20,8 +20,8 @@ message XpEngineGrpcError {
 }
 
 enum XpEngineXpGrpcType {
-    TRADER = 1;
-    INFLUENCER = 2;
+    TRADER = 0;
+    INFLUENCER = 1;
 }
 
 enum XpEngineXpTransactionSourceGrpc {

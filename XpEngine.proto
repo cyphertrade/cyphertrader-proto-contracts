@@ -20,7 +20,6 @@ message XpEngineGrpcError {
 }
 
 enum XpEngineXpGrpcType {
-    PARTNER = 0;
     TRADER = 1;
     INFLUENCER = 2;
 }

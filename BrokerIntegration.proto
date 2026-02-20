@@ -148,12 +148,23 @@ message BrokerIntegrationGetContestAccountAutoLoginGrpcResponse{
     }
 }
 
+message BrokerIntegrationGetUserAccountAutologinGrpcRequest{
+    string UserId = 1;
+}
+
+message BrokerIntegrationGetUserAccountAutologinGrpcResponse{
+    oneof RedirectLink{
+        string Url = 1;
+        BrokerIntegrationErrorsGrpcModel Errors = 2;
+    }
+}
 
 service BrokerIntegrationGrpcService{
     rpc SetupContest(BrokerIntegrationSetupContestGrpcRequest) returns (BrokerIntegrationSetupContestGrpcResponse);
 
     rpc RegisterContestAccount(BrokerIntegrationRegisterContestAccountGrpcRequest) returns (BrokerIntegrationRegisterContestAccountGrpcResponse);
     rpc GetContestAccountAutoLogin(BrokerIntegrationGetContestAccountAutoLoginGrpcRequest) returns (BrokerIntegrationGetContestAccountAutoLoginGrpcResponse);
+    rpc GetUserAccountAutologin(BrokerIntegrationGetUserAccountAutologinGrpcRequest) returns (BrokerIntegrationGetUserAccountAutologinGrpcResponse);
     rpc ContestRegistrationCanceled(BrokerIntegrationContestRegistrationCancelGrpcRequest) returns (BrokerIntegrationRegisterContestAccountGrpcResponse);
 
     rpc ProcessContestCanceled(BrokerIntegrationProcessContestCanceledGrpcRequest) returns (BrokerIntegrationProcessContestCanceledGrpcResponse);

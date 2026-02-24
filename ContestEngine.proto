@@ -462,6 +462,12 @@ message ContestEngineGetContestsGrpcRequest{
   optional string ContestId = 5;
 }
 
+message ContestEngineGetUserContestsHistoryGrpcRequest{
+  string UserId = 1;
+  optional uint64 DateFrom = 2;
+  optional uint64 DateTo = 3;
+}
+
 message ContestEngineGetContestParticipationLoginGrpcResponse{
   oneof ContestParticipationLoginResult {
     string AutoLoginLink = 1;
@@ -494,6 +500,7 @@ service ContestEngineGrpcService {
   rpc InsertOrReplaceContestSettings(ContestEngineContestSettingsGrpcModel) returns (ContestEngineInsertOrReplaceContestSettingsGrpcResponse);
 
   rpc GetContests(ContestEngineGetContestsGrpcRequest) returns (stream ContestEngineContestGrpcModel);
+  rpc GetUserContestsHistory(ContestEngineGetUserContestsHistoryGrpcRequest) returns (stream ContestEngineContestGrpcModel);
 
   rpc Ping(google.protobuf.Empty) returns (google.protobuf.Empty);
 }

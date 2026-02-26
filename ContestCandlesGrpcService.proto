@@ -26,6 +26,7 @@ message ContestCandleGrpcModel {
     string High = 5;  // Decimal as string
     string Low = 6;   // Decimal as string
     string Close = 7; // Decimal as string
+    string UserId = 8;
 }
 
 // Request to get candles with filters

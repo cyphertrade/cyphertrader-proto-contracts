@@ -159,6 +159,24 @@ message BrokerIntegrationGetUserAccountAutologinGrpcResponse{
     }
 }
 
+message BrokerIntegrationGetContestPositionsGrpcRequest{
+    string ContestId = 1;
+}
+
+message BrokerIntegrationContestPositionGrpcModel{
+    string Id = 1;
+    string ContestId = 2;
+    string ContestAccountId = 3;
+    string AssetPair = 4;
+    bool IsBuy = 5;
+    double TotalPl = 6;
+    double OpenPrice = 7;
+    optional double ClosePrice = 8;
+    uint64 CreateDate = 9;
+    optional uint64 CloseDate = 10;
+    double LotsAmount = 11;
+}
+
 service BrokerIntegrationGrpcService{
     rpc SetupContest(BrokerIntegrationSetupContestGrpcRequest) returns (BrokerIntegrationSetupContestGrpcResponse);
 
@@ -170,6 +188,8 @@ service BrokerIntegrationGrpcService{
     rpc ProcessContestCanceled(BrokerIntegrationProcessContestCanceledGrpcRequest) returns (BrokerIntegrationProcessContestCanceledGrpcResponse);
     rpc ProcessContestEnded(BrokerIntegrationProcessContestEndedGrpcRequest) returns (BrokerIntegrationProcessContestEndedGrpcResponse);
     rpc StartContest(BrokerIntegrationStartContestGrpcRequest) returns (BrokerIntegrationStartContestGrpcResponse);
+
+    rpc GetContestPositions(BrokerIntegrationGetContestPositionsGrpcRequest) returns (stream BrokerIntegrationContestPositionGrpcModel);
 
     rpc Ping(google.protobuf.Empty) returns (google.protobuf.Empty);
 }
